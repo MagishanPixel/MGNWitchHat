@@ -4,17 +4,23 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.DyeColor;
 
 public enum BuckleType implements StringRepresentable {
-    IRON("iron"),
-    GOLD("gold"),
-    DIAMOND("diamond")
+    IRON("iron", 0xfffff),
+    GOLD("gold", 0xe9b115),
+    DIAMOND("diamond", 0x4aedd9)
     ;
 
     public static final StringRepresentable.EnumCodec<BuckleType> CODEC = StringRepresentable.fromEnum(BuckleType::values);
 
     private final String name;
+    private final int color;
 
-    BuckleType(String name) {
+    BuckleType(String name, int color) {
         this.name = name;
+        this.color = color;
+    }
+
+    public int getCol() {
+        return color;
     }
 
     @Override

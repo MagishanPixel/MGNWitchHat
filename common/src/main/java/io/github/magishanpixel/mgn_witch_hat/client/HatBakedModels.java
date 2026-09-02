@@ -2,11 +2,10 @@ package io.github.magishanpixel.mgn_witch_hat.client;
 
 import com.google.common.collect.ImmutableMap;
 import io.github.magishanpixel.mgn_witch_hat.client.models.BuckleModel;
-import io.github.magishanpixel.mgn_witch_hat.client.models.RobeModel;
+import io.github.magishanpixel.mgn_witch_hat.client.models.HatBandModel;
 import io.github.magishanpixel.mgn_witch_hat.client.models.WitchHatModel;
 import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayerLocations;
 import net.minecraft.client.model.Model;
-import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public class HatBakedModels {
@@ -14,7 +13,7 @@ public class HatBakedModels {
 
     public enum ModelType {
         HAT,
-        ROBE,
+        HAT_BAND,
         BUCKLE
     }
 
@@ -26,7 +25,7 @@ public class HatBakedModels {
         ImmutableMap.Builder<ModelType, Model> m = ImmutableMap.builder();
 
         m.put(ModelType.HAT, new WitchHatModel<>(context.bakeLayer(ModModelLayerLocations.WITCH_HAT)));
-        m.put(ModelType.ROBE, new RobeModel<>(context.bakeLayer(ModModelLayerLocations.ROBE)));
+        m.put(ModelType.HAT_BAND, new HatBandModel<>(context.bakeLayer(ModModelLayerLocations.ROBE)));
         m.put(ModelType.BUCKLE, new BuckleModel<>(context.bakeLayer(ModModelLayerLocations.BUCKLE)));
 
         HAT_MAP = m.build();

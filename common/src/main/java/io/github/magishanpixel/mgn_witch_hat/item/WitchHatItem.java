@@ -17,21 +17,39 @@ public class WitchHatItem extends Item implements Equipable {
         super(properties);
     }
 
+    private static final String ITEM_TRANSLATE = "item.mgn_witch_hat.";
+
+    private static Component createComp(String descName, String v) {
+        return Component.translatable(ITEM_TRANSLATE + "desc." + descName).append(": ").append(Component.translatable(ITEM_TRANSLATE + v));
+
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> c, TooltipFlag tooltipFlag) {
         DyeColor dyeHat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? stack.get(ModDataComponents.WITCH_HAT_COLOR.value()) : null;
         BuckleType buckleType = stack.has(ModDataComponents.BUCKLE_TYPE.value()) ? stack.get(ModDataComponents.BUCKLE_TYPE.value()) : null;
 
         if (dyeHat != null) {
-            Component col = Component.literal(dyeHat.getSerializedName());
-            c.add(col);
+            c.add(createComp("dye", "col." + dyeHat.getSerializedName()));
         }
 
         if (buckleType != null) {
-            Component col = Component.literal(buckleType.getSerializedName());
-
-            c.add(col);
+            c.add(createComp("buckle", "buckle." + buckleType.getSerializedName()));
         }
+
+        if (stack.get(ModDataComponents.HAS_BAND.value())) {
+            String str = "default";
+
+            if (stack.has(ModDataComponents.BAND_COLOR.value())) {
+                DyeColor v = stack.get(ModDataComponents.BAND_COLOR.value());
+                str = v.getSerializedName();
+            }
+
+            c.add(createComp("hat_band", "hat_band." + str));
+        }
+
+
+
 
     }
 

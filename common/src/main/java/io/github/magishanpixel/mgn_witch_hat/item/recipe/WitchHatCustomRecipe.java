@@ -4,6 +4,7 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModCustomRecipes;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.item.BuckleItem;
+import io.github.magishanpixel.mgn_witch_hat.item.HatBandItem;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
@@ -25,6 +26,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         ItemStack targStack = ItemStack.EMPTY;
         ItemStack buckleStack = ItemStack.EMPTY;
         ItemStack dyeStack = ItemStack.EMPTY;
+        ItemStack bandStack = ItemStack.EMPTY;
 
         for(int i = 0; i < input.size(); ++i) {
             ItemStack inputStack = input.getItem(i);
@@ -48,12 +50,17 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                         return false;
                     }
                     dyeStack = inputStack;
+                } else if (item instanceof HatBandItem)  {
+                    if (!bandStack.isEmpty()) {
+                        return false;
+                    }
+                    bandStack = inputStack;
                 } else {
                     return false;
                 }
             }
 
-            if ((!dyeStack.isEmpty() || !buckleStack.isEmpty()) && !targStack.isEmpty()) {
+            if ((!dyeStack.isEmpty() || !buckleStack.isEmpty() || !bandStack.isEmpty()) && !targStack.isEmpty()) {
                 return true;
             }
         }
@@ -65,6 +72,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
     public ItemStack assemble(CraftingInput input, HolderLookup.Provider provider) {
         DyeItem dyeItem = null;
         BuckleItem buckleItem = null;
+        HatBandItem bandItem = null;
         ItemStack targStack = ItemStack.EMPTY;
 
         for(int i = 0; i < input.size(); ++i) {
@@ -88,19 +96,35 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                     }
 
                     buckleItem = (BuckleItem) item;
+                } else if (item instanceof HatBandItem) {
+                    if (bandItem != null) {
+                        return ItemStack.EMPTY;
+                    }
+
+                    bandItem = (HatBandItem) item;
                 } else {
                     return ItemStack.EMPTY;
                 }
             }
         }
 
-        if ((dyeItem != null || buckleItem != null) && !targStack.isEmpty()) {
+        if ((dyeItem != null || buckleItem != null || bandItem != null) && !targStack.isEmpty()) {
             if (dyeItem != null) {
                 targStack.set(ModDataComponents.WITCH_HAT_COLOR.value(), dyeItem.getDyeColor());
             }
 
             if (buckleItem != null) {
                 targStack.set(ModDataComponents.BUCKLE_TYPE.value(), buckleItem.getBuckleType());
+            }
+
+            if (bandItem != null) {
+                targStack.set(ModDataComponents.HAS_BAND.value(), true);
+
+                if (bandItem.getDyeColor() != null) {
+                    targStack.set(ModDataComponents.BAND_COLOR.value(), bandItem.getDyeColor());
+                } else {
+                    targStack.remove(ModDataComponents.BAND_COLOR.value());
+                }
             }
 
             return targStack;

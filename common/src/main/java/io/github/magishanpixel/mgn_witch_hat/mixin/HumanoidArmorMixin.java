@@ -36,12 +36,7 @@ public class HumanoidArmorMixin<T extends LivingEntity, M extends EntityModel<T>
             RenderLayer<T, M> self = (RenderLayer<T, M>) (Object) this;
             int i = LivingEntityRenderer.getOverlayCoords(livingEntity, 0.0F);
 
-
-            ResourceLocation tex_robe = MGNConstants.getTexture("robe");
-
             Model hatModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT);
-            Model robeModel = HatBakedModels.getModel(HatBakedModels.ModelType.ROBE);
-            Model buckleModel = HatBakedModels.getModel(HatBakedModels.ModelType.BUCKLE);
 
             poseStack.pushPose();
             self.getParentModel().getHead().translateAndRotate(poseStack);
@@ -52,9 +47,21 @@ public class HumanoidArmorMixin<T extends LivingEntity, M extends EntityModel<T>
             ResourceLocation tex_hat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? MGNConstants.getTexture("witch_hat/" + stack.get(ModDataComponents.WITCH_HAT_COLOR.value())) : MGNConstants.getTexture("witch_hat/base");
             hatModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_hat)), packedLight, i, -1);
 
-            robeModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_robe)), packedLight, i, -1);
+            if (stack.get(ModDataComponents.HAS_BAND.value())) {
+                Model bandModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT_BAND);
+                ResourceLocation tex_band;
+
+                if (stack.has(ModDataComponents.BAND_COLOR.value())) {
+                    tex_band = MGNConstants.getTexture("hat_band/" + stack.get(ModDataComponents.BAND_COLOR.value()).getSerializedName());
+                } else {
+                    tex_band = MGNConstants.getTexture("hat_band/base");
+                }
+
+                bandModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_band)), packedLight, i, -1);
+            }
 
             if (stack.has(ModDataComponents.BUCKLE_TYPE.value())) {
+                Model buckleModel = HatBakedModels.getModel(HatBakedModels.ModelType.BUCKLE);
                 ResourceLocation tex_buckle = MGNConstants.getTexture("buckle/" + stack.get(ModDataComponents.BUCKLE_TYPE.value()).getSerializedName());
                 buckleModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_buckle)), packedLight, i, -1);
             }
