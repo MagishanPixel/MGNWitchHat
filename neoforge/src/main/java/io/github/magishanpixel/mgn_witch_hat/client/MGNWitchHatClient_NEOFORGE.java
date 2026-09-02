@@ -1,0 +1,26 @@
+package io.github.magishanpixel.mgn_witch_hat.client;
+
+import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
+import net.blay09.mods.balm.api.client.BalmClient;
+import net.blay09.mods.balm.neoforge.NeoForgeLoadContext;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+
+@Mod(value = MGNConstants.MOD_ID, dist = Dist.CLIENT)
+public class MGNWitchHatClient_NEOFORGE {
+    public MGNWitchHatClient_NEOFORGE(IEventBus modEventBus) {
+        MGNWitchHatClient.init();
+        final var loadContext = new NeoForgeLoadContext(modEventBus);
+        BalmClient.initializeMod(MGNConstants.MOD_ID,loadContext,new MGNWitchHatClient());
+
+        modEventBus.addListener(this::onAddLayers);
+    }
+
+    public void onAddLayers(EntityRenderersEvent.AddLayers event) {
+        EntityRendererProvider.Context context = event.getContext();
+        HatBakedModels.bakeModels(context);
+    }
+}
