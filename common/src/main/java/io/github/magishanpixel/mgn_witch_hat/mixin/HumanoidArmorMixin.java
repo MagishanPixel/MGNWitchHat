@@ -73,6 +73,7 @@ public class HumanoidArmorMixin<T extends LivingEntity, M extends EntityModel<T>
             if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
                 Minecraft inst = Minecraft.getInstance();
 
+
                 DecorRenderer.render(
                         stack.get(ModDataComponents.DECOR_TYPES.value()),
                         inst.getBlockRenderer(),

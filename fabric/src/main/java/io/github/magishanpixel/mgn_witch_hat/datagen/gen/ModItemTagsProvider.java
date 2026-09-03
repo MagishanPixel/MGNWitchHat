@@ -20,6 +20,8 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
     protected void addTags(HolderLookup.Provider provider) {
         //getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(ModItems.STRAW_HAT.asItem());
         getOrCreateTagBuilder(MGNConstants.ItemTags.WITCH_HAT_DECOR)
-                .add(Items.SKELETON_SKULL);
+                .add(Items.SKELETON_SKULL)
+                .add(Items.LANTERN)
+        ;
     }
 }

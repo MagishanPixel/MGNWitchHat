@@ -1,34 +1,48 @@
 package io.github.magishanpixel.mgn_witch_hat.misc;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import java.util.function.Predicate;
 
 public enum DecorType implements StringRepresentable {
-    SKULL("skull", v -> v.is(Items.SKELETON_SKULL))
+    SKULL("skull"),
+    LANTERN("lantern")
     ;
-
-    public static final StringRepresentable.EnumCodec<DecorType> CODEC = StringRepresentable.fromEnum(DecorType::values);
-
     private final String name;
-    private final Predicate<ItemStack> check;
 
-    DecorType(String name, Predicate<ItemStack> check) {
+    private static ImmutableMap<Item, DecorType> ITEM_MAP = null;
+
+    DecorType(String name) {
         this.name = name;
-        this.check = check;
+
+    }
+
+    public static void mapInit() {
+        ImmutableMap.Builder<Item, DecorType> m = new ImmutableMap.Builder<>();
+
+        m.put(Items.SKELETON_SKULL, SKULL);
+
+        ITEM_MAP = m.build();
     }
 
     public static DecorType getType(ItemStack stack) {
-        for (DecorType v : values()) {
-            if (v.check.test(stack)) {
-                return v;
+        if (ITEM_MAP != null) {
+            Item item = stack.getItem();
+
+            if (ITEM_MAP.containsKey(item)) {
+                return ITEM_MAP.get(item);
             }
         }
 
         return null;
     }
+
+    public static final StringRepresentable.EnumCodec<DecorType> CODEC = StringRepresentable.fromEnum(DecorType::values);
+
 
     @Override
     public String getSerializedName() {

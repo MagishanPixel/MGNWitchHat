@@ -4,36 +4,42 @@ import com.google.common.collect.ImmutableMap;
 import io.github.magishanpixel.mgn_witch_hat.client.models.BuckleModel;
 import io.github.magishanpixel.mgn_witch_hat.client.models.HatBandModel;
 import io.github.magishanpixel.mgn_witch_hat.client.models.WitchHatModel;
-import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayerLocations;
+import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayers;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.model.SkullModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public class HatBakedModels {
-    private static ImmutableMap<ModelType, Model> HAT_MAP = null;
+    private static ImmutableMap<ModelType, Model> MODEL_MAP = null;
 
     public enum ModelType {
         HAT,
         HAT_BAND,
-        BUCKLE
+        BUCKLE,
+        SKELETON_SKULL,
+        WITHER_SKULL,
     }
 
     public static boolean isAvail() {
-        return HAT_MAP != null;
+        return MODEL_MAP != null;
     }
 
     public static void bakeModels(EntityRendererProvider.Context context) {
         ImmutableMap.Builder<ModelType, Model> m = ImmutableMap.builder();
 
-        m.put(ModelType.HAT, new WitchHatModel<>(context.bakeLayer(ModModelLayerLocations.WITCH_HAT)));
-        m.put(ModelType.HAT_BAND, new HatBandModel<>(context.bakeLayer(ModModelLayerLocations.ROBE)));
-        m.put(ModelType.BUCKLE, new BuckleModel<>(context.bakeLayer(ModModelLayerLocations.BUCKLE)));
+        m.put(ModelType.HAT, new WitchHatModel<>(context.bakeLayer(ModModelLayers.WITCH_HAT)));
+        m.put(ModelType.HAT_BAND, new HatBandModel<>(context.bakeLayer(ModModelLayers.ROBE)));
+        m.put(ModelType.BUCKLE, new BuckleModel<>(context.bakeLayer(ModModelLayers.BUCKLE)));
 
-        HAT_MAP = m.build();
+        m.put(ModelType.SKELETON_SKULL, new SkullModel(context.bakeLayer(ModelLayers.SKELETON_SKULL)));
+
+        MODEL_MAP = m.build();
     }
 
     public static Model getModel(ModelType v) {
-        if (HAT_MAP != null) {
-            return HAT_MAP.get(v);
+        if (MODEL_MAP != null) {
+            return MODEL_MAP.get(v);
         }
 
         return null;

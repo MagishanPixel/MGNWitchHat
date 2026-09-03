@@ -2,10 +2,9 @@ package io.github.magishanpixel.mgn_witch_hat.client;
 
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
-import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayerLocations;
+import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayers;
 import net.blay09.mods.balm.api.client.module.BalmClientModule;
 import net.blay09.mods.balm.client.BalmClientTooltipComponentRegistrar;
-import net.blay09.mods.balm.client.color.item.BalmItemColorRegistrar;
 import net.blay09.mods.balm.client.model.geom.BalmModelLayerRegistrar;
 import net.minecraft.resources.ResourceLocation;
 
@@ -21,7 +20,7 @@ public class MGNWitchHatClient implements BalmClientModule {
 
     @Override
     public void registerModelLayers(BalmModelLayerRegistrar modelLayers) {
-        ModModelLayerLocations.init(modelLayers);
+        ModModelLayers.init(modelLayers);
 
     }
 

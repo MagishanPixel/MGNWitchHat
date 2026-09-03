@@ -20,7 +20,6 @@ import net.minecraft.world.level.Level;
 import java.util.ArrayList;
 import java.util.List;
 
-// Copied from ArmorDyeRecipe.class btwww
 public class WitchHatCustomRecipe extends CustomRecipe {
     public WitchHatCustomRecipe(CraftingBookCategory category) {
         super(category);
@@ -94,7 +93,9 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         BuckleItem buckleItem = null;
         HatBandItem bandItem = null;
         ItemStack targStack = ItemStack.EMPTY;
+        List<DecorType> prevDecors = new ArrayList<>();
         List<DecorType> decorList = new ArrayList<>();
+        boolean canCraft = false;
 
         for(int i = 0; i < input.size(); ++i) {
             ItemStack inputStack = input.getItem(i);
@@ -105,11 +106,16 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                         return ItemStack.EMPTY;
                     }
                     targStack = inputStack.copy();
+                    if (targStack.has(ModDataComponents.DECOR_TYPES.value())) {
+                        prevDecors = targStack.get(ModDataComponents.DECOR_TYPES.value());
+                    }
+                    canCraft = true;
                 } else if (item instanceof DyeItem) {
                     if (dyeItem != null) {
                         return ItemStack.EMPTY;
                     }
                     dyeItem = (DyeItem) item;
+                    canCraft = true;
 
                 } else if (item instanceof BuckleItem) {
                     if (buckleItem != null) {
@@ -117,19 +123,31 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                     }
 
                     buckleItem = (BuckleItem) item;
+                    canCraft = true;
                 } else if (item instanceof HatBandItem) {
                     if (bandItem != null) {
                         return ItemStack.EMPTY;
                     }
 
                     bandItem = (HatBandItem) item;
+                    canCraft = true;
+                } else if (inputStack.is(MGNConstants.ItemTags.WITCH_HAT_DECOR)) {
+                    DecorType deco = DecorType.getType(inputStack);
+
+                    if (deco != null) {
+                        if (prevDecors.contains(deco)) {
+                            return ItemStack.EMPTY;
+                        }
+                        decorList.add(deco);
+                        canCraft = true;
+                    }
                 } else {
                     return ItemStack.EMPTY;
                 }
             }
         }
 
-        if ((dyeItem != null || buckleItem != null || bandItem != null) && !targStack.isEmpty()) {
+        if (canCraft && !targStack.isEmpty()) {
             if (dyeItem != null) {
                 targStack.set(ModDataComponents.WITCH_HAT_COLOR.value(), dyeItem.getDyeColor());
             }
@@ -146,6 +164,11 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                 } else {
                     targStack.remove(ModDataComponents.BAND_COLOR.value());
                 }
+            }
+
+            if (!decorList.isEmpty()) {
+                decorList.addAll(prevDecors);
+                targStack.set(ModDataComponents.DECOR_TYPES.value(), decorList);
             }
 
             return targStack;

@@ -7,7 +7,7 @@ import io.github.magishanpixel.mgn_witch_hat.client.models.WitchHatModel;
 import net.blay09.mods.balm.client.model.geom.BalmModelLayerRegistrar;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 
-public class ModModelLayerLocations {
+public class ModModelLayers {
     public static ModelLayerLocation WITCH_HAT = create("witch_hat");
     public static ModelLayerLocation ROBE = create("hat_band");
     public static ModelLayerLocation BUCKLE = create("buckle");
