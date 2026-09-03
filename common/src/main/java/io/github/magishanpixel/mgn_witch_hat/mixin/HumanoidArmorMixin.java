@@ -2,9 +2,11 @@ package io.github.magishanpixel.mgn_witch_hat.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
+import io.github.magishanpixel.mgn_witch_hat.client.DecorRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.item.WitchHatItem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HeadedModel;
 import net.minecraft.client.model.Model;
@@ -67,6 +69,26 @@ public class HumanoidArmorMixin<T extends LivingEntity, M extends EntityModel<T>
             }
 
             poseStack.popPose();
+
+            if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
+                Minecraft inst = Minecraft.getInstance();
+
+                DecorRenderer.render(
+                        stack.get(ModDataComponents.DECOR_TYPES.value()),
+                        inst.getBlockRenderer(),
+                        inst.getItemRenderer(),
+                        buffer,
+                        poseStack,
+                        packedLight,
+                        i,
+                        p -> self.getParentModel().getHead().translateAndRotate(p)
+                );
+
+
+
+            }
+
+
 
 
         }

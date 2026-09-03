@@ -1,16 +1,21 @@
 package io.github.magishanpixel.mgn_witch_hat.item;
 
+import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
+import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class WitchHatItem extends Item implements Equipable {
     public WitchHatItem(Properties properties) {
@@ -26,6 +31,7 @@ public class WitchHatItem extends Item implements Equipable {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> c, TooltipFlag tooltipFlag) {
+        /*
         DyeColor dyeHat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? stack.get(ModDataComponents.WITCH_HAT_COLOR.value()) : null;
         BuckleType buckleType = stack.has(ModDataComponents.BUCKLE_TYPE.value()) ? stack.get(ModDataComponents.BUCKLE_TYPE.value()) : null;
 
@@ -45,14 +51,38 @@ public class WitchHatItem extends Item implements Equipable {
                 str = v.getSerializedName();
             }
 
-            c.add(createComp("hat_band", "hat_band." + str));
+            c.add(createComp("hat_band", "col." + str));
         }
 
-
-
-
+        */
     }
 
+    @Override
+    public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
+        List<ItemStack> stackList = new ArrayList<>();
+
+        DyeColor dyeHat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? stack.get(ModDataComponents.WITCH_HAT_COLOR.value()) : null;
+        BuckleType buckleType = stack.has(ModDataComponents.BUCKLE_TYPE.value()) ? stack.get(ModDataComponents.BUCKLE_TYPE.value()) : null;
+
+        if (dyeHat != null) {
+            stackList.add(DyeItem.byColor(dyeHat).getDefaultInstance());
+        }
+
+        if (buckleType != null) {
+            stackList.add(BuckleItem.byType(buckleType).getDefaultInstance());
+        }
+
+        if (stack.get(ModDataComponents.HAS_BAND.value())) {
+            if (stack.has(ModDataComponents.BAND_COLOR.value())) {
+                DyeColor v = stack.get(ModDataComponents.BAND_COLOR.value());
+                stackList.add(HatBandItem.byColor(v).getDefaultInstance());
+            } else {
+                stackList.add(ModItems.HAT_BAND.createStack());
+            }
+        }
+
+        return stackList.isEmpty() ? Optional.empty() : Optional.of(new WitchHatTooltip.DisplayStacks(stackList));
+    }
 
     @Override
     public EquipmentSlot getEquipmentSlot() {

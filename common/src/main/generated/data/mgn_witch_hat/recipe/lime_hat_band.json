@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "hat_band_colors",
+  "ingredients": [
+    {
+      "item": "mgn_witch_hat:hat_band"
+    },
+    {
+      "item": "minecraft:lime_dye"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mgn_witch_hat:lime_hat_band"
+  }
+}

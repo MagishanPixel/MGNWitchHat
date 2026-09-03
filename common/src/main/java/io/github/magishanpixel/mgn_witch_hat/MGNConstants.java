@@ -1,6 +1,10 @@
 package io.github.magishanpixel.mgn_witch_hat;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,4 +20,13 @@ public class MGNConstants {
 	public static ResourceLocation getTexture(String name) {
 		return newId("textures/entity/hat/" + name + ".png");
 	}
+
+	public static class ItemTags {
+		public static final TagKey<Item> WITCH_HAT_DECOR = of("witch_hat_decor");
+
+		private static TagKey<Item> of(String name) {
+			return TagKey.create(Registries.ITEM, newId(name));
+		}
+	}
+
 }

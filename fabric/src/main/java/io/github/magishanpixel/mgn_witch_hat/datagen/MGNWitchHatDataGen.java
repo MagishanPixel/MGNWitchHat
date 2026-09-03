@@ -1,7 +1,9 @@
 package io.github.magishanpixel.mgn_witch_hat.datagen;
 
 import io.github.magishanpixel.mgn_witch_hat.datagen.gen.ModItemTagsProvider;
+import io.github.magishanpixel.mgn_witch_hat.datagen.gen.ModModelProvider;
 import io.github.magishanpixel.mgn_witch_hat.datagen.gen.ModRecipeProvider;
+import io.github.magishanpixel.mgn_witch_hat.datagen.gen.ModTranslateProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 
@@ -11,5 +13,7 @@ public class MGNWitchHatDataGen implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
         pack.addProvider(ModItemTagsProvider::new);
         pack.addProvider(ModRecipeProvider::new);
+        pack.addProvider(ModTranslateProvider::new);
+        pack.addProvider(ModModelProvider::new);
     }
 }

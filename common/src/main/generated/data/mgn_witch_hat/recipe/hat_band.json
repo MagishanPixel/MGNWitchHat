@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "  B",
+    "BBB",
+    "B  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "mgn_witch_hat:hat_band"
+  }
+}

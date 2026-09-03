@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:wool"
+    },
+    "B": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "pattern": [
+    " # ",
+    "#B#",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mgn_witch_hat:witch_hat"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mgn_witch_hat:item/pink_hat_band"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_brown_hat_band": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mgn_witch_hat:brown_hat_band"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mgn_witch_hat:brown_hat_band"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_brown_hat_band"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mgn_witch_hat:brown_hat_band"
+    ]
+  }
+}

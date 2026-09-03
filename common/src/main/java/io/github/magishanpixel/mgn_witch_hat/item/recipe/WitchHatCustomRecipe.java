@@ -1,10 +1,12 @@
 package io.github.magishanpixel.mgn_witch_hat.item.recipe;
 
+import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.init.ModCustomRecipes;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.item.BuckleItem;
 import io.github.magishanpixel.mgn_witch_hat.item.HatBandItem;
+import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
@@ -14,6 +16,9 @@ import net.minecraft.world.item.crafting.CraftingInput;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Copied from ArmorDyeRecipe.class btwww
 public class WitchHatCustomRecipe extends CustomRecipe {
@@ -28,6 +33,9 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         ItemStack dyeStack = ItemStack.EMPTY;
         ItemStack bandStack = ItemStack.EMPTY;
 
+        List<DecorType> decorList = new ArrayList<>();
+        boolean canCraft = false;
+
         for(int i = 0; i < input.size(); ++i) {
             ItemStack inputStack = input.getItem(i);
             if (!inputStack.isEmpty()) {
@@ -39,33 +47,45 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                         return false;
                     }
                     targStack = inputStack;
+
+                    if (targStack.has(ModDataComponents.DECOR_TYPES.value())) {
+                        decorList = targStack.get(ModDataComponents.DECOR_TYPES.value());
+                    }
                 } else if (item instanceof BuckleItem) {
                     if (!buckleStack.isEmpty()) {
                         return false;
                     }
 
                     buckleStack = inputStack;
+                    canCraft = true;
                 } else if (item instanceof DyeItem)  {
                     if (!dyeStack.isEmpty()) {
                         return false;
                     }
                     dyeStack = inputStack;
-                } else if (item instanceof HatBandItem)  {
+                } else if (item instanceof HatBandItem) {
                     if (!bandStack.isEmpty()) {
                         return false;
                     }
                     bandStack = inputStack;
+                    canCraft = true;
+                } else if (inputStack.is(MGNConstants.ItemTags.WITCH_HAT_DECOR)) {
+                    DecorType deco = DecorType.getType(inputStack);
+
+                    if (deco != null) {
+                        if (decorList.contains(deco)) {
+                            return false;
+                        }
+                        decorList.add(deco);
+                        canCraft = true;
+                    }
                 } else {
                     return false;
                 }
             }
-
-            if ((!dyeStack.isEmpty() || !buckleStack.isEmpty() || !bandStack.isEmpty()) && !targStack.isEmpty()) {
-                return true;
-            }
         }
 
-        return false;
+        return canCraft && !targStack.isEmpty();
     }
 
     @Override
@@ -74,6 +94,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         BuckleItem buckleItem = null;
         HatBandItem bandItem = null;
         ItemStack targStack = ItemStack.EMPTY;
+        List<DecorType> decorList = new ArrayList<>();
 
         for(int i = 0; i < input.size(); ++i) {
             ItemStack inputStack = input.getItem(i);

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 public class HatBandModel<T extends Entity> extends EntityModel<T> {
 	private final ModelPart basebody;
 
+
 	public HatBandModel(ModelPart root) {
 		this.basebody = root.getChild("basebody");
 	}
