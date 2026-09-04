@@ -110,6 +110,8 @@ public class WitchHatCustomRecipe extends CustomRecipe {
 
         List<ItemStack> catchedStack = new ArrayList<>();
 
+        int centerSlot = -1;
+
         for (int i = 0; i < input.size(); ++i) {
             ItemStack inputStack = input.getItem(i);
             if (!inputStack.isEmpty()) {
@@ -122,6 +124,8 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                     if (targStack.has(ModDataComponents.DECOR_TYPES.value())) {
                         prevDecors = targStack.get(ModDataComponents.DECOR_TYPES.value());
                     }
+
+                    centerSlot = i;
                 } else {
                     catchedStack.add(inputStack);
                 }

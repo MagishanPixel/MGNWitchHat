@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -20,8 +21,15 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
     protected void addTags(HolderLookup.Provider provider) {
         //getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(ModItems.STRAW_HAT.asItem());
         getOrCreateTagBuilder(MGNConstants.ItemTags.WITCH_HAT_DECOR)
-                .add(Items.SKELETON_SKULL)
+                .addTag(MGNConstants.ItemTags.Decor.SKULLS)
                 .add(Items.LANTERN)
+        ;
+
+        getOrCreateTagBuilder(MGNConstants.ItemTags.Decor.SKULLS)
+                .add(Items.SKELETON_SKULL)
+                .add(Items.WITHER_SKELETON_SKULL)
+                .add(Items.CREEPER_HEAD)
+                .add(Items.ZOMBIE_HEAD)
         ;
     }
 }

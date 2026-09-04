@@ -24,9 +24,18 @@ public class MGNConstants {
 	public static class ItemTags {
 		public static final TagKey<Item> WITCH_HAT_DECOR = of("witch_hat_decor");
 
+		public static class Decor {
+			public static final TagKey<Item> SKULLS = decorOf("skulls");
+
+			private static TagKey<Item> decorOf(String name) {
+				return of("decor/" + name);
+			}
+		}
+
 		private static TagKey<Item> of(String name) {
 			return TagKey.create(Registries.ITEM, newId(name));
 		}
+
 	}
 
 }

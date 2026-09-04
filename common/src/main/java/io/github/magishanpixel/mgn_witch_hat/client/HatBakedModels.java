@@ -17,7 +17,7 @@ public class HatBakedModels {
         HAT,
         HAT_BAND,
         BUCKLE,
-        SKELETON_SKULL,
+        SKULL,
         WITHER_SKULL,
     }
 
@@ -32,7 +32,7 @@ public class HatBakedModels {
         m.put(ModelType.HAT_BAND, new HatBandModel<>(context.bakeLayer(ModModelLayers.ROBE)));
         m.put(ModelType.BUCKLE, new BuckleModel<>(context.bakeLayer(ModModelLayers.BUCKLE)));
 
-        m.put(ModelType.SKELETON_SKULL, new SkullModel(context.bakeLayer(ModelLayers.SKELETON_SKULL)));
+        m.put(ModelType.SKULL, new SkullModel(context.bakeLayer(ModelLayers.SKELETON_SKULL)));
 
         MODEL_MAP = m.build();
     }

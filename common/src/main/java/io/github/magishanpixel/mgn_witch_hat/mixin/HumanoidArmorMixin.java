@@ -1,6 +1,7 @@
 package io.github.magishanpixel.mgn_witch_hat.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.DecorRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
@@ -82,7 +83,10 @@ public class HumanoidArmorMixin<T extends LivingEntity, M extends EntityModel<T>
                         poseStack,
                         packedLight,
                         i,
-                        p -> self.getParentModel().getHead().translateAndRotate(p)
+                        p -> {
+                            self.getParentModel().getHead().translateAndRotate(p);
+                            p.mulPose(Axis.XN.rotation((float) (Math.toRadians(7.5))));
+                        }
                 );
 
 

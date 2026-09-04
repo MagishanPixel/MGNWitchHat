@@ -1,5 +1,6 @@
 package io.github.magishanpixel.mgn_witch_hat.misc;
 
+import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -15,25 +16,32 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 public enum DecorType implements StringRepresentable {
-    SKULL(0,"skull", v -> v.is(Items.SKELETON_SKULL), false),
-    LANTERN(1,"lantern", v -> v.is(Items.LANTERN) || v.is(Items.SOUL_LANTERN), true),
-    FLOWER(2, "flower", v -> v.is(ItemTags.SMALL_FLOWERS), true),
-    CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true)
+    SKULL(0,"skull", v -> v.is(MGNConstants.ItemTags.Decor.SKULLS), true, true),
+    LANTERN(1,"lantern", v -> v.is(Items.LANTERN) || v.is(Items.SOUL_LANTERN), true, true),
+    FLOWER(2, "flower", v -> v.is(ItemTags.SMALL_FLOWERS), true, true),
+    CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true, true)
     ;
     private final String name;
+    private final int id;
     private final Predicate<ItemStack> check;
     private final boolean storeVal;
-    private final int id;
+
+    private final boolean sided;
     
-    DecorType(int id, String name, Predicate<ItemStack> check, boolean storeVal) {
+    DecorType(int id, String name, Predicate<ItemStack> check, boolean storeVal, boolean sided) {
         this.name = name;
         this.check = check;
         this.storeVal = storeVal;
         this.id = id;
+        this.sided = sided;
     }
 
     public int getId() {
         return id;
+    }
+
+    public boolean isSided() {
+        return sided;
     }
 
     public boolean canStoreValue() {

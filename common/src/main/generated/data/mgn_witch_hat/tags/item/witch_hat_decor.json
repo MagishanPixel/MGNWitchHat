@@ -1,5 +1,6 @@
 {
   "values": [
-    "minecraft:skeleton_skull"
+    "#mgn_witch_hat:decor/skulls",
+    "minecraft:lantern"
   ]
 }
