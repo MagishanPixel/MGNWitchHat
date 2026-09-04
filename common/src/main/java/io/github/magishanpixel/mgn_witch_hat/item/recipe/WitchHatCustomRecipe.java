@@ -18,7 +18,9 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WitchHatCustomRecipe extends CustomRecipe {
     public WitchHatCustomRecipe(CraftingBookCategory category) {
@@ -35,12 +37,11 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         List<DecorType> decorList = new ArrayList<>();
         boolean canCraft = false;
 
-        for(int i = 0; i < input.size(); ++i) {
+        List<ItemStack> catchedStack = new ArrayList<>();
+
+        for (int i = 0; i < input.size(); i++) {
             ItemStack inputStack = input.getItem(i);
             if (!inputStack.isEmpty()) {
-
-                Item item = inputStack.getItem();
-
                 if (inputStack.is(ModItems.WITCH_HAT.value())) {
                     if (!targStack.isEmpty()) {
                         return false;
@@ -48,9 +49,19 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                     targStack = inputStack;
 
                     if (targStack.has(ModDataComponents.DECOR_TYPES.value())) {
-                        decorList = targStack.get(ModDataComponents.DECOR_TYPES.value());
+                        decorList.addAll(targStack.get(ModDataComponents.DECOR_TYPES.value()).keySet());
                     }
-                } else if (item instanceof BuckleItem) {
+                } else {
+                    catchedStack.add(inputStack);
+                }
+            }
+
+        }
+
+        for (ItemStack inputStack : catchedStack) {
+            if (!inputStack.isEmpty()) {
+                Item item = inputStack.getItem();
+                if (item instanceof BuckleItem) {
                     if (!buckleStack.isEmpty()) {
                         return false;
                     }
@@ -93,24 +104,34 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         BuckleItem buckleItem = null;
         HatBandItem bandItem = null;
         ItemStack targStack = ItemStack.EMPTY;
-        List<DecorType> prevDecors = new ArrayList<>();
-        List<DecorType> decorList = new ArrayList<>();
+        Map<DecorType, ItemStack> prevDecors = new HashMap<>();
+        Map<DecorType, ItemStack> decorList = new HashMap<>();
         boolean canCraft = false;
 
-        for(int i = 0; i < input.size(); ++i) {
+        List<ItemStack> catchedStack = new ArrayList<>();
+
+        for (int i = 0; i < input.size(); ++i) {
             ItemStack inputStack = input.getItem(i);
             if (!inputStack.isEmpty()) {
-                Item item = inputStack.getItem();
                 if (inputStack.is(ModItems.WITCH_HAT.value())) {
                     if (!targStack.isEmpty()) {
                         return ItemStack.EMPTY;
                     }
                     targStack = inputStack.copy();
+
                     if (targStack.has(ModDataComponents.DECOR_TYPES.value())) {
                         prevDecors = targStack.get(ModDataComponents.DECOR_TYPES.value());
                     }
-                    canCraft = true;
-                } else if (item instanceof DyeItem) {
+                } else {
+                    catchedStack.add(inputStack);
+                }
+            }
+        }
+
+        for (ItemStack inputStack : catchedStack) {
+            if (!inputStack.isEmpty()) {
+                Item item = inputStack.getItem();
+                if (item instanceof DyeItem) {
                     if (dyeItem != null) {
                         return ItemStack.EMPTY;
                     }
@@ -135,10 +156,10 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                     DecorType deco = DecorType.getType(inputStack);
 
                     if (deco != null) {
-                        if (prevDecors.contains(deco)) {
+                        if (prevDecors.containsKey(deco)) {
                             return ItemStack.EMPTY;
                         }
-                        decorList.add(deco);
+                        decorList.put(deco, deco.canStoreValue() ? inputStack.copy() : ItemStack.EMPTY);
                         canCraft = true;
                     }
                 } else {
@@ -167,9 +188,11 @@ public class WitchHatCustomRecipe extends CustomRecipe {
             }
 
             if (!decorList.isEmpty()) {
-                decorList.addAll(prevDecors);
+                decorList.putAll(prevDecors);
                 targStack.set(ModDataComponents.DECOR_TYPES.value(), decorList);
             }
+
+            MGNConstants.LOG.info(targStack.toString());
 
             return targStack;
         }

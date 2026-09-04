@@ -1,12 +1,14 @@
 package io.github.magishanpixel.mgn_witch_hat.client;
 
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
+import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.DecorRenderer;
 import net.blay09.mods.balm.api.client.BalmClient;
 import net.blay09.mods.balm.neoforge.NeoForgeLoadContext;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 @Mod(value = MGNConstants.MOD_ID, dist = Dist.CLIENT)
@@ -17,10 +19,15 @@ public class MGNWitchHatClient_NEOFORGE {
         BalmClient.initializeMod(MGNConstants.MOD_ID,loadContext,new MGNWitchHatClient());
 
         modEventBus.addListener(this::onAddLayers);
+        modEventBus.addListener(this::clientInit);
     }
 
     public void onAddLayers(EntityRenderersEvent.AddLayers event) {
         EntityRendererProvider.Context context = event.getContext();
         HatBakedModels.bakeModels(context);
+    }
+
+    public void clientInit(FMLClientSetupEvent event) {
+        event.enqueueWork(DecorRenderer::init);
     }
 }

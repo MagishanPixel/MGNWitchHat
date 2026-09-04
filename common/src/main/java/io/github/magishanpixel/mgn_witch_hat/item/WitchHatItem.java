@@ -4,6 +4,7 @@ import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -92,4 +93,5 @@ public class WitchHatItem extends Item implements Equipable {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         return this.swapWithEquipmentSlot(this, level, player, hand);
     }
+
 }

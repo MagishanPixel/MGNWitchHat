@@ -31,7 +31,7 @@ public class MGNWitchHat_NEOFORGE {
     }
 
     public void commonInit(FMLCommonSetupEvent event) {
-        event.enqueueWork(DecorType::mapInit);
+
     }
 
 }

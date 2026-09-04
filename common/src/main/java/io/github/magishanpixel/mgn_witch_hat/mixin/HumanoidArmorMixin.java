@@ -2,7 +2,7 @@ package io.github.magishanpixel.mgn_witch_hat.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
-import io.github.magishanpixel.mgn_witch_hat.client.DecorRenderer;
+import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.DecorRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.item.WitchHatItem;
