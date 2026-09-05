@@ -53,7 +53,7 @@ public class WitchHatModel<T extends Entity> extends EntityModel<T> {
 
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int i2) {
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, int col) {
 		basebody.render(poseStack, vertexConsumer, packedLight, packedOverlay);
 	}
 }

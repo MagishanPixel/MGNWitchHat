@@ -24,12 +24,17 @@ public class ModDataComponents {
     public static Holder<DataComponentType<Map<DecorType, DataDecor>>> DECOR_TYPES;
 
     public static void init(BalmDataComponentTypeRegistrar reg) {
-        WITCH_HAT_COLOR = reg.register("witch_hat_color", DyeColor.CODEC).asHolder();
-        BAND_COLOR = reg.register("band_color", DyeColor.CODEC).asHolder();
+        WITCH_HAT_COLOR = reg.register("witch_hat_color", DyeColor.CODEC, DyeColor.STREAM_CODEC).asHolder();
+        BAND_COLOR = reg.register("band_color", DyeColor.CODEC, DyeColor.STREAM_CODEC).asHolder();
         BUCKLE_TYPE = reg.register("buckle_type", BuckleType.CODEC).asHolder();
-        HAS_BAND = reg.register("has_band", Codec.BOOL).asHolder();
+        HAS_BAND = reg.register("has_band", Codec.BOOL, ByteBufCodecs.BOOL).asHolder();
         DECOR_TYPES = reg.register("decor_types",
-                Codec.unboundedMap(DecorType.CODEC, DataDecor.CODEC)
+                Codec.unboundedMap(DecorType.CODEC, DataDecor.CODEC),
+                ByteBufCodecs.map(
+                        HashMap::new,
+                        DecorType.STREAM_CODEC,
+                        DataDecor.STREAM_CODEC
+                )
         ).asHolder();
 
     }

@@ -149,7 +149,8 @@ public class RenderValue {
             return this;
         }
 
-        public Builder debug() {
+        // I named the function like this so I can see it due to being dyslexic-
+        public Builder debug_DEBUG_DEBUUUG() {
             this.onDebug = true;
             return this;
         }

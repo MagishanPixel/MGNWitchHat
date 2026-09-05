@@ -2,7 +2,6 @@ package io.github.magishanpixel.mgn_witch_hat.client.decorrenderer;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.BasicRenderDecor;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.RenderValue;
@@ -14,7 +13,6 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.SkullBlock;
 import org.joml.Quaternionf;
 
@@ -82,8 +80,14 @@ public class DecorRenderer {
                         )
                         .addBackSide(RenderValue.builder()
                                 .scale(0.5f)
-                                .translate(0f, -2f, 0f)
-                                .rotate(0, 0, 0)
+                                .translate(0.2f, -0.805f, 0.6f)
+                                .rotate(0, -145, 0)
+                                .build()
+                        )
+                        .addBackSide(RenderValue.builder()
+                                .scale(0.35f)
+                                .translate(-0.4f, -1.15f, 0.9f)
+                                .rotate(0, -220, 0)
                                 .build()
                         )
                         .build()
@@ -100,11 +104,13 @@ public class DecorRenderer {
         return new BasicRenderDecor.Builder();
     }
 
-
     public static void setPoseAsDebug(PoseStack poseStack) {
-        poseStack.scale(0.5f,0.5f,0.5f);
-        poseStack.translate(0.65f, -0.805f, -0.15);
-        poseStack.mulPose(new Quaternionf().rotationXYZ((float) Math.toRadians(0), (float) Math.toRadians(-70), (float) Math.toRadians(0)));
+        poseStack.scale(0.35f,0.35f,0.35f);
+        poseStack.translate(-0.4f, -1.15f, 0.9);
+        poseStack.mulPose(new Quaternionf().rotationXYZ(
+                (float) Math.toRadians(0),
+                (float) Math.toRadians(-220),
+                (float) Math.toRadians(0)));
     }
 
 
