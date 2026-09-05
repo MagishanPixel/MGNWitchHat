@@ -104,6 +104,8 @@ public class WitchHatItem extends Item implements Equipable {
                 }
 
                 stack.remove(ModDataComponents.DECOR_TYPES.value());
+
+                return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
             }
         }
         return this.swapWithEquipmentSlot(this, level, player, hand);

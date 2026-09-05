@@ -2,26 +2,31 @@ package io.github.magishanpixel.mgn_witch_hat.client.decorrenderer;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.BasicRenderDecor;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.RenderValue;
+import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.SkullBlock;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
 import java.util.Map;
 import java.util.function.Consumer;
 
 public class WitchHatRenderer {
-    public static final boolean ON_DEBUG = true;
-
     public interface RenderDecor {
         void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> setPose, DataDecor data);
     }
@@ -110,7 +115,7 @@ public class WitchHatRenderer {
                         )
                         .add_RIGHT(RenderValue.builder()
                                 .scale(0.7f)
-                                .translate(0.325f, 0.5f, -0.2f)
+                                .translate(-0.325f, 0.5f, -0.2f)
                                 .rotate(-10, 0, 0)
                                 .build()
                         )
@@ -126,7 +131,7 @@ public class WitchHatRenderer {
         DECOR_RENDERERS = rendBuilder.build();
     }
 
-    private static void qRot(PoseStack poseStack, double x, double y, double z) {
+    public static void qRot(PoseStack poseStack, double x, double y, double z) {
         poseStack.mulPose(new Quaternionf().rotationXYZ((float) Math.toRadians(x), (float) Math.toRadians(y), (float) Math.toRadians(z)));
     }
 
@@ -145,6 +150,75 @@ public class WitchHatRenderer {
 
 
     }
+
+    public static void renderHat(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int overlay, Consumer<PoseStack> resetPose, @Nullable Consumer<PoseStack> startPose) {
+        Model hatModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT);
+
+        poseStack.pushPose();
+        if (startPose != null) {
+            startPose.accept(poseStack);
+        }
+
+        poseStack.scale(1.1f, 1.1f, 1.1f);
+        poseStack.translate(0, -1.9f,0);
+
+        ResourceLocation tex_hat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? MGNConstants.getTexture("witch_hat/" + stack.get(ModDataComponents.WITCH_HAT_COLOR.value())) : MGNConstants.getTexture("witch_hat/base");
+        hatModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_hat)), packedLight, overlay, -1);
+
+        if (stack.get(ModDataComponents.HAS_BAND.value())) {
+            Model bandModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT_BAND);
+            ResourceLocation tex_band;
+
+            if (stack.has(ModDataComponents.BAND_COLOR.value())) {
+                tex_band = MGNConstants.getTexture("hat_band/" + stack.get(ModDataComponents.BAND_COLOR.value()).getSerializedName());
+            } else {
+                tex_band = MGNConstants.getTexture("hat_band/base");
+            }
+
+            bandModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_band)), packedLight, overlay, -1);
+        }
+
+        if (stack.has(ModDataComponents.BUCKLE_TYPE.value())) {
+            Model buckleModel = HatBakedModels.getModel(HatBakedModels.ModelType.BUCKLE);
+            ResourceLocation tex_buckle = MGNConstants.getTexture("buckle/" + stack.get(ModDataComponents.BUCKLE_TYPE.value()).getSerializedName());
+            buckleModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_buckle)), packedLight, overlay, -1);
+        }
+
+        poseStack.popPose();
+
+        if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
+            Minecraft inst = Minecraft.getInstance();
+
+            renderDecors(
+                    stack.get(ModDataComponents.DECOR_TYPES.value()),
+                    inst.getBlockRenderer(),
+                    inst.getItemRenderer(),
+                    buffer,
+                    poseStack,
+                    packedLight,
+                    overlay,
+                    resetPose
+            );
+
+
+
+        }
+    }
+
+    public static void renderAsItem(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+        poseStack.pushPose();
+
+        WitchHatRenderer.qRot(poseStack, 180, 180, 0);
+        poseStack.translate(-0.5f, 0.5f, 0.5f);
+
+        WitchHatRenderer.renderHat(stack, poseStack, buffer, packedLight, packedOverlay,
+                p -> p.mulPose(Axis.XN.rotation((float) (Math.toRadians(7.5)))),
+                null
+        );
+
+        poseStack.popPose();
+    }
+
 
 
 

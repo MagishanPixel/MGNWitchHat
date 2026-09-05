@@ -79,7 +79,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
         }
 
         public BasicRenderDecor build() {
-            ImmutableMap.Builder<DecorPlacement, ImmutableList<RenderValue>> m = new ImmutableMap.Builder();
+            ImmutableMap.Builder<DecorPlacement, ImmutableList<RenderValue>> m = new ImmutableMap.Builder<>();
 
             builder.forEach((placement, v) -> {
                 m.put(placement, v.build());
