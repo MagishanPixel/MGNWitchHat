@@ -6,6 +6,7 @@ import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.BasicRenderDecor;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.RenderValue;
+import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -24,13 +25,13 @@ public class DecorRenderer {
     public static final boolean ON_DEBUG = true;
 
     public interface RenderDecor {
-        void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> setPose, ItemStack stack);
+        void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> setPose, DataDecor data);
     }
 
     private static ImmutableMap<DecorType, RenderDecor> DECOR_RENDERERS;
 
-    public static void render(Map<DecorType, ItemStack> mapTypes, BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> resetPose) {
-        for (Map.Entry<DecorType, ItemStack> entry : mapTypes.entrySet()) {
+    public static void render(Map<DecorType, DataDecor> mapTypes, BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> resetPose) {
+        for (Map.Entry<DecorType, DataDecor> entry : mapTypes.entrySet()) {
             RenderDecor v = DECOR_RENDERERS.get(entry.getKey());
 
             v.render(blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, resetPose, entry.getValue());
@@ -79,32 +80,14 @@ public class DecorRenderer {
                                 .rotate(0, -135, 0)
                                 .build()
                         )
+                        .addBackSide(RenderValue.builder()
+                                .scale(0.5f)
+                                .translate(0f, -2f, 0f)
+                                .rotate(0, 0, 0)
+                                .build()
+                        )
                         .build()
         );
-
-        /*
-        rendBuilder.put(DecorType.SKULL, (blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, setPose, stack) -> {
-            poseStack.pushPose();
-            setPose.accept(poseStack);
-
-            poseStack.pushPose();
-            poseStack.scale(0.5f, 0.5f, 0.5f);
-            poseStack.translate(0.65f, -0.805f, -0.15f);
-            qRot(poseStack, 0, -70, 0);
-
-
-            itemRenderer.render(stack, ItemDisplayContext.NONE, false, poseStack, buffer, packedLight, overlay, itemRenderer.getModel(stack, null, null, 0));
-            poseStack.popPose();
-
-            poseStack.pushPose();
-            poseStack.scale(0.35f, 0.35f, 0.35f);
-            poseStack.translate(1.1f, -1.15f, 0.4f);
-            qRot(poseStack, 0, -135, 0);
-            itemRenderer.renderStatic(stack, ItemDisplayContext.NONE, packedLight, overlay, poseStack, buffer, null, 0);
-            poseStack.popPose();
-
-            poseStack.popPose();
-        });*/
 
         DECOR_RENDERERS = rendBuilder.build();
     }

@@ -2,6 +2,7 @@ package io.github.magishanpixel.mgn_witch_hat.init;
 
 import com.mojang.serialization.Codec;
 import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
+import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.blay09.mods.balm.core.component.BalmDataComponentTypeRegistrar;
 import net.minecraft.core.Holder;
@@ -20,7 +21,7 @@ public class ModDataComponents {
     public static Holder<DataComponentType<DyeColor>> BAND_COLOR;
     public static Holder<DataComponentType<BuckleType>> BUCKLE_TYPE;
     public static Holder<DataComponentType<Boolean>> HAS_BAND;
-    public static Holder<DataComponentType<Map<DecorType, ItemStack>>> DECOR_TYPES;
+    public static Holder<DataComponentType<Map<DecorType, DataDecor>>> DECOR_TYPES;
 
     public static void init(BalmDataComponentTypeRegistrar reg) {
         WITCH_HAT_COLOR = reg.register("witch_hat_color", DyeColor.CODEC).asHolder();
@@ -28,7 +29,7 @@ public class ModDataComponents {
         BUCKLE_TYPE = reg.register("buckle_type", BuckleType.CODEC).asHolder();
         HAS_BAND = reg.register("has_band", Codec.BOOL).asHolder();
         DECOR_TYPES = reg.register("decor_types",
-                Codec.unboundedMap(DecorType.CODEC, ItemStack.OPTIONAL_CODEC)
+                Codec.unboundedMap(DecorType.CODEC, DataDecor.CODEC)
         ).asHolder();
 
     }

@@ -4,6 +4,8 @@ import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
+import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
+import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -16,6 +18,7 @@ import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class WitchHatItem extends Item implements Equipable {
@@ -91,6 +94,18 @@ public class WitchHatItem extends Item implements Equipable {
     }
 
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        if (player.isCrouching()) {
+            ItemStack stack = player.getItemInHand(hand);
+            if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
+                Map<DecorType, DataDecor> map = stack.get(ModDataComponents.DECOR_TYPES.value());
+
+                for (DataDecor data : map.values()) {
+                    player.addItem(data.stack().copy());
+                }
+
+                stack.remove(ModDataComponents.DECOR_TYPES.value());
+            }
+        }
         return this.swapWithEquipmentSlot(this, level, player, hand);
     }
 

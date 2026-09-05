@@ -16,22 +16,20 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 public enum DecorType implements StringRepresentable {
-    SKULL(0,"skull", v -> v.is(MGNConstants.ItemTags.Decor.SKULLS), true, true),
-    LANTERN(1,"lantern", v -> v.is(Items.LANTERN) || v.is(Items.SOUL_LANTERN), true, true),
-    FLOWER(2, "flower", v -> v.is(ItemTags.SMALL_FLOWERS), true, true),
-    CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true, true)
+    SKULL(0,"skull", v -> v.is(MGNConstants.ItemTags.Decor.SKULLS), true),
+    LANTERN(1,"lantern", v -> v.is(Items.LANTERN) || v.is(Items.SOUL_LANTERN), true),
+    FLOWER(2, "flower", v -> v.is(ItemTags.SMALL_FLOWERS), true),
+    CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true)
     ;
     private final String name;
     private final int id;
     private final Predicate<ItemStack> check;
-    private final boolean storeVal;
 
     private final boolean sided;
     
-    DecorType(int id, String name, Predicate<ItemStack> check, boolean storeVal, boolean sided) {
+    DecorType(int id, String name, Predicate<ItemStack> check, boolean sided) {
         this.name = name;
         this.check = check;
-        this.storeVal = storeVal;
         this.id = id;
         this.sided = sided;
     }
@@ -42,10 +40,6 @@ public enum DecorType implements StringRepresentable {
 
     public boolean isSided() {
         return sided;
-    }
-
-    public boolean canStoreValue() {
-        return storeVal;
     }
 
     public static DecorType getType(ItemStack stack) {

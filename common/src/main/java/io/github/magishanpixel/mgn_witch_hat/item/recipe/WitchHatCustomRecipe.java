@@ -6,6 +6,8 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.item.BuckleItem;
 import io.github.magishanpixel.mgn_witch_hat.item.HatBandItem;
+import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
+import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.DyeItem;
@@ -37,7 +39,8 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         List<DecorType> decorList = new ArrayList<>();
         boolean canCraft = false;
 
-        List<ItemStack> catchedStack = new ArrayList<>();
+        Map<Integer,ItemStack> catchedStack = new HashMap<>();
+        int centerSlot = -1;
 
         for (int i = 0; i < input.size(); i++) {
             ItemStack inputStack = input.getItem(i);
@@ -51,14 +54,18 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                     if (targStack.has(ModDataComponents.DECOR_TYPES.value())) {
                         decorList.addAll(targStack.get(ModDataComponents.DECOR_TYPES.value()).keySet());
                     }
+
+                    centerSlot = i;
                 } else {
-                    catchedStack.add(inputStack);
+                    catchedStack.put(i, inputStack);
                 }
             }
 
         }
 
-        for (ItemStack inputStack : catchedStack) {
+        for (Map.Entry<Integer, ItemStack> entry : catchedStack.entrySet()) {
+            ItemStack inputStack = entry.getValue();
+            int slot = entry.getKey();
             if (!inputStack.isEmpty()) {
                 Item item = inputStack.getItem();
                 if (item instanceof BuckleItem) {
@@ -72,7 +79,9 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                     if (!dyeStack.isEmpty()) {
                         return false;
                     }
+
                     dyeStack = inputStack;
+                    canCraft = true;
                 } else if (item instanceof HatBandItem) {
                     if (!bandStack.isEmpty()) {
                         return false;
@@ -86,6 +95,17 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                         if (decorList.contains(deco)) {
                             return false;
                         }
+
+                        boolean canDeco = !deco.isSided();
+
+                        if (deco.isSided()) {
+                            canDeco = (slot == centerSlot - 1) || (slot == centerSlot + 1) || (slot == centerSlot + input.width());
+                        }
+
+                        if (!canDeco) {
+                            return false;
+                        }
+
                         decorList.add(deco);
                         canCraft = true;
                     }
@@ -104,11 +124,11 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         BuckleItem buckleItem = null;
         HatBandItem bandItem = null;
         ItemStack targStack = ItemStack.EMPTY;
-        Map<DecorType, ItemStack> prevDecors = new HashMap<>();
-        Map<DecorType, ItemStack> decorList = new HashMap<>();
+        Map<DecorType, DataDecor> prevDecors = new HashMap<>();
+        Map<DecorType, DataDecor> decorList = new HashMap<>();
         boolean canCraft = false;
 
-        List<ItemStack> catchedStack = new ArrayList<>();
+        Map<Integer,ItemStack> catchedStack = new HashMap<>();
 
         int centerSlot = -1;
 
@@ -127,12 +147,14 @@ public class WitchHatCustomRecipe extends CustomRecipe {
 
                     centerSlot = i;
                 } else {
-                    catchedStack.add(inputStack);
+                    catchedStack.put(i,inputStack);
                 }
             }
         }
 
-        for (ItemStack inputStack : catchedStack) {
+        for (Map.Entry<Integer, ItemStack> entry : catchedStack.entrySet()) {
+            ItemStack inputStack = entry.getValue();
+            int slot = entry.getKey();
             if (!inputStack.isEmpty()) {
                 Item item = inputStack.getItem();
                 if (item instanceof DyeItem) {
@@ -163,7 +185,20 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                         if (prevDecors.containsKey(deco)) {
                             return ItemStack.EMPTY;
                         }
-                        decorList.put(deco, deco.canStoreValue() ? inputStack.copy() : ItemStack.EMPTY);
+
+                        DecorPlacement placement = DecorPlacement.REGULAR;
+
+                        if (deco.isSided()) {
+                            if (slot == centerSlot + input.width()) {
+                                placement = DecorPlacement.BACK;
+                            } else if (slot == centerSlot + 1) {
+                                placement = DecorPlacement.RIGHT;
+                            } else if (slot != centerSlot - 1) {
+                                return ItemStack.EMPTY;
+                            }
+                        }
+
+                        decorList.put(deco, new DataDecor(inputStack.copy(), placement));
                         canCraft = true;
                     }
                 } else {

@@ -11,8 +11,7 @@ import java.util.function.IntFunction;
 public enum DecorPlacement implements StringRepresentable {
     REGULAR(0,"regular"),
     BACK(1,"back"),
-    LEFT(2,"left"),
-    RIGHT(3,"right");
+    RIGHT(2,"right");
 
     private final String name;
     private final int id;
