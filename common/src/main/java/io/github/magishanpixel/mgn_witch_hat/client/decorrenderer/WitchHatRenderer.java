@@ -34,6 +34,8 @@ public class WitchHatRenderer {
     private static ImmutableMap<DecorType, RenderDecor> DECOR_RENDERERS;
 
     public static void renderDecors(Map<DecorType, DataDecor> mapTypes, BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> resetPose) {
+        if (DECOR_RENDERERS == null) return;
+
         for (Map.Entry<DecorType, DataDecor> entry : mapTypes.entrySet()) {
             RenderDecor v = DECOR_RENDERERS.get(entry.getKey());
 
@@ -42,6 +44,9 @@ public class WitchHatRenderer {
     }
 
     public static void init() {
+        // for being reloadable
+        DECOR_RENDERERS = null;
+
         ImmutableMap.Builder<DecorType, RenderDecor> rendBuilder = new ImmutableMap.Builder<>();
 
         // SKULL
@@ -74,24 +79,36 @@ public class WitchHatRenderer {
                         )
                         .autoSided()
                         .add(RenderValue.builder()
+                                .setStage(RenderValue.PoseStage.SCALE)
+                                .setStage(RenderValue.PoseStage.TRANSLATE)
+                                .setStage(RenderValue.PoseStage.MULPOSE)
                                 .scale(0.5f)
                                 .translate(0.65f, -0.805f, -0.15f)
                                 .rotate(0, -70, 0)
                                 .build()
                         )
                         .add(RenderValue.builder()
+                                .setStage(RenderValue.PoseStage.SCALE)
+                                .setStage(RenderValue.PoseStage.TRANSLATE)
+                                .setStage(RenderValue.PoseStage.MULPOSE)
                                 .scale(0.35f)
                                 .translate(1.1f, -1.15f, 0.4f)
                                 .rotate(0, -135, 0)
                                 .build()
                         )
                         .add_BACK(RenderValue.builder()
+                                .setStage(RenderValue.PoseStage.SCALE)
+                                .setStage(RenderValue.PoseStage.TRANSLATE)
+                                .setStage(RenderValue.PoseStage.MULPOSE)
                                 .scale(0.5f)
                                 .translate(0.2f, -0.805f, 0.6f)
                                 .rotate(0, -145, 0)
                                 .build()
                         )
                         .add_BACK(RenderValue.builder()
+                                .setStage(RenderValue.PoseStage.SCALE)
+                                .setStage(RenderValue.PoseStage.TRANSLATE)
+                                .setStage(RenderValue.PoseStage.MULPOSE)
                                 .scale(0.35f)
                                 .translate(-0.4f, -1.15f, 0.9f)
                                 .rotate(0, -220, 0)
@@ -100,29 +117,39 @@ public class WitchHatRenderer {
                         .build()
         );
 
-        // FLOWER
-        rendBuilder.put(DecorType.FLOWER,
+        // LANTERN
+        rendBuilder.put(DecorType.LANTERN,
                 decorBuilder()
-                        .setDefaultModel(new RenderValue.ModelVal.Builder()
-                                .blockstateAsItem()
-                                .build()
-                        )
+                        .setDefaultModel(RenderValue.ModelVal.asBlockItem())
+                        .autoSided()
                         .add(RenderValue.builder()
-                                .scale(0.7f)
-                                .translate(0.75f, 0.5f, -0.2f)
-                                .rotate(-10, 0, 0)
-                                .build()
-                        )
-                        .add_RIGHT(RenderValue.builder()
-                                .scale(0.7f)
-                                .translate(-0.325f, 0.5f, -0.2f)
-                                .rotate(-10, 0, 0)
+                                .translate(0.4f, 0.652f, 0.35f)
+                                .scale(0.5f)
+                                .rotate(0, 25, 0)
+                                .debug_DEBUG_DEBUUUG()
                                 .build()
                         )
                         .add_BACK(RenderValue.builder()
-                                .scale(0.7f)
-                                .translate(0.2f, 0.45f, -0.25f)
-                                .rotate(-15, 0, 0)
+                                .translate(0, 1f, -0.565f)
+                                .scale(0.5f)
+                                .debug_DEBUG_DEBUUUG()
+                                .build()
+                        )
+                        .build()
+
+        );
+
+        // FLOWER
+        rendBuilder.put(DecorType.FLOWER,
+                decorBuilder()
+                        .setDefaultModel(RenderValue.ModelVal.asBlockItem())
+                        .autoSided()
+                        .add(RenderValue.builder()
+                                .debug_DEBUG_DEBUUUG()
+                                .build()
+                        )
+                        .add_BACK(RenderValue.builder()
+                                .debug_DEBUG_DEBUUUG()
                                 .build()
                         )
                         .build()
@@ -140,11 +167,11 @@ public class WitchHatRenderer {
     }
 
     public static void setPoseAsDebug(PoseStack poseStack) {
-        poseStack.scale(0.7f,0.7f,0.7f);
-        //0.75
-        poseStack.translate(0.2f, 0.45, -0.25);
+        // x 0.2
+        poseStack.translate(0f, 1f, -0.565f);
+        poseStack.scale(0.5f, 0.5f, 0.5f);
         poseStack.mulPose(new Quaternionf().rotationXYZ(
-                (float) Math.toRadians(-15),
+                (float) Math.toRadians(0),
                 (float) Math.toRadians(0),
                 (float) Math.toRadians(0)));
 
@@ -199,9 +226,6 @@ public class WitchHatRenderer {
                     overlay,
                     resetPose
             );
-
-
-
         }
     }
 

@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
@@ -52,7 +53,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
             addTo(DecorPlacement.REGULAR, v);
 
             if (autoSided) {
-                addTo(DecorPlacement.RIGHT, new RenderValue(v.modelVal, v.scale, new Vec3(v.rot.x, -v.rot.y, v.rot.z), -v.pX, v.pY, v.pZ, v.onDebug));
+                addTo(DecorPlacement.RIGHT, new RenderValue(v.modelVal, v.scale, new Vec3(v.rot.x, -v.rot.y, v.rot.z), -v.pX, v.pY, v.pZ, v.onDebug, v.poseStages));
             }
 
             return this;
@@ -107,13 +108,19 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
 
             Runnable adjustedPose = () -> {
                 if (!v.onDebug) {
-                    poseStack.scale(v.scale, v.scale, v.scale);
-                    poseStack.translate(v.pX, v.pY, v.pZ);
-                    poseStack.mulPose(new Quaternionf().rotationXYZ(
-                            (float) Math.toRadians(v.rot.x),
-                            (float) Math.toRadians(v.rot.y),
-                            (float) Math.toRadians(v.rot.z)
-                    ));
+                    for (int k = 0; k < v.poseStages.size(); k++) {
+                        RenderValue.PoseStage stg = v.poseStages.get(k);
+
+                        switch (stg) {
+                            case SCALE -> poseStack.scale(v.scale, v.scale, v.scale);
+                            case TRANSLATE -> poseStack.translate(v.pX, v.pY, v.pZ);
+                            case MULPOSE -> poseStack.mulPose(new Quaternionf().rotationXYZ(
+                                    (float) Math.toRadians(v.rot.x),
+                                    (float) Math.toRadians(v.rot.y),
+                                    (float) Math.toRadians(v.rot.z)
+                            ));
+                        }
+                    }
                 } else {
                     // For hotswapping yuh
                     WitchHatRenderer.setPoseAsDebug(poseStack);
@@ -140,19 +147,22 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
                     }
 
                     poseStack.pushPose();
-                    poseStack.scale(1f, 1f, 1f);
-                    poseStack.translate(-0.5f, 0, 0.5);
+                    poseStack.translate(0.5f, 0.5, 0.5);
+                    poseStack.scale(1, 1f, 1f);
+
                     poseStack.mulPose(new Quaternionf().rotationXYZ(
                             (float) Math.toRadians(180),
                             (float) Math.toRadians(0),
                             (float) Math.toRadians(0)));
 
-                    poseStack.pushPose();
+                    poseStack.translate(-0.5f, 0.5f, 0.5f);
+
                     adjustedPose.run();
+
+                    poseStack.translate(-0.5f, -0.5f, -0.5f);
 
                     blockRenderer.renderSingleBlock(targState, poseStack, buffer, packedLight, overlay);
 
-                    poseStack.popPose();
                     poseStack.popPose();
                 }
             }

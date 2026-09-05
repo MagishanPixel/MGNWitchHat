@@ -1,5 +1,6 @@
 package io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value;
 
+import com.google.common.collect.ImmutableList;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.ItemStack;
@@ -7,6 +8,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 public class RenderValue {
@@ -17,8 +20,15 @@ public class RenderValue {
     public final float pZ;
     public final boolean onDebug;
     public final ModelVal modelVal;
+    public final ImmutableList<PoseStage> poseStages;
 
-    public RenderValue(ModelVal modelVal, float scale, Vec3 rot, float pX, float pY, float pZ, boolean onDebug) {
+    public enum PoseStage {
+        TRANSLATE,
+        MULPOSE,
+        SCALE
+    }
+
+    public RenderValue(ModelVal modelVal, float scale, Vec3 rot, float pX, float pY, float pZ, boolean onDebug, ImmutableList<PoseStage> poseStages) {
         this.modelVal = modelVal;
         this.scale = scale;
         this.rot = rot;
@@ -26,6 +36,7 @@ public class RenderValue {
         this.pY = pY;
         this.pZ = pZ;
         this.onDebug = onDebug;
+        this.poseStages = poseStages;
     }
 
     public static Builder builder() {
@@ -36,6 +47,10 @@ public class RenderValue {
         public final BlockState blockstate;
         public final Function<ItemStack, HatBakedModels.ModelType> modelType;
         public final Function<ItemStack, RenderType> renderType;
+
+        public static ModelVal asBlockItem() {
+            return new Builder().blockstateAsItem().build();
+        }
 
         public ModelVal(BlockState blockstate, Function<ItemStack, HatBakedModels.ModelType> modelType, Function<ItemStack, RenderType> renderType) {
             this.blockstate = blockstate;
@@ -103,6 +118,12 @@ public class RenderValue {
         private float spY = 0f;
         private float spZ = 0f;
         private boolean onDebug;
+        private List<PoseStage> poseStages = new ArrayList<>();
+
+        public Builder setStage(PoseStage stage) {
+            poseStages.add(stage);
+            return this;
+        }
 
         public Builder blockstate(BlockState state) {
             this.modelVal.blockstate(state);
@@ -167,7 +188,9 @@ public class RenderValue {
         }
 
         public RenderValue build() {
-            return new RenderValue(modelVal.build(), scale, rot, pX, pY, pZ, onDebug);
+            ImmutableList<PoseStage> poseList = poseStages.isEmpty() ? ImmutableList.of(PoseStage.TRANSLATE, PoseStage.SCALE, PoseStage.MULPOSE) : ImmutableList.copyOf(poseStages);
+
+            return new RenderValue(modelVal.build(), scale, rot, pX, pY, pZ, onDebug, poseList);
         }
     }
 }
