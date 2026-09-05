@@ -1,6 +1,10 @@
 {
   "values": [
     "#mgn_witch_hat:decor/skulls",
+    {
+      "id": "#minecraft:small_flowers",
+      "required": false
+    },
     "minecraft:lantern"
   ]
 }

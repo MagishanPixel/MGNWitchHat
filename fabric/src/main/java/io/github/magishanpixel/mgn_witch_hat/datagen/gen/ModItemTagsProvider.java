@@ -22,6 +22,7 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
         //getOrCreateTagBuilder(ItemTags.HEAD_ARMOR).add(ModItems.STRAW_HAT.asItem());
         getOrCreateTagBuilder(MGNConstants.ItemTags.WITCH_HAT_DECOR)
                 .addTag(MGNConstants.ItemTags.Decor.SKULLS)
+                .addOptionalTag(ItemTags.SMALL_FLOWERS)
                 .add(Items.LANTERN)
         ;
 
@@ -31,5 +32,6 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
                 .add(Items.CREEPER_HEAD)
                 .add(Items.ZOMBIE_HEAD)
         ;
+
     }
 }

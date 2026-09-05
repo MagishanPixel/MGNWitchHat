@@ -3,7 +3,7 @@ package io.github.magishanpixel.mgn_witch_hat.mixin;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
-import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.DecorRenderer;
+import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.item.WitchHatItem;
@@ -74,7 +74,7 @@ public class HumanoidArmorMixin<T extends LivingEntity, M extends EntityModel<T>
             if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
                 Minecraft inst = Minecraft.getInstance();
 
-                DecorRenderer.render(
+                WitchHatRenderer.renderDecors(
                         stack.get(ModDataComponents.DECOR_TYPES.value()),
                         inst.getBlockRenderer(),
                         inst.getItemRenderer(),

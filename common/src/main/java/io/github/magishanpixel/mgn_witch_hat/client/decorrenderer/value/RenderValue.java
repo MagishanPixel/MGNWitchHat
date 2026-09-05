@@ -99,6 +99,9 @@ public class RenderValue {
         private float pX = 0f;
         private float pY = 0f;
         private float pZ = 0f;
+        private float spX = 0f;
+        private float spY = 0f;
+        private float spZ = 0f;
         private boolean onDebug;
 
         public Builder blockstate(BlockState state) {
@@ -138,6 +141,14 @@ public class RenderValue {
 
         public Builder rotate(double x, double y, double z) {
             this.rot = new Vec3(x, y, z);
+            return this;
+        }
+
+        public Builder center(float x, float y, float z) {
+            this.spX = x;
+            this.spY = y;
+            this.spZ = z;
+
             return this;
         }
 

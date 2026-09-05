@@ -1,7 +1,7 @@
 package io.github.magishanpixel.mgn_witch_hat.client;
 
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
-import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.DecorRenderer;
+import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
 import net.blay09.mods.balm.api.client.BalmClient;
 import net.blay09.mods.balm.neoforge.NeoForgeLoadContext;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -28,6 +28,6 @@ public class MGNWitchHatClient_NEOFORGE {
     }
 
     public void clientInit(FMLClientSetupEvent event) {
-        event.enqueueWork(DecorRenderer::init);
+        event.enqueueWork(WitchHatRenderer::init);
     }
 }
