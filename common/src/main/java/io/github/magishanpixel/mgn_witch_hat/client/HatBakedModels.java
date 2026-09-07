@@ -1,9 +1,7 @@
 package io.github.magishanpixel.mgn_witch_hat.client;
 
 import com.google.common.collect.ImmutableMap;
-import io.github.magishanpixel.mgn_witch_hat.client.models.BuckleModel;
-import io.github.magishanpixel.mgn_witch_hat.client.models.HatBandModel;
-import io.github.magishanpixel.mgn_witch_hat.client.models.WitchHatModel;
+import io.github.magishanpixel.mgn_witch_hat.client.models.*;
 import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayers;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.SkullModel;
@@ -19,6 +17,8 @@ public class HatBakedModels {
         BUCKLE,
         SKULL,
         WITHER_SKULL,
+        MOSS_COVERED,
+        RIBBON
     }
 
     public static boolean isAvail() {
@@ -33,6 +33,9 @@ public class HatBakedModels {
         m.put(ModelType.BUCKLE, new BuckleModel<>(context.bakeLayer(ModModelLayers.BUCKLE)));
 
         m.put(ModelType.SKULL, new SkullModel(context.bakeLayer(ModelLayers.SKELETON_SKULL)));
+
+        m.put(ModelType.MOSS_COVERED, new MossCoveredModel<>(context.bakeLayer(ModModelLayers.MOSS_COVERED)));
+        m.put(ModelType.RIBBON, new RibbonModel<>(context.bakeLayer(ModModelLayers.RIBBON)));
 
         MODEL_MAP = m.build();
     }

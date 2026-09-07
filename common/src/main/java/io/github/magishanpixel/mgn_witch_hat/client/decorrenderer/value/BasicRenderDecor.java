@@ -41,6 +41,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
         private RenderValue.ModelVal defaultModel;
         private boolean autoSided = false;
 
+
         private void addTo(DecorPlacement placement, RenderValue v) {
             if (!builder.containsKey(placement)) {
                 builder.put(placement, new ImmutableList.Builder<>());
@@ -53,7 +54,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
             addTo(DecorPlacement.REGULAR, v);
 
             if (autoSided) {
-                addTo(DecorPlacement.RIGHT, new RenderValue(v.modelVal, v.scale, new Vec3(v.rot.x, -v.rot.y, v.rot.z), -v.pX, v.pY, v.pZ, v.onDebug, v.poseStages));
+                addTo(DecorPlacement.RIGHT, new RenderValue(v.modelVal, v.scale, new Vec3(v.rot.x, -v.rot.y, -v.rot.z), -v.pX, v.pY, v.pZ, v.onDebug, v.defaultRot, v.poseStages));
             }
 
             return this;
@@ -105,6 +106,10 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
 
             poseStack.pushPose();
             setPose.accept(poseStack);
+
+            if (v.defaultRot) {
+                poseStack.mulPose(Axis.XP.rotation((float) (Math.toRadians(7.5))));
+            }
 
             Runnable adjustedPose = () -> {
                 if (!v.onDebug) {

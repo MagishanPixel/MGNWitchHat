@@ -6,7 +6,6 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -79,7 +78,7 @@ public class WitchHatItem extends Item implements Equipable {
         if (stack.get(ModDataComponents.HAS_BAND.value())) {
             if (stack.has(ModDataComponents.BAND_COLOR.value())) {
                 DyeColor v = stack.get(ModDataComponents.BAND_COLOR.value());
-                stackList.add(HatBandItem.byColor(v).getDefaultInstance());
+                stackList.add(ColoredItem.byColor(ColoredItem.ItemType.HAT_BAND,v).getDefaultInstance());
             } else {
                 stackList.add(ModItems.HAT_BAND.createStack());
             }

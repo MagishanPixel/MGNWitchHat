@@ -38,6 +38,23 @@ public class ModTranslateProvider extends FabricLanguageProvider {
         t.add(ModItems.RED_HAT_BAND.asItem(), "Red Hat Band");
         t.add(ModItems.BLACK_HAT_BAND.asItem(), "Black Hat Band");
 
+        t.add(ModItems.WHITE_RIBBON.asItem(), "White Ribbon");
+        t.add(ModItems.ORANGE_RIBBON.asItem(), "Orange Ribbon");
+        t.add(ModItems.MAGENTA_RIBBON.asItem(), "Magenta Ribbon");
+        t.add(ModItems.LIGHT_BLUE_RIBBON.asItem(), "Light Blue Ribbon");
+        t.add(ModItems.YELLOW_RIBBON.asItem(), "Yellow Ribbon");
+        t.add(ModItems.LIME_RIBBON.asItem(), "Lime Ribbon");
+        t.add(ModItems.PINK_RIBBON.asItem(), "Pink Ribbon");
+        t.add(ModItems.GRAY_RIBBON.asItem(), "Gray Ribbon");
+        t.add(ModItems.LIGHT_GRAY_RIBBON.asItem(), "Light Gray Ribbon");
+        t.add(ModItems.CYAN_RIBBON.asItem(), "Cyan Ribbon");
+        t.add(ModItems.PURPLE_RIBBON.asItem(), "Purple Ribbon");
+        t.add(ModItems.BLUE_RIBBON.asItem(), "Blue Ribbon");
+        t.add(ModItems.BROWN_RIBBON.asItem(), "Brown Ribbon");
+        t.add(ModItems.GREEN_RIBBON.asItem(), "Green Ribbon");
+        t.add(ModItems.RED_RIBBON.asItem(), "Red Ribbon");
+        t.add(ModItems.BLACK_RIBBON.asItem(), "Black Ribbon");
+
     }
 
 }

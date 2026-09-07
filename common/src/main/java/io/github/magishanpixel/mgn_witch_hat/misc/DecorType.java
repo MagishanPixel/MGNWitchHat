@@ -19,7 +19,9 @@ public enum DecorType implements StringRepresentable {
     SKULL(0,"skull", v -> v.is(MGNConstants.ItemTags.Decor.SKULLS), true),
     LANTERN(1,"lantern", v -> v.is(Items.LANTERN) || v.is(Items.SOUL_LANTERN), true),
     FLOWER(2, "flower", v -> v.is(ItemTags.SMALL_FLOWERS), true),
-    CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true)
+    CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true),
+    MOSS(4, "moss", v -> v.is(Items.MOSS_BLOCK), false),
+    RIBBON(5, "ribbon", v -> v.is(MGNConstants.ItemTags.Decor.RIBBON), false);
     ;
     private final String name;
     private final int id;

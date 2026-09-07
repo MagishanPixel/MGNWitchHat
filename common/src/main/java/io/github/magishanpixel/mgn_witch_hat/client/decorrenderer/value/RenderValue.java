@@ -20,6 +20,7 @@ public class RenderValue {
     public final float pZ;
     public final boolean onDebug;
     public final ModelVal modelVal;
+    public final boolean defaultRot;
     public final ImmutableList<PoseStage> poseStages;
 
     public enum PoseStage {
@@ -28,7 +29,7 @@ public class RenderValue {
         SCALE
     }
 
-    public RenderValue(ModelVal modelVal, float scale, Vec3 rot, float pX, float pY, float pZ, boolean onDebug, ImmutableList<PoseStage> poseStages) {
+    public RenderValue(ModelVal modelVal, float scale, Vec3 rot, float pX, float pY, float pZ, boolean onDebug, boolean defaultRot, ImmutableList<PoseStage> poseStages) {
         this.modelVal = modelVal;
         this.scale = scale;
         this.rot = rot;
@@ -36,6 +37,7 @@ public class RenderValue {
         this.pY = pY;
         this.pZ = pZ;
         this.onDebug = onDebug;
+        this.defaultRot = defaultRot;
         this.poseStages = poseStages;
     }
 
@@ -119,6 +121,12 @@ public class RenderValue {
         private float spZ = 0f;
         private boolean onDebug;
         private List<PoseStage> poseStages = new ArrayList<>();
+        private boolean revertRot = false;
+
+        public Builder revertRot() {
+            this.revertRot =  true;
+            return this;
+        }
 
         public Builder setStage(PoseStage stage) {
             poseStages.add(stage);
@@ -190,7 +198,7 @@ public class RenderValue {
         public RenderValue build() {
             ImmutableList<PoseStage> poseList = poseStages.isEmpty() ? ImmutableList.of(PoseStage.TRANSLATE, PoseStage.SCALE, PoseStage.MULPOSE) : ImmutableList.copyOf(poseStages);
 
-            return new RenderValue(modelVal.build(), scale, rot, pX, pY, pZ, onDebug, poseList);
+            return new RenderValue(modelVal.build(), scale, rot, pX, pY, pZ, onDebug, revertRot, poseList);
         }
     }
 }

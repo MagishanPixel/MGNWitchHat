@@ -1,10 +1,12 @@
 {
   "values": [
     "#mgn_witch_hat:decor/skulls",
+    "#mgn_witch_hat:decor/ribbon",
     {
       "id": "#minecraft:small_flowers",
       "required": false
     },
-    "minecraft:lantern"
+    "minecraft:lantern",
+    "minecraft:moss_block"
   ]
 }

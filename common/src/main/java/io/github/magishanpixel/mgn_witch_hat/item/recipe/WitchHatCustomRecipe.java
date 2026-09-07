@@ -5,7 +5,7 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModCustomRecipes;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.item.BuckleItem;
-import io.github.magishanpixel.mgn_witch_hat.item.HatBandItem;
+import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
@@ -82,7 +82,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
 
                     dyeStack = inputStack;
                     canCraft = true;
-                } else if (item instanceof HatBandItem) {
+                } else if (inputStack.is(MGNConstants.ItemTags.HAT_BAND)) {
                     if (!bandStack.isEmpty()) {
                         return false;
                     }
@@ -122,7 +122,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
     public ItemStack assemble(CraftingInput input, HolderLookup.Provider provider) {
         DyeItem dyeItem = null;
         BuckleItem buckleItem = null;
-        HatBandItem bandItem = null;
+        ColoredItem bandItem = null;
         ItemStack targStack = ItemStack.EMPTY;
         Map<DecorType, DataDecor> prevDecors = new HashMap<>();
         Map<DecorType, DataDecor> decorList = new HashMap<>();
@@ -171,12 +171,13 @@ public class WitchHatCustomRecipe extends CustomRecipe {
 
                     buckleItem = (BuckleItem) item;
                     canCraft = true;
-                } else if (item instanceof HatBandItem) {
+                } else if (inputStack.is(MGNConstants.ItemTags.HAT_BAND)) {
+
                     if (bandItem != null) {
                         return ItemStack.EMPTY;
                     }
 
-                    bandItem = (HatBandItem) item;
+                    bandItem = (ColoredItem) item;
                     canCraft = true;
                 } else if (inputStack.is(MGNConstants.ItemTags.WITCH_HAT_DECOR)) {
                     DecorType deco = DecorType.getType(inputStack);

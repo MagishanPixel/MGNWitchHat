@@ -42,5 +42,22 @@ public class ModModelProvider extends FabricModelProvider {
         gen.generateFlatItem(ModItems.GREEN_HAT_BAND.asItem(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(ModItems.RED_HAT_BAND.asItem(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(ModItems.BLACK_HAT_BAND.asItem(), ModelTemplates.FLAT_ITEM);
+
+        gen.generateFlatItem(ModItems.WHITE_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.ORANGE_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.MAGENTA_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.LIGHT_BLUE_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.YELLOW_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.LIME_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.PINK_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.GRAY_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.LIGHT_GRAY_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.CYAN_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.PURPLE_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.BLUE_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.BROWN_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.GREEN_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.RED_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.BLACK_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
     }
 }

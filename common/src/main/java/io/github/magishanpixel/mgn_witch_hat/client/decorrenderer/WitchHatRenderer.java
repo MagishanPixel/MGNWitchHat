@@ -8,6 +8,7 @@ import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.BasicRenderDecor;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.RenderValue;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
+import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.minecraft.client.Minecraft;
@@ -43,7 +44,92 @@ public class WitchHatRenderer {
         }
     }
 
+    private static ResourceLocation getDecorsTex(String name) {
+        return MGNConstants.newId("textures/entity/hat/decors/" + name + ".png");
+    }
+
+    public static void setPoseAsDebug(PoseStack poseStack) {
+        poseStack.scale(1.2f, 1.2f, 1.2f);
+        poseStack.translate(0f, -1.87f, 0);
+
+        qRot(poseStack, 0, 0, 0);
+    }
+
+    public static void qRot(PoseStack poseStack, double x, double y, double z) {
+        poseStack.mulPose(new Quaternionf().rotationXYZ((float) Math.toRadians(x), (float) Math.toRadians(y), (float) Math.toRadians(z)));
+    }
+
+    private static BasicRenderDecor.Builder decorBuilder() {
+        return new BasicRenderDecor.Builder();
+    }
+
+    public static void renderHat(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int overlay, Consumer<PoseStack> resetPose, @Nullable Consumer<PoseStack> startPose) {
+        Model hatModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT);
+
+        poseStack.pushPose();
+        if (startPose != null) {
+            startPose.accept(poseStack);
+        }
+
+        poseStack.scale(1.1f, 1.1f, 1.1f);
+        poseStack.translate(0, -1.9f,0);
+
+        ResourceLocation tex_hat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? MGNConstants.getTexture("witch_hat/" + stack.get(ModDataComponents.WITCH_HAT_COLOR.value())) : MGNConstants.getTexture("witch_hat/base");
+        hatModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_hat)), packedLight, overlay, -1);
+
+        if (stack.get(ModDataComponents.HAS_BAND.value())) {
+            Model bandModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT_BAND);
+            ResourceLocation tex_band;
+
+            if (stack.has(ModDataComponents.BAND_COLOR.value())) {
+                tex_band = MGNConstants.getTexture("hat_band/" + stack.get(ModDataComponents.BAND_COLOR.value()).getSerializedName());
+            } else {
+                tex_band = MGNConstants.getTexture("hat_band/base");
+            }
+
+            bandModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_band)), packedLight, overlay, -1);
+        }
+
+        if (stack.has(ModDataComponents.BUCKLE_TYPE.value())) {
+            Model buckleModel = HatBakedModels.getModel(HatBakedModels.ModelType.BUCKLE);
+            ResourceLocation tex_buckle = MGNConstants.getTexture("buckle/" + stack.get(ModDataComponents.BUCKLE_TYPE.value()).getSerializedName());
+            buckleModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_buckle)), packedLight, overlay, -1);
+        }
+
+        poseStack.popPose();
+
+        if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
+            Minecraft inst = Minecraft.getInstance();
+
+            renderDecors(
+                    stack.get(ModDataComponents.DECOR_TYPES.value()),
+                    inst.getBlockRenderer(),
+                    inst.getItemRenderer(),
+                    buffer,
+                    poseStack,
+                    packedLight,
+                    overlay,
+                    resetPose
+            );
+        }
+    }
+
+    public static void renderAsItem(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+        poseStack.pushPose();
+
+        WitchHatRenderer.qRot(poseStack, 180, 180, 0);
+        poseStack.translate(-0.5f, 0.5f, 0.5f);
+
+        WitchHatRenderer.renderHat(stack, poseStack, buffer, packedLight, packedOverlay,
+                p -> p.mulPose(Axis.XN.rotation((float) (Math.toRadians(7.5)))),
+                null
+        );
+
+        poseStack.popPose();
+    }
+
     public static void init() {
+
         // for being reloadable
         DECOR_RENDERERS = null;
 
@@ -126,13 +212,11 @@ public class WitchHatRenderer {
                                 .translate(0.4f, 0.652f, 0.35f)
                                 .scale(0.5f)
                                 .rotate(0, 25, 0)
-                                .debug_DEBUG_DEBUUUG()
                                 .build()
                         )
                         .add_BACK(RenderValue.builder()
                                 .translate(0, 1f, -0.565f)
                                 .scale(0.5f)
-                                .debug_DEBUG_DEBUUUG()
                                 .build()
                         )
                         .build()
@@ -145,105 +229,58 @@ public class WitchHatRenderer {
                         .setDefaultModel(RenderValue.ModelVal.asBlockItem())
                         .autoSided()
                         .add(RenderValue.builder()
-                                .debug_DEBUG_DEBUUUG()
+                                .translate(0.45f, 0.75f, 0)
+                                .scale(0.6f)
+                                .rotate(-15, 0, -15)
                                 .build()
                         )
                         .add_BACK(RenderValue.builder()
-                                .debug_DEBUG_DEBUUUG()
+                                .translate(0, 0.7f, -0.4f)
+                                .scale(0.6f)
+                                .rotate(-15, 0, 0)
                                 .build()
                         )
                         .build()
         );
 
-        DECOR_RENDERERS = rendBuilder.build();
-    }
-
-    public static void qRot(PoseStack poseStack, double x, double y, double z) {
-        poseStack.mulPose(new Quaternionf().rotationXYZ((float) Math.toRadians(x), (float) Math.toRadians(y), (float) Math.toRadians(z)));
-    }
-
-    private static BasicRenderDecor.Builder decorBuilder() {
-        return new BasicRenderDecor.Builder();
-    }
-
-    public static void setPoseAsDebug(PoseStack poseStack) {
-        // x 0.2
-        poseStack.translate(0f, 1f, -0.565f);
-        poseStack.scale(0.5f, 0.5f, 0.5f);
-        poseStack.mulPose(new Quaternionf().rotationXYZ(
-                (float) Math.toRadians(0),
-                (float) Math.toRadians(0),
-                (float) Math.toRadians(0)));
-
-
-    }
-
-    public static void renderHat(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int overlay, Consumer<PoseStack> resetPose, @Nullable Consumer<PoseStack> startPose) {
-        Model hatModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT);
-
-        poseStack.pushPose();
-        if (startPose != null) {
-            startPose.accept(poseStack);
-        }
-
-        poseStack.scale(1.1f, 1.1f, 1.1f);
-        poseStack.translate(0, -1.9f,0);
-
-        ResourceLocation tex_hat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? MGNConstants.getTexture("witch_hat/" + stack.get(ModDataComponents.WITCH_HAT_COLOR.value())) : MGNConstants.getTexture("witch_hat/base");
-        hatModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_hat)), packedLight, overlay, -1);
-
-        if (stack.get(ModDataComponents.HAS_BAND.value())) {
-            Model bandModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT_BAND);
-            ResourceLocation tex_band;
-
-            if (stack.has(ModDataComponents.BAND_COLOR.value())) {
-                tex_band = MGNConstants.getTexture("hat_band/" + stack.get(ModDataComponents.BAND_COLOR.value()).getSerializedName());
-            } else {
-                tex_band = MGNConstants.getTexture("hat_band/base");
-            }
-
-            bandModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_band)), packedLight, overlay, -1);
-        }
-
-        if (stack.has(ModDataComponents.BUCKLE_TYPE.value())) {
-            Model buckleModel = HatBakedModels.getModel(HatBakedModels.ModelType.BUCKLE);
-            ResourceLocation tex_buckle = MGNConstants.getTexture("buckle/" + stack.get(ModDataComponents.BUCKLE_TYPE.value()).getSerializedName());
-            buckleModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_buckle)), packedLight, overlay, -1);
-        }
-
-        poseStack.popPose();
-
-        if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
-            Minecraft inst = Minecraft.getInstance();
-
-            renderDecors(
-                    stack.get(ModDataComponents.DECOR_TYPES.value()),
-                    inst.getBlockRenderer(),
-                    inst.getItemRenderer(),
-                    buffer,
-                    poseStack,
-                    packedLight,
-                    overlay,
-                    resetPose
-            );
-        }
-    }
-
-    public static void renderAsItem(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
-        poseStack.pushPose();
-
-        WitchHatRenderer.qRot(poseStack, 180, 180, 0);
-        poseStack.translate(-0.5f, 0.5f, 0.5f);
-
-        WitchHatRenderer.renderHat(stack, poseStack, buffer, packedLight, packedOverlay,
-                p -> p.mulPose(Axis.XN.rotation((float) (Math.toRadians(7.5)))),
-                null
+        // MOSS
+        rendBuilder.put(DecorType.MOSS, decorBuilder()
+                .add(RenderValue.builder()
+                        .setStage(RenderValue.PoseStage.SCALE)
+                        .setStage(RenderValue.PoseStage.TRANSLATE)
+                        .setStage(RenderValue.PoseStage.MULPOSE)
+                        .setModel(HatBakedModels.ModelType.MOSS_COVERED)
+                        .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("moss_covered")))
+                        .scale(1.5f)
+                        .translate(0, -1.87f, 0)
+                        .revertRot()
+                        .build()
+                )
+                .build()
         );
 
-        poseStack.popPose();
+        // RIBBON
+        rendBuilder.put(DecorType.RIBBON, decorBuilder()
+                .add(RenderValue.builder()
+                        .setStage(RenderValue.PoseStage.SCALE)
+                        .setStage(RenderValue.PoseStage.TRANSLATE)
+                        .setStage(RenderValue.PoseStage.MULPOSE)
+                        .setModel(HatBakedModels.ModelType.RIBBON)
+                        .setRenderType(stack -> {
+                            ColoredItem coloredItem = (ColoredItem) stack.getItem();
+
+                            return RenderType.entityCutoutNoCull(getDecorsTex("ribbon/" + coloredItem.getDyeColor().getSerializedName()));
+
+                        })
+                        .scale(1.1f)
+                        .translate(0, -1.9f, 0)
+                        .revertRot()
+                        .build()
+                )
+                .build()
+        );
+
+        DECOR_RENDERERS = rendBuilder.build();
     }
-
-
-
 
 }
