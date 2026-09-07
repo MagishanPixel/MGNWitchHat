@@ -64,7 +64,7 @@ public class WitchHatRenderer {
     }
 
     public static void renderHat(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int overlay, Consumer<PoseStack> resetPose, @Nullable Consumer<PoseStack> startPose) {
-        Model hatModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT);
+        Model hatModel = HatBakedModels.getModel(HatBakedModels.HAT);
 
         poseStack.pushPose();
         if (startPose != null) {
@@ -78,7 +78,7 @@ public class WitchHatRenderer {
         hatModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_hat)), packedLight, overlay, -1);
 
         if (stack.get(ModDataComponents.HAS_BAND.value())) {
-            Model bandModel = HatBakedModels.getModel(HatBakedModels.ModelType.HAT_BAND);
+            Model bandModel = HatBakedModels.getModel(HatBakedModels.HAT_BAND);
             ResourceLocation tex_band;
 
             if (stack.has(ModDataComponents.BAND_COLOR.value())) {
@@ -91,7 +91,7 @@ public class WitchHatRenderer {
         }
 
         if (stack.has(ModDataComponents.BUCKLE_TYPE.value())) {
-            Model buckleModel = HatBakedModels.getModel(HatBakedModels.ModelType.BUCKLE);
+            Model buckleModel = HatBakedModels.getModel(HatBakedModels.BUCKLE);
             ResourceLocation tex_buckle = MGNConstants.getTexture("buckle/" + stack.get(ModDataComponents.BUCKLE_TYPE.value()).getSerializedName());
             buckleModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_buckle)), packedLight, overlay, -1);
         }
@@ -128,8 +128,8 @@ public class WitchHatRenderer {
         poseStack.popPose();
     }
 
+    // INITIALIZE THE DECORS OFC
     public static void init() {
-
         // for being reloadable
         DECOR_RENDERERS = null;
 
@@ -139,9 +139,9 @@ public class WitchHatRenderer {
         rendBuilder.put(DecorType.SKULL,
                 decorBuilder()
                         .setDefaultModel(new RenderValue.ModelVal.Builder()
-                                .setModel(HatBakedModels.ModelType.SKULL)
-                                .setRenderType(stack -> {
-                                    BlockItem blockItem = (BlockItem) stack.getItem();
+                                .setModel(HatBakedModels.HAT)
+                                .setRenderType(paramVal -> {
+                                    BlockItem blockItem = (BlockItem) paramVal.stack().getItem();
 
                                     if (blockItem.getBlock() instanceof SkullBlock skullBlock) {
                                         SkullBlock.Types type = (SkullBlock.Types) skullBlock.getType();
@@ -249,7 +249,7 @@ public class WitchHatRenderer {
                         .setStage(RenderValue.PoseStage.SCALE)
                         .setStage(RenderValue.PoseStage.TRANSLATE)
                         .setStage(RenderValue.PoseStage.MULPOSE)
-                        .setModel(HatBakedModels.ModelType.MOSS_COVERED)
+                        .setModel(HatBakedModels.MOSS_COVERED)
                         .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("moss_covered")))
                         .scale(1.5f)
                         .translate(0, -1.87f, 0)
@@ -265,12 +265,10 @@ public class WitchHatRenderer {
                         .setStage(RenderValue.PoseStage.SCALE)
                         .setStage(RenderValue.PoseStage.TRANSLATE)
                         .setStage(RenderValue.PoseStage.MULPOSE)
-                        .setModel(HatBakedModels.ModelType.RIBBON)
-                        .setRenderType(stack -> {
-                            ColoredItem coloredItem = (ColoredItem) stack.getItem();
-
+                        .setModel(HatBakedModels.RIBBON)
+                        .setRenderType(paramVal -> {
+                            ColoredItem coloredItem = (ColoredItem) paramVal.stack().getItem();
                             return RenderType.entityCutoutNoCull(getDecorsTex("ribbon/" + coloredItem.getDyeColor().getSerializedName()));
-
                         })
                         .scale(1.1f)
                         .translate(0, -1.9f, 0)

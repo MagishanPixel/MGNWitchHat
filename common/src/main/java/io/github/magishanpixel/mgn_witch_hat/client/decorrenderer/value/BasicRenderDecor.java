@@ -138,8 +138,9 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
             if (myModel != null) {
                 if (myModel.modelType != null && myModel.renderType != null) {
                     adjustedPose.run();
-                    VertexConsumer vertexConsumer = buffer.getBuffer(myModel.renderType.apply(stack));
-                    Model model = HatBakedModels.getModel(myModel.modelType.apply(stack));
+                    RenderValue.ParamVal paramVal = new RenderValue.ParamVal(stack, placement);
+                    VertexConsumer vertexConsumer = buffer.getBuffer(myModel.renderType.apply(paramVal));
+                    Model model = HatBakedModels.getModel(myModel.modelType.apply(paramVal));
                     model.renderToBuffer(poseStack, vertexConsumer, packedLight, overlay);
                 } else if (myModel.blockstate != null) {
                     BlockState targState = myModel.blockstate;

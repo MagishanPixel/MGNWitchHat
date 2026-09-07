@@ -2,7 +2,9 @@ package io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value;
 
 import com.google.common.collect.ImmutableList;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
+import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,16 +47,18 @@ public class RenderValue {
         return new Builder();
     }
 
+    public record ParamVal(ItemStack stack, DecorPlacement placement) {}
+
     public static class ModelVal {
         public final BlockState blockstate;
-        public final Function<ItemStack, HatBakedModels.ModelType> modelType;
-        public final Function<ItemStack, RenderType> renderType;
+        public final Function<ParamVal, ResourceLocation> modelType;
+        public final Function<ParamVal, RenderType> renderType;
 
         public static ModelVal asBlockItem() {
             return new Builder().blockstateAsItem().build();
         }
 
-        public ModelVal(BlockState blockstate, Function<ItemStack, HatBakedModels.ModelType> modelType, Function<ItemStack, RenderType> renderType) {
+        public ModelVal(BlockState blockstate, Function<ParamVal, ResourceLocation> modelType, Function<ParamVal, RenderType> renderType) {
             this.blockstate = blockstate;
             this.modelType = modelType;
             this.renderType = renderType;
@@ -62,8 +66,8 @@ public class RenderValue {
 
         public static class Builder {
             private BlockState blockstate;
-            private Function<ItemStack, HatBakedModels.ModelType> modelType;
-            private Function<ItemStack, RenderType> renderType;
+            private Function<ParamVal, ResourceLocation> modelType;
+            private Function<ParamVal, RenderType> renderType;
             private boolean isEmpty = true;
 
             public Builder blockstate(BlockState state) {
@@ -73,29 +77,24 @@ public class RenderValue {
             }
 
             public Builder blockstateAsItem() {
-                this.blockstate = Blocks.AIR.defaultBlockState();
-                isEmpty = false;
-                return this;
+                return blockstate(Blocks.AIR.defaultBlockState());
             }
 
-            public Builder setModel(HatBakedModels.ModelType model) {
-                this.modelType = stack -> model;
-                isEmpty = false;
-                return this;
+            public Builder setModel(ResourceLocation name) {
+                return setModel(paramVal -> name);
             }
 
-            public Builder setModel(Function<ItemStack, HatBakedModels.ModelType> model) {
+            public Builder setModel(Function<ParamVal, ResourceLocation> model) {
                 this.modelType = model;
+                isEmpty = false;
                 return this;
             }
 
             public Builder setRenderType(RenderType rend) {
-                this.renderType = stack -> rend;
-                isEmpty = false;
-                return this;
+                return setRenderType(paramVal -> rend);
             }
 
-            public Builder setRenderType(Function<ItemStack, RenderType> rend) {
+            public Builder setRenderType(Function<ParamVal, RenderType> rend) {
                 this.renderType = rend;
                 isEmpty = false;
                 return this;
@@ -116,9 +115,6 @@ public class RenderValue {
         private float pX = 0f;
         private float pY = 0f;
         private float pZ = 0f;
-        private float spX = 0f;
-        private float spY = 0f;
-        private float spZ = 0f;
         private boolean onDebug;
         private List<PoseStage> poseStages = new ArrayList<>();
         private boolean revertRot = false;
@@ -143,12 +139,12 @@ public class RenderValue {
             return this;
         }
 
-        public Builder setModel(HatBakedModels.ModelType model) {
+        public Builder setModel(ResourceLocation model) {
             this.modelVal.setModel(stack -> model);
             return this;
         }
 
-        public Builder setModel(Function<ItemStack, HatBakedModels.ModelType> model) {
+        public Builder setModel(Function<ParamVal, ResourceLocation> model) {
             this.modelVal.setModel(model);
             return this;
         }
@@ -158,7 +154,7 @@ public class RenderValue {
             return this;
         }
 
-        public Builder setRenderType(Function<ItemStack, RenderType> rend) {
+        public Builder setRenderType(Function<ParamVal, RenderType> rend) {
             this.modelVal.setRenderType(rend);
             return this;
         }
@@ -170,14 +166,6 @@ public class RenderValue {
 
         public Builder rotate(double x, double y, double z) {
             this.rot = new Vec3(x, y, z);
-            return this;
-        }
-
-        public Builder center(float x, float y, float z) {
-            this.spX = x;
-            this.spY = y;
-            this.spZ = z;
-
             return this;
         }
 
