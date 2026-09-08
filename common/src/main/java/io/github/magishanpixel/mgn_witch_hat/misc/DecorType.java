@@ -22,7 +22,9 @@ public enum DecorType implements StringRepresentable {
     CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true),
     MOSS(4, "moss", v -> v.is(Items.MOSS_BLOCK)),
     RIBBON(5, "ribbon", v -> v.is(MGNConstants.ItemTags.Decor.RIBBON)),
-    FEATHER(6, "feather", v -> v.is(MGNConstants.ItemTags.Decor.FEATHER), true, false)
+    FEATHER(6, "feather", v -> v.is(MGNConstants.ItemTags.Decor.FEATHER), true),
+    PUMPKIN(7, "pumpkin", v -> v.is(Items.PUMPKIN) || v.is(Items.CARVED_PUMPKIN), true, true),
+    JACK_O_LANTERN(8, "jack_o_lantern", v -> v.is(Items.JACK_O_LANTERN), true, true)
     ;
     private final String name;
     private final int id;

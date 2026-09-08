@@ -28,6 +28,7 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
                 .add(Items.MOSS_BLOCK)
                 .addOptionalTag(ItemTags.CANDLES)
                 .addTag(MGNConstants.ItemTags.Decor.FEATHER)
+                .add(Items.PUMPKIN, Items.CARVED_PUMPKIN, Items.JACK_O_LANTERN)
         ;
 
         getOrCreateTagBuilder(MGNConstants.ItemTags.Decor.FEATHER)

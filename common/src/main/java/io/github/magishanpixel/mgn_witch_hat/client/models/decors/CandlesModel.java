@@ -1,6 +1,7 @@
-package io.github.magishanpixel.mgn_witch_hat.client.models;// Made with Blockbench 5.1.6
+package io.github.magishanpixel.mgn_witch_hat.client.models.decors;// Made with Blockbench 5.1.6
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import io.github.magishanpixel.mgn_witch_hat.client.models.SplittedParts;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

@@ -2,6 +2,7 @@ package io.github.magishanpixel.mgn_witch_hat.init;
 
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.models.*;
+import io.github.magishanpixel.mgn_witch_hat.client.models.decors.*;
 import net.blay09.mods.balm.client.model.geom.BalmModelLayerRegistrar;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 
@@ -17,6 +18,8 @@ public class ModModelLayers {
     public static ModelLayerLocation SHORT_BRIM = create("short_brim");
     public static ModelLayerLocation WIDE_BRIM = create("wide_brim");
 
+    public static ModelLayerLocation PUMPKIN = create("pumpkin");
+
     public static void init(BalmModelLayerRegistrar layer) {
         layer.register(WITCH_HAT.getModel(), WitchHatModel::createBodyLayer);
         layer.register(ROBE.getModel(), HatBandModel::createBodyLayer);
@@ -27,6 +30,7 @@ public class ModModelLayers {
         layer.register(FEATHER.getModel(), FeatherModel::createBodyLayer);
         layer.register(SHORT_BRIM.getModel(), ShortBrimModel::createBodyLayer);
         layer.register(WIDE_BRIM.getModel(), WideBrimModel::createBodyLayer);
+        layer.register(PUMPKIN.getModel(), PumpkinDecorModel::createBodyLayer);
     }
 
     private static ModelLayerLocation create(String name) {

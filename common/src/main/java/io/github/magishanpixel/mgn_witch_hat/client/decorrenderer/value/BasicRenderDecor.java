@@ -8,6 +8,7 @@ import com.mojang.math.Axis;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.models.SplittedParts;
+import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import net.minecraft.client.model.Model;
@@ -94,7 +95,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
     }
 
     @Override
-    public void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int light, int overlay, Consumer<PoseStack> setPose, DataDecor data) {
+    public void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int light, int overlay, Consumer<PoseStack> setPose, DataDecor data, ItemStack hatStack) {
         ItemStack stack = data.stack();
 
         DecorPlacement placement = data.placement();
@@ -142,7 +143,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
             if (myModel != null) {
                 if (myModel.modelType != null && myModel.renderType != null) {
                     adjustedPose.run();
-                    RenderValue.ParamVal paramVal = new RenderValue.ParamVal(stack, placement);
+                    RenderValue.ParamVal paramVal = new RenderValue.ParamVal(stack, placement, stack.get(ModDataComponents.BRIM_TYPE.value()));
                     VertexConsumer vertexConsumer = buffer.getBuffer(myModel.renderType.apply(paramVal));
                     Model model = HatBakedModels.getModel(myModel.modelType.apply(paramVal));
 

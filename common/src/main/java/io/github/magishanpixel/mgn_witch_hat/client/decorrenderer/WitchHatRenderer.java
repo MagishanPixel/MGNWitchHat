@@ -24,6 +24,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SkullBlock;
 import org.jetbrains.annotations.Nullable;
@@ -35,18 +36,18 @@ import java.util.function.Function;
 
 public class WitchHatRenderer {
     public interface RenderDecor {
-        void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> setPose, DataDecor data);
+        void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> setPose, DataDecor datam, ItemStack hatStack);
     }
 
     private static ImmutableMap<DecorType, RenderDecor> DECOR_RENDERERS;
 
-    public static void renderDecors(Map<DecorType, DataDecor> mapTypes, BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> resetPose) {
+    public static void renderDecors(Map<DecorType, DataDecor> mapTypes, ItemStack hatStack, BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> resetPose) {
         if (DECOR_RENDERERS == null) return;
 
         for (Map.Entry<DecorType, DataDecor> entry : mapTypes.entrySet()) {
             RenderDecor v = DECOR_RENDERERS.get(entry.getKey());
 
-            v.render(blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, resetPose, entry.getValue());
+            v.render(blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, resetPose, entry.getValue(), hatStack);
         }
     }
 
@@ -55,9 +56,9 @@ public class WitchHatRenderer {
     }
 
     public static void setPoseAsDebug(PoseStack poseStack) {
-        poseStack.translate(0.35f, -1.5f, -0.1f);
-        poseStack.scale(0.65f, 0.65f, 0.65f);
-        qRot(poseStack, 0, 10, 0);
+        poseStack.translate(-0.1f, -0.665f, 0.325f);
+        poseStack.scale(0.175f, 0.175f, 0.175f);
+        qRot(poseStack, 0, -205, 0);
     }
 
     public static void qRot(PoseStack poseStack, double x, double y, double z) {
@@ -117,6 +118,7 @@ public class WitchHatRenderer {
 
             renderDecors(
                     stack.get(ModDataComponents.DECOR_TYPES.value()),
+                    stack,
                     inst.getBlockRenderer(),
                     inst.getItemRenderer(),
                     buffer,
@@ -148,6 +150,117 @@ public class WitchHatRenderer {
         DECOR_RENDERERS = null;
 
         ImmutableMap.Builder<DecorType, RenderDecor> rendBuilder = new ImmutableMap.Builder<>();
+
+        // PUMPKIN
+        rendBuilder.put(DecorType.PUMPKIN,
+            decorBuilder()
+                    .autoSided()
+                    .setDefaultModel(new RenderValue.ModelVal.Builder()
+                            .setModel(HatBakedModels.PUMPKIN)
+                            .setRenderType(paramVal -> {
+                                String str = "pumpkin" + (paramVal.stack().is(Items.CARVED_PUMPKIN) ? "_carved" : "");
+
+                                return RenderType.entityCutoutNoCull(getDecorsTex(str));
+                            })
+                            .build()
+                    )
+                    .add(RenderValue.builder()
+                            .translate(0.4f, -0.74f, -0.15f)
+                            .scale(0.225f)
+                            .rotate(0, -65, 0)
+                            .build()
+                    )
+                    .add(RenderValue.builder()
+                            .translate(0.4f, -0.665f, 0.05f)
+                            .scale(0.175f)
+                            .rotate(0, -105, 0)
+                            .build()
+                    )
+                    .add_BACK(RenderValue.builder()
+                            .translate(0.08f, -0.74f, 0.3f)
+                            .scale(0.225f)
+                            .rotate(0, -145, 0)
+                            .build()
+                    )
+                    .add_BACK(RenderValue.builder()
+                            .translate(-0.125f, -0.665f, 0.325f)
+                            .scale(0.175f)
+                            .rotate(0, -205, 0)
+                            .build()
+                    )
+                    .build()
+        );
+
+        // JACK O LANTERN
+        rendBuilder.put(DecorType.JACK_O_LANTERN,
+                decorBuilder()
+                        .autoSided()
+                        .setDefaultModel(new RenderValue.ModelVal.Builder()
+                                .setModel(HatBakedModels.PUMPKIN)
+                                .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("jack_o_lantern_empty")))
+                                .build()
+                        )
+                        .add(RenderValue.builder()
+                                .translate(0.4f, -0.74f, -0.15f)
+                                .scale(0.225f)
+                                .rotate(0, -65, 0)
+                                .build()
+                        )
+                        .add(RenderValue.builder()
+                                .translate(0.4f, -0.665f, 0.05f)
+                                .scale(0.175f)
+                                .rotate(0, -105, 0)
+                                .build()
+                        )
+                        .add(RenderValue.builder()
+                                .translate(0.4f, -0.74f, -0.15f)
+                                .scale(0.225f)
+                                .rotate(0, -65, 0)
+                                .setModel(HatBakedModels.PUMPKIN)
+                                .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("jack_o_lantern_lit")))
+                                .glow()
+                                .build()
+                        )
+                        .add(RenderValue.builder()
+                                .translate(0.4f, -0.665f, 0.05f)
+                                .scale(0.175f)
+                                .rotate(0, -105, 0)
+                                .setModel(HatBakedModels.PUMPKIN)
+                                .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("jack_o_lantern_lit")))
+                                .glow()
+                                .build()
+                        )
+                        .add_BACK(RenderValue.builder()
+                                .translate(0.08f, -0.74f, 0.3f)
+                                .scale(0.225f)
+                                .rotate(0, -145, 0)
+                                .build()
+                        )
+                        .add_BACK(RenderValue.builder()
+                                .translate(-0.125f, -0.665f, 0.325f)
+                                .scale(0.175f)
+                                .rotate(0, -205, 0)
+                                .build()
+                        )
+                        .add_BACK(RenderValue.builder()
+                                .translate(0.08f, -0.74f, 0.3f)
+                                .scale(0.225f)
+                                .rotate(0, -145, 0)
+                                .setModel(HatBakedModels.PUMPKIN)
+                                .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("jack_o_lantern_lit")))
+                                .build()
+                        )
+                        .add_BACK(RenderValue.builder()
+                                .translate(-0.125f, -0.665f, 0.325f)
+                                .scale(0.175f)
+                                .rotate(0, -205, 0)
+                                .setModel(HatBakedModels.PUMPKIN)
+                                .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("jack_o_lantern_lit")))
+                                .build()
+                        )
+                        .build()
+        );
+
 
         // FEATHER
         rendBuilder.put(DecorType.FEATHER,

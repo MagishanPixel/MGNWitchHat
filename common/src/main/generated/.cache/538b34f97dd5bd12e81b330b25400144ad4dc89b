@@ -1,6 +1,6 @@
-// 1.21.1	2026-09-08T15:31:48.6971791	MGN's Witch Hat/Tags for minecraft:item
+// 1.21.1	2026-09-09T00:33:50.4266323	MGN's Witch Hat/Tags for minecraft:item
 fa7d98b7de5f99a0228f470875149c6332498992 data\mgn_witch_hat\tags\item\decor\ribbon.json
 8603b4525b849532e2000dcb7171f981f0fa965f data\mgn_witch_hat\tags\item\decor\skulls.json
 49e381739c34554a637e356dbb7b67a2e96c3e71 data\mgn_witch_hat\tags\item\hat_band.json
-3dd5c2f27d3127e605825b828aec610d58bec488 data\mgn_witch_hat\tags\item\witch_hat_decor.json
 6b7860f8d657acf60c4eaf10728f965d409fa5b2 data\mgn_witch_hat\tags\item\decor\feather.json
+904bcc45dbc9efa0efa6465462bc308bcc61228b data\mgn_witch_hat\tags\item\witch_hat_decor.json

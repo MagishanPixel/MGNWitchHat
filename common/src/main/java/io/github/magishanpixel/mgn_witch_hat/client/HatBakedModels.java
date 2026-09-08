@@ -3,6 +3,7 @@ package io.github.magishanpixel.mgn_witch_hat.client;
 import com.google.common.collect.ImmutableMap;
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.models.*;
+import io.github.magishanpixel.mgn_witch_hat.client.models.decors.*;
 import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayers;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.SkullModel;
@@ -21,6 +22,7 @@ public class HatBakedModels {
     public static final ResourceLocation FEATHER = id("feather");
     public static final ResourceLocation SHORT_BRIM = id("short_brim");
     public static final ResourceLocation WIDE_BRIM = id("wide_brim");
+    public static final ResourceLocation PUMPKIN = id("pumpkin");
 
     private static ImmutableMap<ResourceLocation, Model> MODEL_MAP = null;
 
@@ -45,7 +47,7 @@ public class HatBakedModels {
 
         m.put(SHORT_BRIM, new ShortBrimModel<>(context.bakeLayer(ModModelLayers.SHORT_BRIM)));
         m.put(WIDE_BRIM, new ShortBrimModel<>(context.bakeLayer(ModModelLayers.WIDE_BRIM)));
-
+        m.put(PUMPKIN, new PumpkinDecorModel<>(context.bakeLayer(ModModelLayers.PUMPKIN)));
 
         MODEL_MAP = m.build();
     }

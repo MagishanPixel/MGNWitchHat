@@ -1,4 +1,4 @@
-package io.github.magishanpixel.mgn_witch_hat.client.models;
+package io.github.magishanpixel.mgn_witch_hat.client.models.decors;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;

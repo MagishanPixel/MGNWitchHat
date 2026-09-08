@@ -2,6 +2,7 @@ package io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value;
 
 import com.google.common.collect.ImmutableList;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
+import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
@@ -51,7 +52,7 @@ public class RenderValue {
         return new Builder();
     }
 
-    public record ParamVal(ItemStack stack, DecorPlacement placement) {}
+    public record ParamVal(ItemStack stack, DecorPlacement placement, BrimType brimType) {}
 
     public static class ModelVal {
         public final BlockState blockstate;

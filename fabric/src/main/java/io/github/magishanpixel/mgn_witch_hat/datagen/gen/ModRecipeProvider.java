@@ -16,6 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
@@ -43,6 +44,14 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .unlockedBy(FabricRecipeProvider.getHasName(ModItems.HAT_BAND), FabricRecipeProvider.has(ModItems.HAT_BAND))
                 .save(recipeOutput);
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLD_BUCKLE)
+                .pattern("BBB")
+                .pattern("B B")
+                .pattern("BBB")
+                .define('B', Ingredient.of(Items.GOLD_INGOT))
+                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.GOLD_BUCKLE), FabricRecipeProvider.has(ModItems.GOLD_BUCKLE))
+                .save(recipeOutput);
+
         hatBand(ModItems.WHITE_HAT_BAND, Items.WHITE_DYE, recipeOutput);
         hatBand(ModItems.ORANGE_HAT_BAND, Items.ORANGE_DYE, recipeOutput);
         hatBand(ModItems.MAGENTA_HAT_BAND, Items.MAGENTA_DYE, recipeOutput);
@@ -58,6 +67,37 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         hatBand(ModItems.GREEN_HAT_BAND, Items.GREEN_DYE, recipeOutput);
         hatBand(ModItems.RED_HAT_BAND, Items.RED_DYE, recipeOutput);
         hatBand(ModItems.BLACK_HAT_BAND, Items.BLACK_DYE, recipeOutput);
+
+        /*
+        for (DeferredItem deferredItem : List.of(
+                ModItems.WHITE_RIBBON,
+                ModItems.ORANGE_RIBBON,
+                ModItems.MAGENTA_RIBBON,
+                ModItems.LIGHT_BLUE_RIBBON,
+                ModItems.YELLOW_RIBBON,
+                ModItems.LIME_RIBBON,
+                ModItems.PINK_RIBBON,
+                ModItems.GRAY_RIBBON,
+                ModItems.LIGHT_GRAY_RIBBON,
+                ModItems.CYAN_RIBBON,
+                ModItems.PURPLE_RIBBON,
+                ModItems.BLUE_RIBBON,
+                ModItems.BROWN_RIBBON,
+                ModItems.GREEN_RIBBON,
+                ModItems.RED_RIBBON,
+                ModItems.BLACK_RIBBON
+        )) {
+            Item item = deferredItem.asItem();
+
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLD_BUCKLE)
+                    .pattern("B B")
+                    .pattern(" B ")
+                    .pattern("S S")
+                    .define('B', Ingredient.of(Items.B))
+                    .define('S', Ingredient.of(Items.STRING))
+                    .unlockedBy(FabricRecipeProvider.getHasName(ModItems.GOLD_BUCKLE), FabricRecipeProvider.has(ModItems.GOLD_BUCKLE))
+                    .save(recipeOutput);
+        }*/
     }
 
     private static void hatBand(DeferredItem item, Item dyeItem, RecipeOutput output) {
