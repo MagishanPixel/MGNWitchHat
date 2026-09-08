@@ -14,6 +14,9 @@ public class ModModelLayers {
     public static ModelLayerLocation CANDLES = create("candles");
     public static ModelLayerLocation FEATHER = create("feather");
 
+    public static ModelLayerLocation SHORT_BRIM = create("short_brim");
+    public static ModelLayerLocation WIDE_BRIM = create("wide_brim");
+
     public static void init(BalmModelLayerRegistrar layer) {
         layer.register(WITCH_HAT.getModel(), WitchHatModel::createBodyLayer);
         layer.register(ROBE.getModel(), HatBandModel::createBodyLayer);
@@ -22,6 +25,8 @@ public class ModModelLayers {
         layer.register(RIBBON.getModel(), RibbonModel::createBodyLayer);
         layer.register(CANDLES.getModel(), CandlesModel::createBodyLayer);
         layer.register(FEATHER.getModel(), FeatherModel::createBodyLayer);
+        layer.register(SHORT_BRIM.getModel(), ShortBrimModel::createBodyLayer);
+        layer.register(WIDE_BRIM.getModel(), WideBrimModel::createBodyLayer);
     }
 
     private static ModelLayerLocation create(String name) {

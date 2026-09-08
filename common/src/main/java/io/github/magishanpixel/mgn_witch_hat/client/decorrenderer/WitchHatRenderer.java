@@ -12,6 +12,7 @@ import io.github.magishanpixel.mgn_witch_hat.client.models.SplittedParts;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
+import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.minecraft.client.Minecraft;
@@ -69,6 +70,13 @@ public class WitchHatRenderer {
 
     public static void renderHat(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int overlay, Consumer<PoseStack> resetPose, @Nullable Consumer<PoseStack> startPose) {
         Model hatModel = HatBakedModels.getModel(HatBakedModels.HAT);
+        BrimType brimType = stack.get(ModDataComponents.BRIM_TYPE.value());
+        Model brimModel = HatBakedModels.getModel(switch (brimType) {
+            case SHORT -> HatBakedModels.SHORT_BRIM;
+            case WIDE -> HatBakedModels.WIDE_BRIM;
+        });
+
+        String hatCol = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? stack.get(ModDataComponents.WITCH_HAT_COLOR.value()).getSerializedName() : "base";
 
         poseStack.pushPose();
         if (startPose != null) {
@@ -78,8 +86,10 @@ public class WitchHatRenderer {
         poseStack.scale(1.1f, 1.1f, 1.1f);
         poseStack.translate(0, -1.9f,0);
 
-        ResourceLocation tex_hat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? MGNConstants.getTexture("witch_hat/" + stack.get(ModDataComponents.WITCH_HAT_COLOR.value())) : MGNConstants.getTexture("witch_hat/base");
+        ResourceLocation tex_hat = MGNConstants.getTexture("witch_hat/" + hatCol);
+        ResourceLocation tex_brim = MGNConstants.getTexture("brim/" + brimType.getSerializedName() + "/" + hatCol);
         hatModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_hat)), packedLight, overlay, -1);
+        brimModel.renderToBuffer(poseStack, buffer.getBuffer(RenderType.entityCutout(tex_brim)), packedLight, overlay, -1);
 
         if (stack.get(ModDataComponents.HAS_BAND.value())) {
             Model bandModel = HatBakedModels.getModel(HatBakedModels.HAT_BAND);
@@ -168,7 +178,7 @@ public class WitchHatRenderer {
         rendBuilder.put(DecorType.SKULL,
                 decorBuilder()
                         .setDefaultModel(new RenderValue.ModelVal.Builder()
-                                .setModel(HatBakedModels.HAT)
+                                .setModel(HatBakedModels.SKULL)
                                 .setRenderType(paramVal -> {
                                     BlockItem blockItem = (BlockItem) paramVal.stack().getItem();
 

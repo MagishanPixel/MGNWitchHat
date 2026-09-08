@@ -3,6 +3,7 @@ package io.github.magishanpixel.mgn_witch_hat.init;
 import io.github.magishanpixel.mgn_witch_hat.item.BuckleItem;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.item.WitchHatItem;
+import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
 import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
 import net.blay09.mods.balm.core.DeferredHolder;
 import net.blay09.mods.balm.world.item.BalmCreativeModeTabRegistrar;
@@ -64,7 +65,7 @@ public class ModItems {
     public static Holder<CreativeModeTab> MAIN_TAB;
 
     public static void init(BalmItemRegistrar reg) {
-        WITCH_HAT = reg.register("witch_hat", p -> new WitchHatItem(p.component(ModDataComponents.HAS_BAND.value(), false)), p -> p.stacksTo(1)).asDeferredItem();
+        WITCH_HAT = reg.register("witch_hat", p -> new WitchHatItem(p.component(ModDataComponents.HAS_BAND.value(), false).component(ModDataComponents.BRIM_TYPE.value(), BrimType.SHORT)), p -> p.stacksTo(1)).asDeferredItem();
 
         IRON_BUCKLE = reg.register("iron_buckle", p -> new BuckleItem(p, BuckleType.IRON), p -> p.stacksTo(1)).asDeferredItem();
         DIAMOND_BUCKLE = reg.register("diamond_buckle", p -> new BuckleItem(p, BuckleType.DIAMOND), p -> p.stacksTo(1)).asDeferredItem();
@@ -115,6 +116,9 @@ public class ModItems {
                 .icon(WITCH_HAT::createStack)
                 .displayItems((itemDisplayParameters, v) -> {
                     v.accept(WITCH_HAT);
+                    ItemStack a = WITCH_HAT.createStack();
+                    a.set(ModDataComponents.BRIM_TYPE.value(), BrimType.WIDE);
+                    v.accept(a);
 
                     v.accept(RAVEN_FEATHER);
 
