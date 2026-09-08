@@ -11,6 +11,7 @@ public class ModModelLayers {
     public static ModelLayerLocation BUCKLE = create("buckle");
     public static ModelLayerLocation MOSS_COVERED = create("moss_covered");
     public static ModelLayerLocation RIBBON = create("ribbon");
+    public static ModelLayerLocation CANDLES = create("candles");
 
     public static void init(BalmModelLayerRegistrar layer) {
         layer.register(WITCH_HAT.getModel(), WitchHatModel::createBodyLayer);
@@ -18,6 +19,7 @@ public class ModModelLayers {
         layer.register(BUCKLE.getModel(), BuckleModel::createBodyLayer);
         layer.register(MOSS_COVERED.getModel(), MossCoveredModel::createBodyLayer);
         layer.register(RIBBON.getModel(), RibbonModel::createBodyLayer);
+        layer.register(CANDLES.getModel(), CandlesModel::createBodyLayer);
     }
 
     private static ModelLayerLocation create(String name) {

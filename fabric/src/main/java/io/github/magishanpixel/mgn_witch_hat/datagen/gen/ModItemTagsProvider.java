@@ -26,6 +26,7 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
                 .addOptionalTag(ItemTags.SMALL_FLOWERS)
                 .add(Items.LANTERN)
                 .add(Items.MOSS_BLOCK)
+                .addOptionalTag(ItemTags.CANDLES)
         ;
 
         getOrCreateTagBuilder(MGNConstants.ItemTags.Decor.SKULLS)

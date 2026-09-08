@@ -2,11 +2,13 @@ package io.github.magishanpixel.mgn_witch_hat.client.decorrenderer;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.BasicRenderDecor;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.RenderValue;
+import io.github.magishanpixel.mgn_witch_hat.client.models.SplittedParts;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
@@ -20,12 +22,14 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SkullBlock;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class WitchHatRenderer {
     public interface RenderDecor {
@@ -49,10 +53,9 @@ public class WitchHatRenderer {
     }
 
     public static void setPoseAsDebug(PoseStack poseStack) {
-        poseStack.scale(1.2f, 1.2f, 1.2f);
-        poseStack.translate(0f, -1.87f, 0);
-
-        qRot(poseStack, 0, 0, 0);
+        poseStack.translate(0.4f, -1.67f, -0.1f);
+        poseStack.scale(0.7f, 0.7f, 0.7f);
+        qRot(poseStack, 0, -15, 0);
     }
 
     public static void qRot(PoseStack poseStack, double x, double y, double z) {
@@ -135,6 +138,7 @@ public class WitchHatRenderer {
 
         ImmutableMap.Builder<DecorType, RenderDecor> rendBuilder = new ImmutableMap.Builder<>();
 
+        // First decor ever made btw :3
         // SKULL
         rendBuilder.put(DecorType.SKULL,
                 decorBuilder()
@@ -278,7 +282,132 @@ public class WitchHatRenderer {
                 .build()
         );
 
+        final Function<RenderValue.ParamVal, RenderType> CANDLE_FIRE = paramVal -> {
+            Level level = Minecraft.getInstance().level;
+            int currClock = (int) level.getGameTime();
+            int v = ((currClock / 4) % 3) + 1;
+            return RenderType.entityCutoutNoCull(getDecorsTex("candle_fire" + v));
+        };
+
+        // CANDLES
+        rendBuilder.put(DecorType.CANDLE,
+                decorBuilder()
+                        .setDefaultModel(new RenderValue.ModelVal.Builder()
+                                .setModel(HatBakedModels.CANDLES)
+                                .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("candle")))
+                                .build()
+                        )
+                        .autoSided()
+                        // BODY
+                        .add(RenderValue.builder()
+                                .scale(0.7f)
+                                .translate(0.4f, -1.455f, -0.45f)
+                                .rotate(0, 45, 0)
+                                .boneId(1)
+                                .build()
+                        )
+                        .add(RenderValue.builder()
+                                .scale(0.7f)
+                                .translate(0.4f, -1.455f, -0.25f)
+                                .boneId(2)
+                                .build()
+                        )
+                        .add(RenderValue.builder()
+                                .scale(0.7f)
+                                .translate(0.4f, -1.455f, -0.1f)
+                                .rotate(0, -15, 0)
+                                .boneId(3)
+                                .build()
+                        )
+                        // TIP
+                        .add(RenderValue.builder()
+                                .glow()
+                                .setModel(HatBakedModels.CANDLES)
+                                .setRenderType(CANDLE_FIRE)
+                                .scale(0.7f)
+                                .translate(0.4f, -1.76f, -0.45f)
+                                .rotate(0, 45, 0)
+                                .boneId(4)
+                                .build()
+                        )
+                        .add(RenderValue.builder()
+                                .glow()
+                                .setModel(HatBakedModels.CANDLES)
+                                .setRenderType(CANDLE_FIRE)
+                                .scale(0.5f)
+                                .translate(0.4f, -1.33f, -0.25f)
+                                .rotate(0, 0, 0)
+                                .boneId(4)
+                                .build()
+                        )
+                        .add(RenderValue.builder()
+                                .glow()
+                                .setModel(HatBakedModels.CANDLES)
+                                .setRenderType(CANDLE_FIRE)
+                                .scale(0.5f)
+                                .translate(0.4f, -1.37f, -0.1f)
+                                .rotate(0, -15, 0)
+                                .boneId(4)
+                                .build()
+                        )
+                        .build()
+        );
+
         DECOR_RENDERERS = rendBuilder.build();
     }
+
+     /*
+        rendBuilder.put(DecorType.CANDLE, (blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, setPose, data) -> {
+            RenderType rendCandle = RenderType.entityCutoutNoCull(getDecorsTex("candle"));
+            VertexConsumer vertexConsumer = buffer.getBuffer(rendCandle);
+
+            SplittedParts model = (SplittedParts) HatBakedModels.getModel(HatBakedModels.CANDLES);
+
+            for (int i = 1; i <= 3; i++) {
+                poseStack.pushPose();
+
+                setPose.accept(poseStack);
+
+                if (i == 1) {
+                    poseStack.translate(0.4f, -1.455f, -0.4f);
+                } else if (i == 2) {
+                    poseStack.translate(0.45f, -1.455f, -0.2f);
+                } else {
+                    poseStack.translate(0.5f, -1.455f, 0.1f);
+                }
+
+                poseStack.scale(0.7f,0.7f,0.7f);
+
+                if (i == 1) {
+                    poseStack.mulPose(Axis.YP.rotation(45));
+                } else if (i == 2) {
+                    poseStack.mulPose(Axis.YP.rotation(0f));
+                } else {
+                    poseStack.mulPose(Axis.YP.rotation(0f));
+                }
+
+                //
+
+                model.renderSpecificBone(i, poseStack, vertexConsumer, packedLight, overlay);
+                poseStack.pushPose();
+
+                float yTip = -0.435f;
+
+                if (i == 3) {
+                    yTip = -0.31f;
+                } else if (i == 2) {
+                    yTip = -0.25f;
+                }
+
+                poseStack.translate(0, yTip, 0);
+                model.renderSpecificBone(4, poseStack, vertexConsumer, packedLight, overlay);
+                poseStack.popPose();
+
+                poseStack.popPose();
+            }
+
+
+
+        });*/
 
 }

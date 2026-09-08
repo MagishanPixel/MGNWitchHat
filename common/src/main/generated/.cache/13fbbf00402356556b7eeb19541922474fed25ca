@@ -1,15 +1,15 @@
-// 1.21.1	2026-09-07T17:02:18.3428914	MGN's Witch Hat/Model Definitions
+// 1.21.1	2026-09-07T22:19:20.9557417	MGN's Witch Hat/Model Definitions
 13f672fb86f7db5712a620563c7b16b20b855639 assets\mgn_witch_hat\models\item\gray_ribbon.json
-41e64ca1af0380caf6746e7a7c15e7f9d9b4ea89 assets\mgn_witch_hat\models\item\black_hat_band.json
 32255a9604d96a67b8779aa62979b4b10a256484 assets\mgn_witch_hat\models\item\green_ribbon.json
+41e64ca1af0380caf6746e7a7c15e7f9d9b4ea89 assets\mgn_witch_hat\models\item\black_hat_band.json
 5cef612aec03f1ffdc8c80a82df6ddd3d01d756b assets\mgn_witch_hat\models\item\light_gray_hat_band.json
 8fe45a6acb064c7b1428e7a7a07b43b8577169f4 assets\mgn_witch_hat\models\item\magenta_ribbon.json
 1ea0a19992620b0229ba2458a658ff0ca582dfd5 assets\mgn_witch_hat\models\item\purple_hat_band.json
 904ac3da46df72a993de8a9f5d4565e4a5033689 assets\mgn_witch_hat\models\item\lime_hat_band.json
-a11e7681ae179fb75e9dc221b39a2fe85cfb3741 assets\mgn_witch_hat\models\item\light_blue_ribbon.json
 2fd77ab7620f65557fc823078a39c49ed792a35e assets\mgn_witch_hat\models\item\purple_ribbon.json
-433481d64c7225e469f5318262abc1374b009704 assets\mgn_witch_hat\models\item\brown_ribbon.json
+a11e7681ae179fb75e9dc221b39a2fe85cfb3741 assets\mgn_witch_hat\models\item\light_blue_ribbon.json
 1b7d0bde9ac81f79298becdddede5020d703c3d8 assets\mgn_witch_hat\models\item\cyan_hat_band.json
+433481d64c7225e469f5318262abc1374b009704 assets\mgn_witch_hat\models\item\brown_ribbon.json
 bc2766bb3d26ddfdb3dc81c56712e60151e2d261 assets\mgn_witch_hat\models\item\orange_ribbon.json
 31248eeb4b80d4184418dbf678d0e2e29d7968c9 assets\mgn_witch_hat\models\item\hat_band.json
 2b687dad3bcc02f0c52f8f67002201f853dd3d66 assets\mgn_witch_hat\models\item\white_hat_band.json

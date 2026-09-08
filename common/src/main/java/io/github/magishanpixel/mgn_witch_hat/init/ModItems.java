@@ -155,29 +155,5 @@ public class ModItems {
         ).asHolder();
     }
 
-    public static void addToCreativeTab(Consumer<ItemStack> v) {
-        /*
-        v.accept(WITCH_HAT.createStack());
-        v.accept(GOLD_BUCKLE.createStack());
-        v.accept(IRON_BUCKLE.createStack());
-        v.accept(DIAMOND_BUCKLE.createStack());
-        v.accept(HAT_BAND.createStack());
-        v.accept(WHITE_HAT_BAND.createStack());
-        v.accept(ORANGE_HAT_BAND.createStack());
-        v.accept(MAGENTA_HAT_BAND.createStack());
-        v.accept(LIGHT_BLUE_HAT_BAND.createStack());
-        v.accept(YELLOW_HAT_BAND.createStack());
-        v.accept(LIME_HAT_BAND.createStack());
-        v.accept(PINK_HAT_BAND.createStack());
-        v.accept(GRAY_HAT_BAND.createStack());
-        v.accept(LIGHT_GRAY_HAT_BAND.createStack());
-        v.accept(CYAN_HAT_BAND.createStack());
-        v.accept(PURPLE_HAT_BAND.createStack());
-        v.accept(BLUE_HAT_BAND.createStack());
-        v.accept(BROWN_HAT_BAND.createStack());
-        v.accept(GREEN_HAT_BAND.createStack());
-        v.accept(RED_HAT_BAND.createStack());
-        v.accept(BLACK_HAT_BAND.createStack())*/;
-
-    }
+    public static void addToCreativeTab(Consumer<ItemStack> v) {}
 }

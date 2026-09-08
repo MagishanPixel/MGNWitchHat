@@ -99,7 +99,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                         boolean canDeco = !deco.isSided();
 
                         if (deco.isSided()) {
-                            canDeco = (slot == centerSlot - 1) || (slot == centerSlot + 1) || (slot == centerSlot + input.width());
+                            canDeco = (slot == centerSlot - 1) || (slot == centerSlot + 1) || (deco.allowBack() && (slot == centerSlot + input.width()));
                         }
 
                         if (!canDeco) {
@@ -191,6 +191,9 @@ public class WitchHatCustomRecipe extends CustomRecipe {
 
                         if (deco.isSided()) {
                             if (slot == centerSlot + input.width()) {
+                                if (!deco.allowBack()) {
+                                    return ItemStack.EMPTY;
+                                }
                                 placement = DecorPlacement.BACK;
                             } else if (slot == centerSlot + 1) {
                                 placement = DecorPlacement.RIGHT;

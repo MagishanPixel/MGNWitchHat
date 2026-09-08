@@ -7,9 +7,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
+import io.github.magishanpixel.mgn_witch_hat.client.models.SplittedParts;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import net.minecraft.client.model.Model;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -54,7 +56,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
             addTo(DecorPlacement.REGULAR, v);
 
             if (autoSided) {
-                addTo(DecorPlacement.RIGHT, new RenderValue(v.modelVal, v.scale, new Vec3(v.rot.x, -v.rot.y, -v.rot.z), -v.pX, v.pY, v.pZ, v.onDebug, v.defaultRot, v.poseStages));
+                addTo(DecorPlacement.RIGHT, new RenderValue(v.modelVal, v.scale, new Vec3(v.rot.x, -v.rot.y, -v.rot.z), -v.pX, v.pY, v.pZ, v.onDebug, v.defaultRot, v.poseStages, v.boneId, v.glowing));
             }
 
             return this;
@@ -92,7 +94,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
     }
 
     @Override
-    public void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> setPose, DataDecor data) {
+    public void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int light, int overlay, Consumer<PoseStack> setPose, DataDecor data) {
         ItemStack stack = data.stack();
 
         DecorPlacement placement = data.placement();
@@ -134,6 +136,8 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
 
 
             RenderValue.ModelVal myModel = v.modelVal != null ? v.modelVal : defaultModel;
+            int packedLight = v.glowing ? LightTexture.FULL_BRIGHT : light;
+
 
             if (myModel != null) {
                 if (myModel.modelType != null && myModel.renderType != null) {
@@ -141,7 +145,12 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
                     RenderValue.ParamVal paramVal = new RenderValue.ParamVal(stack, placement);
                     VertexConsumer vertexConsumer = buffer.getBuffer(myModel.renderType.apply(paramVal));
                     Model model = HatBakedModels.getModel(myModel.modelType.apply(paramVal));
-                    model.renderToBuffer(poseStack, vertexConsumer, packedLight, overlay);
+
+                    if (model instanceof SplittedParts splitModel) {
+                        splitModel.renderSpecificBone(v.boneId, poseStack, vertexConsumer, packedLight, overlay);
+                    } else {
+                        model.renderToBuffer(poseStack, vertexConsumer, packedLight, overlay);
+                    }
                 } else if (myModel.blockstate != null) {
                     BlockState targState = myModel.blockstate;
 

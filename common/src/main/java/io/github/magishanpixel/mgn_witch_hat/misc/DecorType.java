@@ -16,24 +16,34 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 public enum DecorType implements StringRepresentable {
-    SKULL(0,"skull", v -> v.is(MGNConstants.ItemTags.Decor.SKULLS), true),
-    LANTERN(1,"lantern", v -> v.is(Items.LANTERN) || v.is(Items.SOUL_LANTERN), true),
-    FLOWER(2, "flower", v -> v.is(ItemTags.SMALL_FLOWERS), true),
+    SKULL(0,"skull", v -> v.is(MGNConstants.ItemTags.Decor.SKULLS), true, true),
+    LANTERN(1,"lantern", v -> v.is(Items.LANTERN) || v.is(Items.SOUL_LANTERN), true, true),
+    FLOWER(2, "flower", v -> v.is(ItemTags.SMALL_FLOWERS), true, true),
     CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true),
-    MOSS(4, "moss", v -> v.is(Items.MOSS_BLOCK), false),
-    RIBBON(5, "ribbon", v -> v.is(MGNConstants.ItemTags.Decor.RIBBON), false)
+    MOSS(4, "moss", v -> v.is(Items.MOSS_BLOCK)),
+    RIBBON(5, "ribbon", v -> v.is(MGNConstants.ItemTags.Decor.RIBBON))
     ;
     private final String name;
     private final int id;
     private final Predicate<ItemStack> check;
 
     private final boolean sided;
-    
+    private final boolean allowBack;
+
+    DecorType(int id, String name, Predicate<ItemStack> check) {
+        this(id, name, check, false, false);
+    }
+
     DecorType(int id, String name, Predicate<ItemStack> check, boolean sided) {
+        this(id, name, check, sided, false);
+    }
+
+    DecorType(int id, String name, Predicate<ItemStack> check, boolean sided, boolean allowBack) {
         this.name = name;
         this.check = check;
         this.id = id;
         this.sided = sided;
+        this.allowBack = allowBack;
     }
 
     public int getId() {
@@ -42,6 +52,10 @@ public enum DecorType implements StringRepresentable {
 
     public boolean isSided() {
         return sided;
+    }
+
+    public boolean allowBack() {
+        return allowBack;
     }
 
     public static DecorType getType(ItemStack stack) {

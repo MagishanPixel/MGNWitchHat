@@ -23,7 +23,9 @@ public class RenderValue {
     public final boolean onDebug;
     public final ModelVal modelVal;
     public final boolean defaultRot;
+    public final int boneId;
     public final ImmutableList<PoseStage> poseStages;
+    public final boolean glowing;
 
     public enum PoseStage {
         TRANSLATE,
@@ -31,7 +33,7 @@ public class RenderValue {
         SCALE
     }
 
-    public RenderValue(ModelVal modelVal, float scale, Vec3 rot, float pX, float pY, float pZ, boolean onDebug, boolean defaultRot, ImmutableList<PoseStage> poseStages) {
+    public RenderValue(ModelVal modelVal, float scale, Vec3 rot, float pX, float pY, float pZ, boolean onDebug, boolean defaultRot, ImmutableList<PoseStage> poseStages, int boneId, boolean glowing) {
         this.modelVal = modelVal;
         this.scale = scale;
         this.rot = rot;
@@ -40,7 +42,9 @@ public class RenderValue {
         this.pZ = pZ;
         this.onDebug = onDebug;
         this.defaultRot = defaultRot;
+        this.boneId = boneId;
         this.poseStages = poseStages;
+        this.glowing = glowing;
     }
 
     public static Builder builder() {
@@ -118,6 +122,18 @@ public class RenderValue {
         private boolean onDebug;
         private List<PoseStage> poseStages = new ArrayList<>();
         private boolean revertRot = false;
+        private int boneId = 1;
+        private boolean glowing = false;
+
+        public Builder glow() {
+            this.glowing = true;
+            return this;
+        }
+
+        public Builder boneId(int num) {
+            this.boneId = num;
+            return this;
+        }
 
         public Builder revertRot() {
             this.revertRot =  true;
@@ -186,7 +202,7 @@ public class RenderValue {
         public RenderValue build() {
             ImmutableList<PoseStage> poseList = poseStages.isEmpty() ? ImmutableList.of(PoseStage.TRANSLATE, PoseStage.SCALE, PoseStage.MULPOSE) : ImmutableList.copyOf(poseStages);
 
-            return new RenderValue(modelVal.build(), scale, rot, pX, pY, pZ, onDebug, revertRot, poseList);
+            return new RenderValue(modelVal.build(), scale, rot, pX, pY, pZ, onDebug, revertRot, poseList, boneId, glowing);
         }
     }
 }
