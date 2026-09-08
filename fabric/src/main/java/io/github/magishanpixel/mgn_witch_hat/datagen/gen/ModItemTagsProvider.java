@@ -27,6 +27,12 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
                 .add(Items.LANTERN)
                 .add(Items.MOSS_BLOCK)
                 .addOptionalTag(ItemTags.CANDLES)
+                .addTag(MGNConstants.ItemTags.Decor.FEATHER)
+        ;
+
+        getOrCreateTagBuilder(MGNConstants.ItemTags.Decor.FEATHER)
+                .add(Items.FEATHER)
+                .add(ModItems.RAVEN_FEATHER.asItem())
         ;
 
         getOrCreateTagBuilder(MGNConstants.ItemTags.Decor.SKULLS)

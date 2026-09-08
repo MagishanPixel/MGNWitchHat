@@ -25,6 +25,8 @@ public class ModModelProvider extends FabricModelProvider {
         gen.generateFlatItem(ModItems.DIAMOND_BUCKLE.asItem(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(ModItems.GOLD_BUCKLE.asItem(), ModelTemplates.FLAT_ITEM);
 
+        gen.generateFlatItem(ModItems.RAVEN_FEATHER.asItem(), ModelTemplates.FLAT_ITEM);
+
         gen.generateFlatItem(ModItems.HAT_BAND.asItem(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(ModItems.WHITE_HAT_BAND.asItem(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(ModItems.ORANGE_HAT_BAND.asItem(), ModelTemplates.FLAT_ITEM);

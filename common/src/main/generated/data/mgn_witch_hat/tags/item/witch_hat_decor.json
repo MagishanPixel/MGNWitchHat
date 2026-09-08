@@ -11,6 +11,7 @@
     {
       "id": "#minecraft:candles",
       "required": false
-    }
+    },
+    "#mgn_witch_hat:decor/feather"
   ]
 }

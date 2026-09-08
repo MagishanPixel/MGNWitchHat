@@ -18,6 +18,7 @@ public class HatBakedModels {
     public static final ResourceLocation MOSS_COVERED = id("moss_covered");
     public static final ResourceLocation RIBBON = id("ribbon");
     public static final ResourceLocation CANDLES = id("candles");
+    public static final ResourceLocation FEATHER = id("feather");
 
     private static ImmutableMap<ResourceLocation, Model> MODEL_MAP = null;
 
@@ -38,6 +39,7 @@ public class HatBakedModels {
         m.put(RIBBON, new RibbonModel<>(context.bakeLayer(ModModelLayers.RIBBON)));
 
         m.put(CANDLES, new CandlesModel<>(context.bakeLayer(ModModelLayers.CANDLES)));
+        m.put(FEATHER, new FeatherModel<>(context.bakeLayer(ModModelLayers.FEATHER)));
 
         MODEL_MAP = m.build();
     }

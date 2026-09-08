@@ -10,6 +10,7 @@ import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.BasicRen
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.RenderValue;
 import io.github.magishanpixel.mgn_witch_hat.client.models.SplittedParts;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
+import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
@@ -53,9 +54,9 @@ public class WitchHatRenderer {
     }
 
     public static void setPoseAsDebug(PoseStack poseStack) {
-        poseStack.translate(0.4f, -1.67f, -0.1f);
-        poseStack.scale(0.7f, 0.7f, 0.7f);
-        qRot(poseStack, 0, -15, 0);
+        poseStack.translate(0.35f, -1.5f, -0.1f);
+        poseStack.scale(0.65f, 0.65f, 0.65f);
+        qRot(poseStack, 0, 10, 0);
     }
 
     public static void qRot(PoseStack poseStack, double x, double y, double z) {
@@ -137,6 +138,30 @@ public class WitchHatRenderer {
         DECOR_RENDERERS = null;
 
         ImmutableMap.Builder<DecorType, RenderDecor> rendBuilder = new ImmutableMap.Builder<>();
+
+        // FEATHER
+        rendBuilder.put(DecorType.FEATHER,
+                decorBuilder()
+                        .autoSided()
+                        .add(RenderValue.builder()
+                                .setModel(HatBakedModels.FEATHER)
+                                .setRenderType(paramVal -> {
+                                    ItemStack stack = paramVal.stack();
+                                    String str = "feather";
+
+                                    if (stack.is(ModItems.RAVEN_FEATHER)) {
+                                        str = "raven_feather";
+                                    }
+
+                                    return RenderType.entityCutout(getDecorsTex(str));
+                                })
+                                .translate(0.35f, -1.5f, -0.1f)
+                                .scale(0.65f)
+                                .rotate(0, 10, 0)
+                                .build()
+                        )
+                        .build()
+        );
 
         // First decor ever made btw :3
         // SKULL
@@ -286,7 +311,7 @@ public class WitchHatRenderer {
             Level level = Minecraft.getInstance().level;
             int currClock = (int) level.getGameTime();
             int v = ((currClock / 4) % 3) + 1;
-            return RenderType.entityCutoutNoCull(getDecorsTex("candle_fire" + v));
+            return RenderType.entityCutout(getDecorsTex("candle_fire" + v));
         };
 
         // CANDLES
@@ -294,7 +319,7 @@ public class WitchHatRenderer {
                 decorBuilder()
                         .setDefaultModel(new RenderValue.ModelVal.Builder()
                                 .setModel(HatBakedModels.CANDLES)
-                                .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("candle")))
+                                .setRenderType(RenderType.entityCutout(getDecorsTex("candle")))
                                 .build()
                         )
                         .autoSided()

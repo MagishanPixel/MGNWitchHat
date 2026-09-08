@@ -55,6 +55,8 @@ public class ModTranslateProvider extends FabricLanguageProvider {
         t.add(ModItems.RED_RIBBON.asItem(), "Red Ribbon");
         t.add(ModItems.BLACK_RIBBON.asItem(), "Black Ribbon");
 
+        t.add(ModItems.RAVEN_FEATHER.asItem(), "Raven Feather");
+
     }
 
 }

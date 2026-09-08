@@ -12,6 +12,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Consumer;
@@ -58,6 +59,8 @@ public class ModItems {
     public static DeferredItem RED_RIBBON;
     public static DeferredItem BLACK_RIBBON;
 
+    public static DeferredItem RAVEN_FEATHER;
+
     public static Holder<CreativeModeTab> MAIN_TAB;
 
     public static void init(BalmItemRegistrar reg) {
@@ -102,6 +105,8 @@ public class ModItems {
         RED_RIBBON = reg.register("red_ribbon", p -> new ColoredItem(p, DyeColor.RED, ColoredItem.ItemType.RIBBON), p -> p.stacksTo(1)).asDeferredItem();
         BLACK_RIBBON = reg.register("black_ribbon", p -> new ColoredItem(p, DyeColor.BLACK, ColoredItem.ItemType.RIBBON), p -> p.stacksTo(1)).asDeferredItem();
         PURPLE_RIBBON = reg.register("purple_ribbon", p -> new ColoredItem(p, DyeColor.PURPLE, ColoredItem.ItemType.RIBBON), p -> p.stacksTo(1)).asDeferredItem();
+
+        RAVEN_FEATHER = reg.register("raven_feather", Item::new, p -> p.stacksTo(1)).asDeferredItem();
     }
 
     public static void creativeTabInit(BalmCreativeModeTabRegistrar reg) {
@@ -110,6 +115,8 @@ public class ModItems {
                 .icon(WITCH_HAT::createStack)
                 .displayItems((itemDisplayParameters, v) -> {
                     v.accept(WITCH_HAT);
+
+                    v.accept(RAVEN_FEATHER);
 
                     v.accept(GOLD_BUCKLE);
                     v.accept(IRON_BUCKLE);

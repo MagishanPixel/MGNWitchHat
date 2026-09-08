@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-07T22:19:20.9557417	MGN's Witch Hat/Model Definitions
+// 1.21.1	2026-09-08T15:31:48.7001697	MGN's Witch Hat/Model Definitions
 13f672fb86f7db5712a620563c7b16b20b855639 assets\mgn_witch_hat\models\item\gray_ribbon.json
 32255a9604d96a67b8779aa62979b4b10a256484 assets\mgn_witch_hat\models\item\green_ribbon.json
 41e64ca1af0380caf6746e7a7c15e7f9d9b4ea89 assets\mgn_witch_hat\models\item\black_hat_band.json
@@ -6,10 +6,10 @@
 8fe45a6acb064c7b1428e7a7a07b43b8577169f4 assets\mgn_witch_hat\models\item\magenta_ribbon.json
 1ea0a19992620b0229ba2458a658ff0ca582dfd5 assets\mgn_witch_hat\models\item\purple_hat_band.json
 904ac3da46df72a993de8a9f5d4565e4a5033689 assets\mgn_witch_hat\models\item\lime_hat_band.json
-2fd77ab7620f65557fc823078a39c49ed792a35e assets\mgn_witch_hat\models\item\purple_ribbon.json
 a11e7681ae179fb75e9dc221b39a2fe85cfb3741 assets\mgn_witch_hat\models\item\light_blue_ribbon.json
-1b7d0bde9ac81f79298becdddede5020d703c3d8 assets\mgn_witch_hat\models\item\cyan_hat_band.json
+2fd77ab7620f65557fc823078a39c49ed792a35e assets\mgn_witch_hat\models\item\purple_ribbon.json
 433481d64c7225e469f5318262abc1374b009704 assets\mgn_witch_hat\models\item\brown_ribbon.json
+1b7d0bde9ac81f79298becdddede5020d703c3d8 assets\mgn_witch_hat\models\item\cyan_hat_band.json
 bc2766bb3d26ddfdb3dc81c56712e60151e2d261 assets\mgn_witch_hat\models\item\orange_ribbon.json
 31248eeb4b80d4184418dbf678d0e2e29d7968c9 assets\mgn_witch_hat\models\item\hat_band.json
 2b687dad3bcc02f0c52f8f67002201f853dd3d66 assets\mgn_witch_hat\models\item\white_hat_band.json
@@ -34,4 +34,5 @@ bc846603f8531b10a1b331ec78ee765f6852adf4 assets\mgn_witch_hat\models\item\white_
 45f841fcc977b6a3429dd1a605460f34cae158b0 assets\mgn_witch_hat\models\item\diamond_buckle.json
 86c0a0b2e4162d4af0ff4425f2f892c7c5f87381 assets\mgn_witch_hat\models\item\magenta_hat_band.json
 e5e84c0dd35fde26d06bb5cc8e63065c4932ce90 assets\mgn_witch_hat\models\item\red_hat_band.json
+e8a91e865417253fa34964893e12f42a443da18a assets\mgn_witch_hat\models\item\raven_feather.json
 c3865c4ed04fbc5daad9c285ac885cb5ee109094 assets\mgn_witch_hat\models\item\yellow_hat_band.json
