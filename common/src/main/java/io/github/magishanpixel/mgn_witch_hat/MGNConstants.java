@@ -24,6 +24,7 @@ public class MGNConstants {
 	public static class ItemTags {
 		public static final TagKey<Item> WITCH_HAT_DECOR = of("witch_hat_decor");
 		public static final TagKey<Item> HAT_BAND = of("hat_band");
+		public static final TagKey<Item> BUCKLE = of("buckle");
 
 
 		public static class Decor {

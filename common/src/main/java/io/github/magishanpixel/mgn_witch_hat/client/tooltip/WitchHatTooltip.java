@@ -1,12 +1,12 @@
 package io.github.magishanpixel.mgn_witch_hat.client.tooltip;
 
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
+import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
@@ -20,26 +20,34 @@ public class WitchHatTooltip implements ClientTooltipComponent {
 
     @Override
     public int getWidth(Font font) {
-        return 24 * display.stackList().size();
+        return 22 * Math.min(display.dataList().size(), 4);
     }
 
     @Override
     public int getHeight() {
-        return 24 * (Math.max(1, (int) Math.floor(((double) display.stackList().size())/3d)));
+        return 22 * (Math.max(1, (int) Math.ceil(((double) display.dataList().size())/4d)));
     }
 
     @Override
     public void renderImage(Font font, int x, int y, GuiGraphics graphics) {
-        List<ItemStack> stackList = display.stackList();
+        List<DataDecor> stackList = display.dataList();
+        int b = 0;
+        int yCount = 0;
 
         for (int i = 0; i < stackList.size(); i++) {
-            int posX = x + (24 * i);
-            graphics.blit(TEX_SLOT, posX, y, 0, 0, 24, 24, 24, 24);
-            graphics.renderItem(stackList.get(i), posX + 4, y + 4);
+            int posX = x + (22 * b);
+            int posY = y + (22 * yCount);
+            graphics.blit(TEX_SLOT, posX, posY, 0, 0, 22, 22, 22, 22);
+            graphics.renderItem(stackList.get(i).stack(), posX + 3, posY + 3);
+            b++;
+            if (b >= 4) {
+                b = 0;
+                yCount++;
+            }
         }
     }
 
-    public record DisplayStacks(List<ItemStack> stackList) implements TooltipComponent {}
+    public record DisplayStacks(List<DataDecor> dataList) implements TooltipComponent {}
 
 
 }

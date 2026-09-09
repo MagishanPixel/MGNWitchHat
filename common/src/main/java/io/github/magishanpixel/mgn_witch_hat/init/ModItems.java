@@ -1,6 +1,5 @@
 package io.github.magishanpixel.mgn_witch_hat.init;
 
-import io.github.magishanpixel.mgn_witch_hat.item.BuckleItem;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.item.WitchHatItem;
 import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
@@ -20,10 +19,6 @@ import java.util.function.Consumer;
 
 public class ModItems {
     public static DeferredItem WITCH_HAT;
-
-    public static DeferredItem IRON_BUCKLE;
-    public static DeferredItem DIAMOND_BUCKLE;
-    public static DeferredItem GOLD_BUCKLE;
 
     public static DeferredItem HAT_BAND;
     public static DeferredItem WHITE_HAT_BAND;
@@ -66,10 +61,6 @@ public class ModItems {
 
     public static void init(BalmItemRegistrar reg) {
         WITCH_HAT = reg.register("witch_hat", p -> new WitchHatItem(p.component(ModDataComponents.HAS_BAND.value(), false).component(ModDataComponents.BRIM_TYPE.value(), BrimType.SHORT)), p -> p.stacksTo(1)).asDeferredItem();
-
-        IRON_BUCKLE = reg.register("iron_buckle", p -> new BuckleItem(p, BuckleType.IRON), p -> p.stacksTo(1)).asDeferredItem();
-        DIAMOND_BUCKLE = reg.register("diamond_buckle", p -> new BuckleItem(p, BuckleType.DIAMOND), p -> p.stacksTo(1)).asDeferredItem();
-        GOLD_BUCKLE = reg.register("gold_buckle", p -> new BuckleItem(p, BuckleType.GOLD), p -> p.stacksTo(1)).asDeferredItem();
 
         HAT_BAND = reg.register("hat_band", p -> new ColoredItem(p, null, ColoredItem.ItemType.HAT_BAND), p -> p.stacksTo(1)).asDeferredItem();
 
@@ -121,10 +112,6 @@ public class ModItems {
                     v.accept(a);
 
                     v.accept(RAVEN_FEATHER);
-
-                    v.accept(GOLD_BUCKLE);
-                    v.accept(IRON_BUCKLE);
-                    v.accept(DIAMOND_BUCKLE);
 
                     v.accept(HAT_BAND);
 

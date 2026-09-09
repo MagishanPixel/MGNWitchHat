@@ -11,6 +11,7 @@ import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value.RenderVa
 import io.github.magishanpixel.mgn_witch_hat.client.models.SplittedParts;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
+import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayers;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
@@ -56,9 +57,9 @@ public class WitchHatRenderer {
     }
 
     public static void setPoseAsDebug(PoseStack poseStack) {
-        poseStack.translate(-0.1f, -0.665f, 0.325f);
-        poseStack.scale(0.175f, 0.175f, 0.175f);
-        qRot(poseStack, 0, -205, 0);
+        poseStack.translate(0, -1.362f, 0.565f);
+        poseStack.scale(0.55f,0.55f,0.55f);
+        qRot(poseStack, 0, 0, 0);
     }
 
     public static void qRot(PoseStack poseStack, double x, double y, double z) {
@@ -150,6 +151,9 @@ public class WitchHatRenderer {
         DECOR_RENDERERS = null;
 
         ImmutableMap.Builder<DecorType, RenderDecor> rendBuilder = new ImmutableMap.Builder<>();
+
+        // Btw I'm having fun making the builder one :D
+        // I know you didnt ask but whatever-
 
         // PUMPKIN
         rendBuilder.put(DecorType.PUMPKIN,
@@ -361,12 +365,14 @@ public class WitchHatRenderer {
                         .setDefaultModel(RenderValue.ModelVal.asBlockItem())
                         .autoSided()
                         .add(RenderValue.builder()
+                                .glow()
                                 .translate(0.4f, 0.652f, 0.35f)
                                 .scale(0.5f)
                                 .rotate(0, 25, 0)
                                 .build()
                         )
                         .add_BACK(RenderValue.builder()
+                                .glow()
                                 .translate(0, 1f, -0.565f)
                                 .scale(0.5f)
                                 .build()
@@ -503,59 +509,5 @@ public class WitchHatRenderer {
 
         DECOR_RENDERERS = rendBuilder.build();
     }
-
-     /*
-        rendBuilder.put(DecorType.CANDLE, (blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, setPose, data) -> {
-            RenderType rendCandle = RenderType.entityCutoutNoCull(getDecorsTex("candle"));
-            VertexConsumer vertexConsumer = buffer.getBuffer(rendCandle);
-
-            SplittedParts model = (SplittedParts) HatBakedModels.getModel(HatBakedModels.CANDLES);
-
-            for (int i = 1; i <= 3; i++) {
-                poseStack.pushPose();
-
-                setPose.accept(poseStack);
-
-                if (i == 1) {
-                    poseStack.translate(0.4f, -1.455f, -0.4f);
-                } else if (i == 2) {
-                    poseStack.translate(0.45f, -1.455f, -0.2f);
-                } else {
-                    poseStack.translate(0.5f, -1.455f, 0.1f);
-                }
-
-                poseStack.scale(0.7f,0.7f,0.7f);
-
-                if (i == 1) {
-                    poseStack.mulPose(Axis.YP.rotation(45));
-                } else if (i == 2) {
-                    poseStack.mulPose(Axis.YP.rotation(0f));
-                } else {
-                    poseStack.mulPose(Axis.YP.rotation(0f));
-                }
-
-                //
-
-                model.renderSpecificBone(i, poseStack, vertexConsumer, packedLight, overlay);
-                poseStack.pushPose();
-
-                float yTip = -0.435f;
-
-                if (i == 3) {
-                    yTip = -0.31f;
-                } else if (i == 2) {
-                    yTip = -0.25f;
-                }
-
-                poseStack.translate(0, yTip, 0);
-                model.renderSpecificBone(4, poseStack, vertexConsumer, packedLight, overlay);
-                poseStack.popPose();
-
-                poseStack.popPose();
-            }
-
-
-
-        });*/
 
 }

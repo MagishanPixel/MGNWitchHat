@@ -4,8 +4,8 @@ import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.init.ModCustomRecipes;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
-import io.github.magishanpixel.mgn_witch_hat.item.BuckleItem;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
+import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
@@ -68,7 +68,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
             int slot = entry.getKey();
             if (!inputStack.isEmpty()) {
                 Item item = inputStack.getItem();
-                if (item instanceof BuckleItem) {
+                if (inputStack.is(MGNConstants.ItemTags.BUCKLE)) {
                     if (!buckleStack.isEmpty()) {
                         return false;
                     }
@@ -121,7 +121,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
     @Override
     public ItemStack assemble(CraftingInput input, HolderLookup.Provider provider) {
         DyeItem dyeItem = null;
-        BuckleItem buckleItem = null;
+        BuckleType buckleType = null;
         ColoredItem bandItem = null;
         ItemStack targStack = ItemStack.EMPTY;
         Map<DecorType, DataDecor> prevDecors = new HashMap<>();
@@ -164,12 +164,12 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                     dyeItem = (DyeItem) item;
                     canCraft = true;
 
-                } else if (item instanceof BuckleItem) {
-                    if (buckleItem != null) {
+                } else if (inputStack.is(MGNConstants.ItemTags.BUCKLE)) {
+                    if (buckleType != null) {
                         return ItemStack.EMPTY;
                     }
 
-                    buckleItem = (BuckleItem) item;
+                    buckleType = BuckleType.getType(inputStack);
                     canCraft = true;
                 } else if (inputStack.is(MGNConstants.ItemTags.HAT_BAND)) {
 
@@ -216,8 +216,8 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                 targStack.set(ModDataComponents.WITCH_HAT_COLOR.value(), dyeItem.getDyeColor());
             }
 
-            if (buckleItem != null) {
-                targStack.set(ModDataComponents.BUCKLE_TYPE.value(), buckleItem.getBuckleType());
+            if (buckleType != null) {
+                targStack.set(ModDataComponents.BUCKLE_TYPE.value(), buckleType);
             }
 
             if (bandItem != null) {

@@ -1,5 +1,4 @@
-// 1.21.1	2026-09-09T00:33:50.4276297	MGN's Witch Hat/Recipes
-b1da5af67dcfd99acd46d0efbac961ebb5c0435d data\mgn_witch_hat\recipe\gold_buckle.json
+// 1.21.1	2026-09-09T17:20:13.3675705	MGN's Witch Hat/Recipes
 5a2ce440f97c1e66ca5579c18e34be55a1281048 data\mgn_witch_hat\advancement\recipes\misc\blue_hat_band.json
 4630d67a7cf217b9865ac2df475039840c1fa7e9 data\mgn_witch_hat\recipe\orange_hat_band.json
 f2048233a312b9eeef0c49e66617a9df8591000e data\mgn_witch_hat\advancement\recipes\misc\purple_hat_band.json
@@ -8,7 +7,6 @@ f2048233a312b9eeef0c49e66617a9df8591000e data\mgn_witch_hat\advancement\recipes\
 1c97c5496096c135e5f28dd065508d93e74c626c data\mgn_witch_hat\advancement\recipes\misc\magenta_hat_band.json
 ee8faf2e0e1cdcaeb88e0eaa71f32703f442e322 data\mgn_witch_hat\advancement\recipes\misc\light_blue_hat_band.json
 5901889f3c5dfe360fc2d5e88877d43f71ee7c55 data\mgn_witch_hat\advancement\recipes\misc\white_hat_band.json
-0dd333858b943ee9460c2114a0c17dfe33097c8a data\mgn_witch_hat\advancement\recipes\misc\gold_buckle.json
 ae002946307f2df9d7603ee60657345efe52bb03 data\mgn_witch_hat\advancement\recipes\misc\cyan_hat_band.json
 02b8a665169060a08e38daaab80899fba22d8224 data\mgn_witch_hat\recipe\brown_hat_band.json
 d09bf6ca9425d883be7a94dd3b7e18fd5c5e22df data\mgn_witch_hat\advancement\recipes\misc\black_hat_band.json

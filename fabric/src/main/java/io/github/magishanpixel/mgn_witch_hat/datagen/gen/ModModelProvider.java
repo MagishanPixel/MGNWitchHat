@@ -20,11 +20,6 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators gen) {
-        //gen.generateFlatItem(ModItems.WITCH_HAT.asItem(), ModelTemplates.FLAT_ITEM);
-        gen.generateFlatItem(ModItems.IRON_BUCKLE.asItem(), ModelTemplates.FLAT_ITEM);
-        gen.generateFlatItem(ModItems.DIAMOND_BUCKLE.asItem(), ModelTemplates.FLAT_ITEM);
-        gen.generateFlatItem(ModItems.GOLD_BUCKLE.asItem(), ModelTemplates.FLAT_ITEM);
-
         gen.generateFlatItem(ModItems.RAVEN_FEATHER.asItem(), ModelTemplates.FLAT_ITEM);
 
         gen.generateFlatItem(ModItems.HAT_BAND.asItem(), ModelTemplates.FLAT_ITEM);

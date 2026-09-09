@@ -44,14 +44,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .unlockedBy(FabricRecipeProvider.getHasName(ModItems.HAT_BAND), FabricRecipeProvider.has(ModItems.HAT_BAND))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLD_BUCKLE)
-                .pattern("BBB")
-                .pattern("B B")
-                .pattern("BBB")
-                .define('B', Ingredient.of(Items.GOLD_INGOT))
-                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.GOLD_BUCKLE), FabricRecipeProvider.has(ModItems.GOLD_BUCKLE))
-                .save(recipeOutput);
-
         hatBand(ModItems.WHITE_HAT_BAND, Items.WHITE_DYE, recipeOutput);
         hatBand(ModItems.ORANGE_HAT_BAND, Items.ORANGE_DYE, recipeOutput);
         hatBand(ModItems.MAGENTA_HAT_BAND, Items.MAGENTA_DYE, recipeOutput);

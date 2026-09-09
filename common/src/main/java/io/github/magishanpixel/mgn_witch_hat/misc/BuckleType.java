@@ -6,13 +6,16 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.function.IntFunction;
+import java.util.function.Predicate;
 
 public enum BuckleType implements StringRepresentable {
-    IRON(0, "iron", 0xfffff),
-    GOLD(1, "gold", 0xe9b115),
-    DIAMOND(2, "diamond", 0x4aedd9)
+    IRON(0, "iron", v -> v.is(Items.IRON_INGOT)),
+    GOLD(1, "gold", v -> v.is(Items.GOLD_INGOT)),
+    DIAMOND(2, "diamond", v -> v.is(Items.DIAMOND))
     ;
 
     private static final IntFunction<BuckleType> BY_ID = ByIdMap.continuous(BuckleType::getId, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
@@ -20,21 +23,27 @@ public enum BuckleType implements StringRepresentable {
     public static final StreamCodec<ByteBuf, BuckleType> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, BuckleType::getId);
 
     private final String name;
-    private final int color;
     private final int id;
+    private final Predicate<ItemStack> check;
 
-    BuckleType(int id, String name, int color) {
+    public static BuckleType getType(ItemStack stack) {
+        for (BuckleType v : values()) {
+            if (v.check.test(stack)) {
+                return v;
+            }
+        }
+
+        return null;
+    }
+
+    BuckleType(int id, String name, Predicate<ItemStack> check) {
         this.name = name;
-        this.color = color;
         this.id = id;
+        this.check = check;
     }
 
     public int getId() {
         return id;
-    }
-
-    public int getCol() {
-        return color;
     }
 
     @Override

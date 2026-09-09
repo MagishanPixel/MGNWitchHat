@@ -20,6 +20,12 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        getOrCreateTagBuilder(MGNConstants.ItemTags.BUCKLE)
+                .add(Items.IRON_INGOT)
+                .add(Items.DIAMOND)
+                .add(Items.GOLD_INGOT)
+        ;
+
         getOrCreateTagBuilder(MGNConstants.ItemTags.WITCH_HAT_DECOR)
                 .addTag(MGNConstants.ItemTags.Decor.SKULLS)
                 .addTag(MGNConstants.ItemTags.Decor.RIBBON)

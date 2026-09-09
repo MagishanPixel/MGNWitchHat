@@ -33,57 +33,8 @@ public class WitchHatItem extends Item implements Equipable {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> c, TooltipFlag tooltipFlag) {
-        /*
-        DyeColor dyeHat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? stack.get(ModDataComponents.WITCH_HAT_COLOR.value()) : null;
-        BuckleType buckleType = stack.has(ModDataComponents.BUCKLE_TYPE.value()) ? stack.get(ModDataComponents.BUCKLE_TYPE.value()) : null;
-
-        if (dyeHat != null) {
-            c.add(createComp("dye", "col." + dyeHat.getSerializedName()));
-        }
-
-        if (buckleType != null) {
-            c.add(createComp("buckle", "buckle." + buckleType.getSerializedName()));
-        }
-
-        if (stack.get(ModDataComponents.HAS_BAND.value())) {
-            String str = "default";
-
-            if (stack.has(ModDataComponents.BAND_COLOR.value())) {
-                DyeColor v = stack.get(ModDataComponents.BAND_COLOR.value());
-                str = v.getSerializedName();
-            }
-
-            c.add(createComp("hat_band", "col." + str));
-        }
-
-        */
-    }
-
-    @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
-        List<ItemStack> stackList = new ArrayList<>();
-
-        DyeColor dyeHat = stack.has(ModDataComponents.WITCH_HAT_COLOR.value()) ? stack.get(ModDataComponents.WITCH_HAT_COLOR.value()) : null;
-        BuckleType buckleType = stack.has(ModDataComponents.BUCKLE_TYPE.value()) ? stack.get(ModDataComponents.BUCKLE_TYPE.value()) : null;
-
-        if (dyeHat != null) {
-            stackList.add(DyeItem.byColor(dyeHat).getDefaultInstance());
-        }
-
-        if (buckleType != null) {
-            stackList.add(BuckleItem.byType(buckleType).getDefaultInstance());
-        }
-
-        if (stack.get(ModDataComponents.HAS_BAND.value())) {
-            if (stack.has(ModDataComponents.BAND_COLOR.value())) {
-                DyeColor v = stack.get(ModDataComponents.BAND_COLOR.value());
-                stackList.add(ColoredItem.byColor(ColoredItem.ItemType.HAT_BAND,v).getDefaultInstance());
-            } else {
-                stackList.add(ModItems.HAT_BAND.createStack());
-            }
-        }
-
+        List<DataDecor> stackList = stack.has(ModDataComponents.DECOR_TYPES.value()) ? List.copyOf(stack.get(ModDataComponents.DECOR_TYPES.value()).values()) : List.of();
         return stackList.isEmpty() ? Optional.empty() : Optional.of(new WitchHatTooltip.DisplayStacks(stackList));
     }
 

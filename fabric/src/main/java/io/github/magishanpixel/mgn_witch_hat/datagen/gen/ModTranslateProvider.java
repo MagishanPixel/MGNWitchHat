@@ -16,9 +16,6 @@ public class ModTranslateProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder t) {
         t.add(ModItems.WITCH_HAT.asItem(), "Witch Hat");
-        t.add(ModItems.DIAMOND_BUCKLE.asItem(), "Diamond Buckle");
-        t.add(ModItems.GOLD_BUCKLE.asItem(), "Gold Buckle");
-        t.add(ModItems.IRON_BUCKLE.asItem(), "Iron Buckle");
 
         t.add(ModItems.HAT_BAND.asItem(), "Hat Band");
         t.add(ModItems.WHITE_HAT_BAND.asItem(), "White Hat Band");
