@@ -12,9 +12,7 @@ import net.blay09.mods.balm.world.item.crafting.BalmRecipeTypeRegistrar;
 import net.minecraft.resources.ResourceLocation;
 
 public class MGNWitchHat implements BalmModule {
-    public static void init() {
-        MGNConstants.LOG.info("COMMON INIT");
-    }
+    public static void init() {}
 
     @Override
     public ResourceLocation getId() {

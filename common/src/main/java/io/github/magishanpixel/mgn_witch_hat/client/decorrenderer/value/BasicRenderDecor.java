@@ -57,7 +57,7 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
             addTo(DecorPlacement.REGULAR, v);
 
             if (autoSided) {
-                addTo(DecorPlacement.RIGHT, new RenderValue(v.modelVal, v.scale, new Vec3(v.rot.x, -v.rot.y, -v.rot.z), -v.pX, v.pY, v.pZ, v.onDebug, v.defaultRot, v.poseStages, v.boneId, v.glowing));
+                addTo(DecorPlacement.RIGHT, new RenderValue(v.modelVal, v.scale, new Vec3(v.rot.x, -v.rot.y, -v.rot.z), -v.pX, v.pY, v.pZ, v.onDebug, v.defaultRot, v.poseStages, v.boneId, v.glowPredicate));
             }
 
             return this;
@@ -137,8 +137,11 @@ public class BasicRenderDecor implements WitchHatRenderer.RenderDecor {
 
 
             RenderValue.ModelVal myModel = v.modelVal != null ? v.modelVal : defaultModel;
-            int packedLight = v.glowing ? LightTexture.FULL_BRIGHT : light;
+            int packedLight = light;
 
+            if (v.glowPredicate != null) {
+                packedLight = v.glowPredicate.test(stack) ? LightTexture.FULL_BRIGHT : light;
+            }
 
             if (myModel != null) {
                 if (myModel.modelType != null && myModel.renderType != null) {

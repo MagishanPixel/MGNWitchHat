@@ -14,6 +14,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class RenderValue {
     public final float scale;
@@ -26,7 +27,7 @@ public class RenderValue {
     public final boolean defaultRot;
     public final int boneId;
     public final ImmutableList<PoseStage> poseStages;
-    public final boolean glowing;
+    public final Predicate<ItemStack> glowPredicate;
 
     public enum PoseStage {
         TRANSLATE,
@@ -34,7 +35,7 @@ public class RenderValue {
         SCALE
     }
 
-    public RenderValue(ModelVal modelVal, float scale, Vec3 rot, float pX, float pY, float pZ, boolean onDebug, boolean defaultRot, ImmutableList<PoseStage> poseStages, int boneId, boolean glowing) {
+    public RenderValue(ModelVal modelVal, float scale, Vec3 rot, float pX, float pY, float pZ, boolean onDebug, boolean defaultRot, ImmutableList<PoseStage> poseStages, int boneId, Predicate<ItemStack> glowPredicate) {
         this.modelVal = modelVal;
         this.scale = scale;
         this.rot = rot;
@@ -45,7 +46,7 @@ public class RenderValue {
         this.defaultRot = defaultRot;
         this.boneId = boneId;
         this.poseStages = poseStages;
-        this.glowing = glowing;
+        this.glowPredicate = glowPredicate;
     }
 
     public static Builder builder() {
@@ -124,10 +125,14 @@ public class RenderValue {
         private List<PoseStage> poseStages = new ArrayList<>();
         private boolean revertRot = false;
         private int boneId = 1;
-        private boolean glowing = false;
+        private Predicate<ItemStack> glowPredicate;
 
         public Builder glow() {
-            this.glowing = true;
+            return glow(stack -> true);
+        }
+
+        public Builder glow(Predicate<ItemStack> predicate) {
+            this.glowPredicate = glowPredicate;
             return this;
         }
 
@@ -203,7 +208,7 @@ public class RenderValue {
         public RenderValue build() {
             ImmutableList<PoseStage> poseList = poseStages.isEmpty() ? ImmutableList.of(PoseStage.TRANSLATE, PoseStage.SCALE, PoseStage.MULPOSE) : ImmutableList.copyOf(poseStages);
 
-            return new RenderValue(modelVal.build(), scale, rot, pX, pY, pZ, onDebug, revertRot, poseList, boneId, glowing);
+            return new RenderValue(modelVal.build(), scale, rot, pX, pY, pZ, onDebug, revertRot, poseList, boneId, glowPredicate);
         }
     }
 }

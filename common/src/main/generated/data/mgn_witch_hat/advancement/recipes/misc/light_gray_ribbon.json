@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_light_gray_ribbon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mgn_witch_hat:light_gray_ribbon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mgn_witch_hat:light_gray_ribbon"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_light_gray_ribbon"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mgn_witch_hat:light_gray_ribbon"
+    ]
+  }
+}

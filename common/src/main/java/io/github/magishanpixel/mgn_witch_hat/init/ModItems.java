@@ -1,6 +1,7 @@
 package io.github.magishanpixel.mgn_witch_hat.init;
 
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
+import io.github.magishanpixel.mgn_witch_hat.item.WitchCandleItem;
 import io.github.magishanpixel.mgn_witch_hat.item.WitchHatItem;
 import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
 import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
@@ -56,6 +57,8 @@ public class ModItems {
     public static DeferredItem BLACK_RIBBON;
 
     public static DeferredItem RAVEN_FEATHER;
+    public static DeferredItem WITCH_CANDLE;
+    public static DeferredItem WITCH_CRYSTAL_DUST;
 
     public static Holder<CreativeModeTab> MAIN_TAB;
 
@@ -99,6 +102,8 @@ public class ModItems {
         PURPLE_RIBBON = reg.register("purple_ribbon", p -> new ColoredItem(p, DyeColor.PURPLE, ColoredItem.ItemType.RIBBON), p -> p.stacksTo(1)).asDeferredItem();
 
         RAVEN_FEATHER = reg.register("raven_feather", Item::new, p -> p.stacksTo(1)).asDeferredItem();
+        WITCH_CANDLE = reg.register("witch_candle", p -> new WitchCandleItem(p.component(ModDataComponents.CANDLE_LIT.value(), false)), p -> p.stacksTo(1)).asDeferredItem();
+        WITCH_CRYSTAL_DUST = reg.register("witch_crystal_dust", Item::new).asDeferredItem();
     }
 
     public static void creativeTabInit(BalmCreativeModeTabRegistrar reg) {
@@ -111,7 +116,9 @@ public class ModItems {
                     a.set(ModDataComponents.BRIM_TYPE.value(), BrimType.WIDE);
                     v.accept(a);
 
+                    v.accept(WITCH_CRYSTAL_DUST);
                     v.accept(RAVEN_FEATHER);
+                    v.accept(WITCH_CANDLE);
 
                     v.accept(HAT_BAND);
 

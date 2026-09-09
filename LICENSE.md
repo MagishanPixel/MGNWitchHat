@@ -1,4 +1,4 @@
-## MagishanPixel Modding License 1.5
+## MagishanPixel Modding 1.5 License
 
 ### Project
 All assets from `resources/assets/...` are under the **All Rights Reserved** license.

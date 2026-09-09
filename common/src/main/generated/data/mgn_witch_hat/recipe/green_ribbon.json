@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "witch_ribbon_colors",
+  "key": {
+    "D": {
+      "item": "mgn_witch_hat:witch_crystal_dust"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "W": {
+      "item": "minecraft:green_wool"
+    }
+  },
+  "pattern": [
+    " W ",
+    "WDW",
+    "S S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mgn_witch_hat:green_ribbon"
+  }
+}

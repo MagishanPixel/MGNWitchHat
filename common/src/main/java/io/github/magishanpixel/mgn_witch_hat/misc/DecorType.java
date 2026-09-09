@@ -1,6 +1,7 @@
 package io.github.magishanpixel.mgn_witch_hat.misc;
 
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
+import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -16,15 +17,16 @@ import java.util.function.IntFunction;
 import java.util.function.Predicate;
 
 public enum DecorType implements StringRepresentable {
+    // I would add more but ran out of ideas :<
+    // I'm planning to add more in the future when I got the ideas anyway...
     SKULL(0,"skull", v -> v.is(MGNConstants.ItemTags.Decor.SKULLS), true, true),
     LANTERN(1,"lantern", v -> v.is(Items.LANTERN) || v.is(Items.SOUL_LANTERN), true, true),
     FLOWER(2, "flower", v -> v.is(ItemTags.SMALL_FLOWERS), true, true),
-    CANDLE(3, "candle", v -> v.is(ItemTags.CANDLES), true),
-    MOSS(4, "moss", v -> v.is(Items.MOSS_BLOCK)),
-    RIBBON(5, "ribbon", v -> v.is(MGNConstants.ItemTags.Decor.RIBBON)),
-    FEATHER(6, "feather", v -> v.is(MGNConstants.ItemTags.Decor.FEATHER), true),
-    PUMPKIN(7, "pumpkin", v -> v.is(Items.PUMPKIN) || v.is(Items.CARVED_PUMPKIN), true, true),
-    JACK_O_LANTERN(8, "jack_o_lantern", v -> v.is(Items.JACK_O_LANTERN), true, true)
+    CANDLE(3, "candle", v -> v.is(ModItems.WITCH_CANDLE.asItem()), true),
+    RIBBON(4, "ribbon", v -> v.is(MGNConstants.ItemTags.Decor.RIBBON)),
+    FEATHER(5, "feather", v -> v.is(MGNConstants.ItemTags.Decor.FEATHER), true),
+    PUMPKIN(6, "pumpkin", v -> v.is(Items.PUMPKIN) || v.is(Items.CARVED_PUMPKIN), true, true),
+    JACK_O_LANTERN(7, "jack_o_lantern", v -> v.is(Items.JACK_O_LANTERN), true, true)
     ;
     private final String name;
     private final int id;

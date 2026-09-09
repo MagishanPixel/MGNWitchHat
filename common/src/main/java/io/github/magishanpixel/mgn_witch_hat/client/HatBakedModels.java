@@ -16,7 +16,6 @@ public class HatBakedModels {
     public static final ResourceLocation HAT_BAND = id("hat_band");
     public static final ResourceLocation BUCKLE = id("buckle");
     public static final ResourceLocation SKULL = id("skull");
-    public static final ResourceLocation MOSS_COVERED = id("moss_covered");
     public static final ResourceLocation RIBBON = id("ribbon");
     public static final ResourceLocation CANDLES = id("candles");
     public static final ResourceLocation FEATHER = id("feather");
@@ -38,8 +37,6 @@ public class HatBakedModels {
         m.put(BUCKLE, new BuckleModel<>(context.bakeLayer(ModModelLayers.BUCKLE)));
 
         m.put(SKULL, new SkullModel(context.bakeLayer(ModelLayers.SKELETON_SKULL)));
-
-        m.put(MOSS_COVERED, new MossCoveredModel<>(context.bakeLayer(ModModelLayers.MOSS_COVERED)));
         m.put(RIBBON, new RibbonModel<>(context.bakeLayer(ModModelLayers.RIBBON)));
 
         m.put(CANDLES, new CandlesModel<>(context.bakeLayer(ModModelLayers.CANDLES)));

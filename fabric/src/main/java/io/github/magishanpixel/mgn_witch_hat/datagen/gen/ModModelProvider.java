@@ -56,5 +56,7 @@ public class ModModelProvider extends FabricModelProvider {
         gen.generateFlatItem(ModItems.GREEN_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(ModItems.RED_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
         gen.generateFlatItem(ModItems.BLACK_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
+
+        gen.generateFlatItem(ModItems.WITCH_CRYSTAL_DUST.asItem(), ModelTemplates.FLAT_ITEM);
     }
 }

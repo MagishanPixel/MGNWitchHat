@@ -4,12 +4,14 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.renderer.WitchHatItemRenderer;
+import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import net.blay09.mods.balm.api.client.BalmClient;
 import net.blay09.mods.balm.neoforge.NeoForgeLoadContext;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.commands.CommandSourceStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -31,7 +33,7 @@ public class MGNWitchHatClient_NEOFORGE {
         modEventBus.addListener(this::onAddLayers);
         modEventBus.addListener(this::clientInit);
         modEventBus.addListener(this::registerItemRenderer);
-        NeoForge.EVENT_BUS.addListener(this::registerCommands);
+        //NeoForge.EVENT_BUS.addListener(this::registerCommands);
     }
 
     public void onAddLayers(EntityRenderersEvent.AddLayers event) {
@@ -41,6 +43,9 @@ public class MGNWitchHatClient_NEOFORGE {
 
     public void clientInit(FMLClientSetupEvent event) {
         event.enqueueWork(WitchHatRenderer::init);
+        event.enqueueWork(() -> {
+            ItemProperties.register(ModItems.WITCH_CANDLE.asItem(), MGNConstants.newId("candle_lit"), (itemStack, clientLevel, livingEntity, i) -> itemStack.get(ModDataComponents.CANDLE_LIT.value()) ? 1f : 0f);
+        });
     }
 
     public void registerItemRenderer(RegisterClientExtensionsEvent event) {
@@ -53,6 +58,8 @@ public class MGNWitchHatClient_NEOFORGE {
             }
         }, ModItems.WITCH_HAT);
     }
+
+
 
     public void registerCommands(RegisterClientCommandsEvent event) {
         LiteralArgumentBuilder<CommandSourceStack> command = LiteralArgumentBuilder.literal("reloadwitchhat");

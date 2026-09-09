@@ -1,0 +1,16 @@
+{
+  "overrides": [
+    {
+      "predicate": {
+        "mgn_witch_hat:candle_lit": 0
+      },
+      "model": "mgn_witch_hat:item/witch_candle_unlit"
+    },
+    {
+      "predicate": {
+        "mgn_witch_hat:candle_lit": 1
+      },
+      "model": "mgn_witch_hat:item/witch_candle_lit"
+    }
+  ]
+}

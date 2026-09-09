@@ -5,18 +5,15 @@ import net.blay09.mods.balm.world.item.DeferredItem;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
@@ -44,61 +41,85 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .unlockedBy(FabricRecipeProvider.getHasName(ModItems.HAT_BAND), FabricRecipeProvider.has(ModItems.HAT_BAND))
                 .save(recipeOutput);
 
-        hatBand(ModItems.WHITE_HAT_BAND, Items.WHITE_DYE, recipeOutput);
-        hatBand(ModItems.ORANGE_HAT_BAND, Items.ORANGE_DYE, recipeOutput);
-        hatBand(ModItems.MAGENTA_HAT_BAND, Items.MAGENTA_DYE, recipeOutput);
-        hatBand(ModItems.LIGHT_BLUE_HAT_BAND, Items.LIGHT_BLUE_DYE, recipeOutput);
-        hatBand(ModItems.YELLOW_HAT_BAND, Items.YELLOW_DYE, recipeOutput);
-        hatBand(ModItems.LIME_HAT_BAND, Items.LIME_DYE, recipeOutput);
-        hatBand(ModItems.PINK_HAT_BAND, Items.PINK_DYE, recipeOutput);
-        hatBand(ModItems.GRAY_HAT_BAND, Items.GRAY_DYE, recipeOutput);
-        hatBand(ModItems.CYAN_HAT_BAND, Items.CYAN_DYE, recipeOutput);
-        hatBand(ModItems.PURPLE_HAT_BAND, Items.PURPLE_DYE, recipeOutput);
-        hatBand(ModItems.BLUE_HAT_BAND, Items.BLUE_DYE, recipeOutput);
-        hatBand(ModItems.BROWN_HAT_BAND, Items.BROWN_DYE, recipeOutput);
-        hatBand(ModItems.GREEN_HAT_BAND, Items.GREEN_DYE, recipeOutput);
-        hatBand(ModItems.RED_HAT_BAND, Items.RED_DYE, recipeOutput);
-        hatBand(ModItems.BLACK_HAT_BAND, Items.BLACK_DYE, recipeOutput);
+        AutoRecipe hatBand = (deferredItem, dyeItem, v) -> {
+            ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, deferredItem)
+                    .requires(ModItems.HAT_BAND)
+                    .requires(dyeItem)
+                    .group("hat_band_colors")
+                    .unlockedBy(FabricRecipeProvider.getHasName(deferredItem), FabricRecipeProvider.has(deferredItem))
+                    .save(v);
+        };
 
-        /*
-        for (DeferredItem deferredItem : List.of(
-                ModItems.WHITE_RIBBON,
-                ModItems.ORANGE_RIBBON,
-                ModItems.MAGENTA_RIBBON,
-                ModItems.LIGHT_BLUE_RIBBON,
-                ModItems.YELLOW_RIBBON,
-                ModItems.LIME_RIBBON,
-                ModItems.PINK_RIBBON,
-                ModItems.GRAY_RIBBON,
-                ModItems.LIGHT_GRAY_RIBBON,
-                ModItems.CYAN_RIBBON,
-                ModItems.PURPLE_RIBBON,
-                ModItems.BLUE_RIBBON,
-                ModItems.BROWN_RIBBON,
-                ModItems.GREEN_RIBBON,
-                ModItems.RED_RIBBON,
-                ModItems.BLACK_RIBBON
-        )) {
-            Item item = deferredItem.asItem();
+        hatBand.create(ModItems.WHITE_HAT_BAND, Items.WHITE_DYE, recipeOutput);
+        hatBand.create(ModItems.ORANGE_HAT_BAND, Items.ORANGE_DYE, recipeOutput);
+        hatBand.create(ModItems.MAGENTA_HAT_BAND, Items.MAGENTA_DYE, recipeOutput);
+        hatBand.create(ModItems.LIGHT_BLUE_HAT_BAND, Items.LIGHT_BLUE_DYE, recipeOutput);
+        hatBand.create(ModItems.YELLOW_HAT_BAND, Items.YELLOW_DYE, recipeOutput);
+        hatBand.create(ModItems.LIME_HAT_BAND, Items.LIME_DYE, recipeOutput);
+        hatBand.create(ModItems.PINK_HAT_BAND, Items.PINK_DYE, recipeOutput);
+        hatBand.create(ModItems.GRAY_HAT_BAND, Items.GRAY_DYE, recipeOutput);
+        hatBand.create(ModItems.CYAN_HAT_BAND, Items.CYAN_DYE, recipeOutput);
+        hatBand.create(ModItems.PURPLE_HAT_BAND, Items.PURPLE_DYE, recipeOutput);
+        hatBand.create(ModItems.BLUE_HAT_BAND, Items.BLUE_DYE, recipeOutput);
+        hatBand.create(ModItems.BROWN_HAT_BAND, Items.BROWN_DYE, recipeOutput);
+        hatBand.create(ModItems.GREEN_HAT_BAND, Items.GREEN_DYE, recipeOutput);
+        hatBand.create(ModItems.RED_HAT_BAND, Items.RED_DYE, recipeOutput);
+        hatBand.create(ModItems.BLACK_HAT_BAND, Items.BLACK_DYE, recipeOutput);
 
-            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.GOLD_BUCKLE)
-                    .pattern("B B")
-                    .pattern(" B ")
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.WITCH_CRYSTAL_DUST)
+                .requires(Items.GUNPOWDER)
+                .requires(Items.STRING)
+                .requires(Items.AMETHYST_SHARD)
+                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.WITCH_CRYSTAL_DUST), FabricRecipeProvider.has(ModItems.WITCH_CRYSTAL_DUST))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.RAVEN_FEATHER)
+                .requires(Items.FEATHER)
+                .requires(ModItems.WITCH_CRYSTAL_DUST)
+                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.RAVEN_FEATHER), FabricRecipeProvider.has(ModItems.RAVEN_FEATHER))
+                .save(recipeOutput);
+
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.WITCH_CANDLE)
+                .requires(ItemTags.CANDLES)
+                .requires(ModItems.WITCH_CRYSTAL_DUST)
+                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.WITCH_CANDLE), FabricRecipeProvider.has(ModItems.WITCH_CANDLE))
+                .save(recipeOutput);
+
+        AutoRecipe ribbonRecipe = (deferredItem, wool, v) -> {
+            ShapedRecipeBuilder.shaped(RecipeCategory.MISC, deferredItem)
+                    .pattern(" W ")
+                    .pattern("WDW")
                     .pattern("S S")
-                    .define('B', Ingredient.of(Items.B))
-                    .define('S', Ingredient.of(Items.STRING))
-                    .unlockedBy(FabricRecipeProvider.getHasName(ModItems.GOLD_BUCKLE), FabricRecipeProvider.has(ModItems.GOLD_BUCKLE))
+                    .define('W', wool)
+                    .define('D', ModItems.WITCH_CRYSTAL_DUST.value())
+                    .define('S', Items.STRING)
+                    .group("witch_ribbon_colors")
+                    .unlockedBy(FabricRecipeProvider.getHasName(deferredItem), FabricRecipeProvider.has(deferredItem))
                     .save(recipeOutput);
-        }*/
+        };
+
+        ribbonRecipe.create(ModItems.WHITE_RIBBON, Items.WHITE_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.ORANGE_RIBBON, Items.ORANGE_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.MAGENTA_RIBBON, Items.MAGENTA_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.LIGHT_BLUE_RIBBON, Items.LIGHT_BLUE_DYE, recipeOutput);
+        ribbonRecipe.create(ModItems.YELLOW_RIBBON, Items.YELLOW_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.LIME_RIBBON, Items.LIME_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.PINK_RIBBON, Items.PINK_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.GRAY_RIBBON, Items.GRAY_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.LIGHT_GRAY_RIBBON, Items.LIGHT_GRAY_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.CYAN_RIBBON, Items.CYAN_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.PURPLE_RIBBON, Items.PURPLE_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.BLUE_RIBBON, Items.BLUE_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.BROWN_RIBBON, Items.BROWN_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.GREEN_RIBBON, Items.GREEN_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.RED_RIBBON, Items.RED_WOOL, recipeOutput);
+        ribbonRecipe.create(ModItems.BLACK_RIBBON, Items.BLACK_WOOL, recipeOutput);
     }
 
-    private static void hatBand(DeferredItem item, Item dyeItem, RecipeOutput output) {
-        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, item)
-                .requires(ModItems.HAT_BAND)
-                .requires(dyeItem)
-                .group("hat_band_colors")
-                .unlockedBy(FabricRecipeProvider.getHasName(item), FabricRecipeProvider.has(item))
-                .save(output);
+    private interface AutoRecipe {
+        void create(DeferredItem deferredItem, Item targItem, RecipeOutput output);
     }
+
 }
 

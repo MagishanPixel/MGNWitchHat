@@ -54,6 +54,9 @@ public class ModTranslateProvider extends FabricLanguageProvider {
         t.add(ModItems.BLACK_RIBBON.asItem(), "Black Ribbon");
 
         t.add(ModItems.RAVEN_FEATHER.asItem(), "Raven Feather");
+        t.add(ModItems.WITCH_CANDLE.asItem(), "Witch Candle");
+        t.add(ModItems.WITCH_CRYSTAL_DUST.asItem(), "Witch Crystal Dust");
+        t.add("item.mgn_witch_hat.witch_candle.desc", "Sneak and Right Click to lit up");
 
     }
 

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mgn_witch_hat:white_ribbon"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_white_ribbon": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mgn_witch_hat:white_ribbon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_white_ribbon"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mgn_witch_hat:white_ribbon"
+    ]
+  }
+}

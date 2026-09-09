@@ -152,7 +152,7 @@ public class WitchHatRenderer {
 
         ImmutableMap.Builder<DecorType, RenderDecor> rendBuilder = new ImmutableMap.Builder<>();
 
-        // Btw I'm having fun making the builder one :D
+        // I'm having fun making the builder one btw :D
         // I know you didnt ask but whatever-
 
         // PUMPKIN
@@ -401,22 +401,6 @@ public class WitchHatRenderer {
                         .build()
         );
 
-        // MOSS
-        rendBuilder.put(DecorType.MOSS, decorBuilder()
-                .add(RenderValue.builder()
-                        .setStage(RenderValue.PoseStage.SCALE)
-                        .setStage(RenderValue.PoseStage.TRANSLATE)
-                        .setStage(RenderValue.PoseStage.MULPOSE)
-                        .setModel(HatBakedModels.MOSS_COVERED)
-                        .setRenderType(RenderType.entityCutoutNoCull(getDecorsTex("moss_covered")))
-                        .scale(1.5f)
-                        .translate(0, -1.87f, 0)
-                        .revertRot()
-                        .build()
-                )
-                .build()
-        );
-
         // RIBBON
         rendBuilder.put(DecorType.RIBBON, decorBuilder()
                 .add(RenderValue.builder()
@@ -437,6 +421,8 @@ public class WitchHatRenderer {
         );
 
         final Function<RenderValue.ParamVal, RenderType> CANDLE_FIRE = paramVal -> {
+            if (!paramVal.stack().get(ModDataComponents.CANDLE_LIT.value())) return RenderType.entityCutout(getDecorsTex("candle"));
+
             Level level = Minecraft.getInstance().level;
             int currClock = (int) level.getGameTime();
             int v = ((currClock / 4) % 3) + 1;
@@ -475,7 +461,7 @@ public class WitchHatRenderer {
                         )
                         // TIP
                         .add(RenderValue.builder()
-                                .glow()
+                                .glow(stack -> stack.get(ModDataComponents.CANDLE_LIT.value()))
                                 .setModel(HatBakedModels.CANDLES)
                                 .setRenderType(CANDLE_FIRE)
                                 .scale(0.7f)
@@ -485,7 +471,7 @@ public class WitchHatRenderer {
                                 .build()
                         )
                         .add(RenderValue.builder()
-                                .glow()
+                                .glow(stack -> stack.get(ModDataComponents.CANDLE_LIT.value()))
                                 .setModel(HatBakedModels.CANDLES)
                                 .setRenderType(CANDLE_FIRE)
                                 .scale(0.5f)
@@ -495,7 +481,7 @@ public class WitchHatRenderer {
                                 .build()
                         )
                         .add(RenderValue.builder()
-                                .glow()
+                                .glow(stack -> stack.get(ModDataComponents.CANDLE_LIT.value()))
                                 .setModel(HatBakedModels.CANDLES)
                                 .setRenderType(CANDLE_FIRE)
                                 .scale(0.5f)

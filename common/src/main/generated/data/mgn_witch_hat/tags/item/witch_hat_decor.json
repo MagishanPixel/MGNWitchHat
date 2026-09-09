@@ -7,14 +7,11 @@
       "required": false
     },
     "minecraft:lantern",
-    "minecraft:moss_block",
-    {
-      "id": "#minecraft:candles",
-      "required": false
-    },
+    "minecraft:soul_lantern",
     "#mgn_witch_hat:decor/feather",
     "minecraft:pumpkin",
     "minecraft:carved_pumpkin",
-    "minecraft:jack_o_lantern"
+    "minecraft:jack_o_lantern",
+    "mgn_witch_hat:witch_candle"
   ]
 }

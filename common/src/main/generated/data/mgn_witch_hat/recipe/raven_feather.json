@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:feather"
+    },
+    {
+      "item": "mgn_witch_hat:witch_crystal_dust"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mgn_witch_hat:raven_feather"
+  }
+}

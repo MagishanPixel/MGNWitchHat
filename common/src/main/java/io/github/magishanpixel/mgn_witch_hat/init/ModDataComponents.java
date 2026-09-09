@@ -23,6 +23,7 @@ public class ModDataComponents {
     public static Holder<DataComponentType<Boolean>> HAS_BAND;
     public static Holder<DataComponentType<Map<DecorType, DataDecor>>> DECOR_TYPES;
     public static Holder<DataComponentType<BrimType>> BRIM_TYPE;
+    public static Holder<DataComponentType<Boolean>> CANDLE_LIT;
 
     public static void init(BalmDataComponentTypeRegistrar reg) {
         WITCH_HAT_COLOR = reg.register("witch_hat_color", DyeColor.CODEC, DyeColor.STREAM_CODEC).asHolder();
@@ -38,6 +39,7 @@ public class ModDataComponents {
                 )
         ).asHolder();
         BRIM_TYPE = reg.register("brim_type", BrimType.CODEC, BrimType.STREAM_CODEC).asHolder();
+        CANDLE_LIT = reg.register("candle_list", Codec.BOOL, ByteBufCodecs.BOOL).asHolder();
 
     }
 }
