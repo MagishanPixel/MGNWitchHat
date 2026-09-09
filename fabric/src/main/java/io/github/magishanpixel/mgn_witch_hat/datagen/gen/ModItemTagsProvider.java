@@ -30,7 +30,7 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
                 .addTag(MGNConstants.ItemTags.Decor.SKULLS)
                 .addTag(MGNConstants.ItemTags.Decor.RIBBON)
                 .addOptionalTag(ItemTags.SMALL_FLOWERS)
-                .add(Items.LANTERN)
+                .add(Items.LANTERN, Items.SOUL_LANTERN)
                 .add(Items.MOSS_BLOCK)
                 .addOptionalTag(ItemTags.CANDLES)
                 .addTag(MGNConstants.ItemTags.Decor.FEATHER)

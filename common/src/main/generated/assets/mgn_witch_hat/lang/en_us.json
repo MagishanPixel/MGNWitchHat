@@ -33,5 +33,6 @@
   "item.mgn_witch_hat.white_ribbon": "White Ribbon",
   "item.mgn_witch_hat.witch_hat": "Witch Hat",
   "item.mgn_witch_hat.yellow_hat_band": "Yellow Hat Band",
-  "item.mgn_witch_hat.yellow_ribbon": "Yellow Ribbon"
+  "item.mgn_witch_hat.yellow_ribbon": "Yellow Ribbon",
+  "itemgroup.mgn_witch_hat": "MGN's Witch Hat"
 }

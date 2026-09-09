@@ -5,11 +5,9 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModCustomRecipes;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
-import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
-import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
-import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
-import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
+import io.github.magishanpixel.mgn_witch_hat.misc.*;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,6 +33,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         ItemStack buckleStack = ItemStack.EMPTY;
         ItemStack dyeStack = ItemStack.EMPTY;
         ItemStack bandStack = ItemStack.EMPTY;
+        boolean hasWool = false;
 
         List<DecorType> decorList = new ArrayList<>();
         boolean canCraft = false;
@@ -75,7 +74,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
 
                     buckleStack = inputStack;
                     canCraft = true;
-                } else if (item instanceof DyeItem)  {
+                } else if (item instanceof DyeItem) {
                     if (!dyeStack.isEmpty()) {
                         return false;
                     }
@@ -109,6 +108,10 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                         decorList.add(deco);
                         canCraft = true;
                     }
+                } else if (inputStack.is(ItemTags.WOOL)) {
+                    if (hasWool || targStack.get(ModDataComponents.BRIM_TYPE.value()) == BrimType.WIDE) return false;
+                    hasWool = true;
+                    canCraft = true;
                 } else {
                     return false;
                 }
@@ -126,6 +129,7 @@ public class WitchHatCustomRecipe extends CustomRecipe {
         ItemStack targStack = ItemStack.EMPTY;
         Map<DecorType, DataDecor> prevDecors = new HashMap<>();
         Map<DecorType, DataDecor> decorList = new HashMap<>();
+        boolean hasWool = false;
         boolean canCraft = false;
 
         Map<Integer,ItemStack> catchedStack = new HashMap<>();
@@ -205,7 +209,11 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                         decorList.put(deco, new DataDecor(inputStack.copy(), placement));
                         canCraft = true;
                     }
-                } else {
+                } else if (inputStack.is(ItemTags.WOOL)) {
+                    if (hasWool || targStack.get(ModDataComponents.BRIM_TYPE.value()) == BrimType.WIDE) return ItemStack.EMPTY;
+                    hasWool = true;
+                    canCraft = true;
+                }else {
                     return ItemStack.EMPTY;
                 }
             }
@@ -233,6 +241,10 @@ public class WitchHatCustomRecipe extends CustomRecipe {
             if (!decorList.isEmpty()) {
                 decorList.putAll(prevDecors);
                 targStack.set(ModDataComponents.DECOR_TYPES.value(), decorList);
+            }
+
+            if (hasWool) {
+                targStack.set(ModDataComponents.BRIM_TYPE.value(), BrimType.WIDE);
             }
 
             MGNConstants.LOG.info(targStack.toString());

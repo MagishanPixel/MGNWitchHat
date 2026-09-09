@@ -25,13 +25,6 @@ public class WitchHatItem extends Item implements Equipable {
         super(properties);
     }
 
-    private static final String ITEM_TRANSLATE = "item.mgn_witch_hat.";
-
-    private static Component createComp(String descName, String v) {
-        return Component.translatable(ITEM_TRANSLATE + "desc." + descName).append(": ").append(Component.translatable(ITEM_TRANSLATE + v));
-
-    }
-
     @Override
     public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
         List<DataDecor> stackList = stack.has(ModDataComponents.DECOR_TYPES.value()) ? List.copyOf(stack.get(ModDataComponents.DECOR_TYPES.value()).values()) : List.of();

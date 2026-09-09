@@ -1,1 +1,1 @@
-For MagishanPixel bruh
+Adds a cosmetic customizable Witch Hat

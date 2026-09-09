@@ -15,6 +15,7 @@ public class ModTranslateProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder t) {
+        t.add("itemgroup.mgn_witch_hat", "MGN's Witch Hat");
         t.add(ModItems.WITCH_HAT.asItem(), "Witch Hat");
 
         t.add(ModItems.HAT_BAND.asItem(), "Hat Band");
