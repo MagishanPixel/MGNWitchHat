@@ -25,11 +25,12 @@ public class ModRecipeProvider extends FabricRecipeProvider {
     public void buildRecipes(RecipeOutput recipeOutput) {
 
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.WITCH_HAT)
-                .pattern(" # ")
+                .pattern("S#S")
                 .pattern("#B#")
                 .pattern("###")
                 .define('#', Ingredient.of(ItemTags.WOOL))
                 .define('B', Items.AMETHYST_SHARD)
+                .define('S', ModItems.WITCH_CRYSTAL_DUST)
                 .unlockedBy(FabricRecipeProvider.getHasName(ModItems.WITCH_HAT), FabricRecipeProvider.has(ModItems.WITCH_HAT))
                 .save(recipeOutput);
 

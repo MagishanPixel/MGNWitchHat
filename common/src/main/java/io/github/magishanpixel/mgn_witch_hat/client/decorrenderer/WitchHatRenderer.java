@@ -276,7 +276,7 @@ public class WitchHatRenderer {
                                     ItemStack stack = paramVal.stack();
                                     String str = "feather";
 
-                                    if (stack.is(ModItems.RAVEN_FEATHER)) {
+                                    if (stack.is(ModItems.RAVEN_FEATHER.asItem())) {
                                         str = "raven_feather";
                                     }
 
@@ -311,11 +311,11 @@ public class WitchHatRenderer {
                                         };
 
                                         if (tex != null) {
-                                            return RenderType.entityCutoutNoCullZOffset(tex);
+                                            return RenderType.entityCutoutNoCull(tex);
                                         }
                                     }
 
-                                    return RenderType.entityCutoutNoCullZOffset(ResourceLocation.withDefaultNamespace("textures/entity/skeleton/skeleton.png"));
+                                    return RenderType.entityCutoutNoCull(ResourceLocation.withDefaultNamespace("textures/entity/skeleton/skeleton.png"));
                                 })
                                 .build()
                         )
@@ -325,7 +325,7 @@ public class WitchHatRenderer {
                                 .setStage(RenderValue.PoseStage.TRANSLATE)
                                 .setStage(RenderValue.PoseStage.MULPOSE)
                                 .scale(0.5f)
-                                .translate(0.65f, -0.805f, -0.15f)
+                                .translate(0.65f, -0.806f, -0.15f)
                                 .rotate(0, -70, 0)
                                 .build()
                         )
@@ -334,7 +334,7 @@ public class WitchHatRenderer {
                                 .setStage(RenderValue.PoseStage.TRANSLATE)
                                 .setStage(RenderValue.PoseStage.MULPOSE)
                                 .scale(0.35f)
-                                .translate(1.1f, -1.15f, 0.4f)
+                                .translate(1.1f, -1.151f, 0.4f)
                                 .rotate(0, -135, 0)
                                 .build()
                         )
@@ -343,7 +343,7 @@ public class WitchHatRenderer {
                                 .setStage(RenderValue.PoseStage.TRANSLATE)
                                 .setStage(RenderValue.PoseStage.MULPOSE)
                                 .scale(0.5f)
-                                .translate(0.2f, -0.805f, 0.6f)
+                                .translate(0.2f, -0.806f, 0.6f)
                                 .rotate(0, -145, 0)
                                 .build()
                         )
@@ -352,7 +352,7 @@ public class WitchHatRenderer {
                                 .setStage(RenderValue.PoseStage.TRANSLATE)
                                 .setStage(RenderValue.PoseStage.MULPOSE)
                                 .scale(0.35f)
-                                .translate(-0.4f, -1.15f, 0.9f)
+                                .translate(-0.4f, -1.151f, 0.9f)
                                 .rotate(0, -220, 0)
                                 .build()
                         )
@@ -366,7 +366,7 @@ public class WitchHatRenderer {
                         .autoSided()
                         .add(RenderValue.builder()
                                 .glow()
-                                .translate(0.4f, 0.652f, 0.35f)
+                                .translate(0.4f, 0.653f, 0.35f)
                                 .scale(0.5f)
                                 .rotate(0, 25, 0)
                                 .build()

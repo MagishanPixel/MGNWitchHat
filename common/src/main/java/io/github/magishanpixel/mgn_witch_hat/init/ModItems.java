@@ -3,19 +3,19 @@ package io.github.magishanpixel.mgn_witch_hat.init;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.item.WitchCandleItem;
 import io.github.magishanpixel.mgn_witch_hat.item.WitchHatItem;
-import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
-import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
+import io.github.magishanpixel.mgn_witch_hat.misc.*;
 import net.blay09.mods.balm.core.DeferredHolder;
 import net.blay09.mods.balm.world.item.BalmCreativeModeTabRegistrar;
 import net.blay09.mods.balm.world.item.BalmItemRegistrar;
 import net.blay09.mods.balm.world.item.DeferredItem;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.ItemLike;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class ModItems {
@@ -156,8 +156,137 @@ public class ModItems {
                     v.accept(RED_RIBBON);
                     v.accept(BLACK_RIBBON);
 
+                    ItemStack premadestack1 = createWithDecorStack(List.of(
+                            DecorType.JACK_O_LANTERN,
+                            DecorType.RIBBON
+                    ), List.of(
+                            new DataDecor(Items.JACK_O_LANTERN.getDefaultInstance(), DecorPlacement.RIGHT),
+                            new DataDecor(PURPLE_RIBBON.createStack(), DecorPlacement.REGULAR)
+                    ));
+
+                    premadestack1.set(ModDataComponents.HAS_BAND.value(), true);
+                    premadestack1.set(ModDataComponents.BAND_COLOR.value(), DyeColor.PURPLE);
+                    premadestack1.set(ModDataComponents.BUCKLE_TYPE.value(), BuckleType.GOLD);
+
+                    ItemStack premadestack2 = createWithDecorStack(List.of(
+                            DecorType.SKULL,
+                            DecorType.FLOWER,
+                            DecorType.LANTERN
+                    ), List.of(
+                            new DataDecor(Items.CREEPER_HEAD.getDefaultInstance(), DecorPlacement.RIGHT),
+                            new DataDecor(Items.PINK_TULIP.getDefaultInstance(), DecorPlacement.RIGHT),
+                            new DataDecor(Items.LANTERN.getDefaultInstance(), DecorPlacement.REGULAR)
+                    ));
+
+                    premadestack2.set(ModDataComponents.HAS_BAND.value(), true);
+                    premadestack2.set(ModDataComponents.BAND_COLOR.value(), DyeColor.BROWN);
+                    premadestack2.set(ModDataComponents.WITCH_HAT_COLOR.value(), DyeColor.GREEN);
+
+                    ItemStack premadestack3 = createWithDecorStack(List.of(
+                            DecorType.SKULL,
+                            DecorType.FEATHER,
+                            DecorType.CANDLE,
+                            DecorType.LANTERN
+                    ), List.of(
+                            new DataDecor(Items.SKELETON_SKULL.getDefaultInstance(), DecorPlacement.RIGHT),
+                            new DataDecor(RAVEN_FEATHER.createStack(), DecorPlacement.RIGHT),
+                            new DataDecor(WITCH_CANDLE.createStack(), DecorPlacement.REGULAR),
+                            new DataDecor(Items.SOUL_LANTERN.getDefaultInstance(), DecorPlacement.BACK)
+                    ));
+
+                    premadestack3.set(ModDataComponents.WITCH_HAT_COLOR.value(), DyeColor.BLACK);
+
+                    v.accept(premadestack1);
+                    v.accept(premadestack2);
+                    v.accept(premadestack3);
+
+                    for (DyeColor col : DyeColor.values()) {
+                        ItemStack stack = WITCH_HAT.createStack();
+                        stack.set(ModDataComponents.WITCH_HAT_COLOR.value(), col);
+                        v.accept(stack);
+                    }
+
+                    AcceptAsDecor acceptAsDecor = (decorType, placement, stackList) -> {
+                        for (ItemStack stack : stackList) {
+                            v.accept(createWithDecorStack(decorType, placement, stack));
+                        }
+                    };
+
+                    acceptAsDecor.run(DecorType.SKULL, DecorPlacement.RIGHT, List.of(
+                            Items.SKELETON_SKULL.getDefaultInstance(),
+                            Items.WITHER_SKELETON_SKULL.getDefaultInstance(),
+                            Items.CREEPER_HEAD.getDefaultInstance(),
+                            Items.ZOMBIE_HEAD.getDefaultInstance()
+                    ));
+
+                    ItemStack CANDLE_LIT_STACK = WITCH_CANDLE.createStack();
+                    CANDLE_LIT_STACK.set(ModDataComponents.CANDLE_LIT.value(), true);
+
+                    acceptAsDecor.run(DecorType.CANDLE, DecorPlacement.RIGHT, List.of(
+                            WITCH_CANDLE.createStack(),
+                            CANDLE_LIT_STACK
+                    ));
+
+                    acceptAsDecor.run(DecorType.FEATHER, DecorPlacement.RIGHT, List.of(
+                            Items.FEATHER.getDefaultInstance(),
+                            RAVEN_FEATHER.createStack()
+                    ));
+
+                    acceptAsDecor.run(DecorType.PUMPKIN, DecorPlacement.RIGHT, List.of(
+                            Items.PUMPKIN.getDefaultInstance(),
+                            Items.CARVED_PUMPKIN.getDefaultInstance()
+                    ));
+
+                    acceptAsDecor.run(DecorType.JACK_O_LANTERN, DecorPlacement.RIGHT, List.of(Items.JACK_O_LANTERN.getDefaultInstance()));
+
+                    acceptAsDecor.run(DecorType.LANTERN, DecorPlacement.RIGHT, List.of(Items.LANTERN.getDefaultInstance(), Items.SOUL_LANTERN.getDefaultInstance()));
+                    acceptAsDecor.run(DecorType.LANTERN, DecorPlacement.BACK, List.of(Items.LANTERN.getDefaultInstance(), Items.SOUL_LANTERN.getDefaultInstance()));
+
+                    acceptAsDecor.run(DecorType.FLOWER, DecorPlacement.RIGHT, List.of(
+                            Items.ORANGE_TULIP.getDefaultInstance(),
+                            Items.PINK_TULIP.getDefaultInstance(),
+                            Items.RED_TULIP.getDefaultInstance(),
+                            Items.WHITE_TULIP.getDefaultInstance()
+                    ));
+
                 })
         ).asHolder();
+    }
+
+    private interface AcceptAsDecor {
+        void run(DecorType decorType, DecorPlacement placement, List<ItemStack> stackList);
+    }
+
+    private static ItemStack createWithDecorStack(DecorType decorType, DecorPlacement placement, ItemStack stackDecor) {
+        ItemStack stack = ModItems.WITCH_HAT.createStack();
+
+        if (!stack.has(ModDataComponents.DECOR_TYPES.value())) {
+            stack.set(ModDataComponents.DECOR_TYPES.value(), new HashMap<>());
+        }
+        Map<DecorType, DataDecor> m = stack.get(ModDataComponents.DECOR_TYPES.value());
+
+        m.put(decorType, new DataDecor(stackDecor, placement));
+
+        stack.set(ModDataComponents.DECOR_TYPES.value(), m);
+
+        return stack;
+    }
+
+    private static ItemStack createWithDecorStack(List<DecorType> decorList, List<DataDecor> dataList) {
+        ItemStack stack = ModItems.WITCH_HAT.createStack();
+
+        if (!stack.has(ModDataComponents.DECOR_TYPES.value())) {
+            stack.set(ModDataComponents.DECOR_TYPES.value(), new HashMap<>());
+        }
+        Map<DecorType, DataDecor> m = stack.get(ModDataComponents.DECOR_TYPES.value());
+
+        for (int i = 0; i < decorList.size(); i++) {
+            m.put(decorList.get(i), dataList.get(i));
+        }
+
+        stack.set(ModDataComponents.DECOR_TYPES.value(), m);
+
+        return stack;
     }
 
     public static void addToCreativeTab(Consumer<ItemStack> v) {}

@@ -247,8 +247,6 @@ public class WitchHatCustomRecipe extends CustomRecipe {
                 targStack.set(ModDataComponents.BRIM_TYPE.value(), BrimType.WIDE);
             }
 
-            MGNConstants.LOG.info(targStack.toString());
-
             return targStack;
         }
 

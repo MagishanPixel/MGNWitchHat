@@ -3,10 +3,9 @@ package io.github.magishanpixel.mgn_witch_hat.item;
 import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
-import io.github.magishanpixel.mgn_witch_hat.misc.BuckleType;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
+import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -15,10 +14,7 @@ import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class WitchHatItem extends Item implements Equipable {
     public WitchHatItem(Properties properties) {
@@ -53,5 +49,7 @@ public class WitchHatItem extends Item implements Equipable {
         }
         return this.swapWithEquipmentSlot(this, level, player, hand);
     }
+
+
 
 }

@@ -36,5 +36,7 @@ public class MGNWitchHatClient_FABRIC implements ClientModInitializer {
         });
 
         ModelPredicateProviderRegistrySpecificAccessor.callRegister(ModItems.WITCH_CANDLE.asItem(), MGNConstants.newId("candle_lit"), (itemStack, clientLevel, livingEntity, i) -> itemStack.get(ModDataComponents.CANDLE_LIT.value()) ? 1f : 0f);
+
+        WitchHatRenderer.init();
     }
 }

@@ -15,6 +15,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.function.IntFunction;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public enum DecorType implements StringRepresentable {
     // I would add more but ran out of ideas :<

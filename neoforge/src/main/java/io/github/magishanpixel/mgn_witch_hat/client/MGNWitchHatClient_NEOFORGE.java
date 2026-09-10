@@ -33,7 +33,7 @@ public class MGNWitchHatClient_NEOFORGE {
         modEventBus.addListener(this::onAddLayers);
         modEventBus.addListener(this::clientInit);
         modEventBus.addListener(this::registerItemRenderer);
-        //NeoForge.EVENT_BUS.addListener(this::registerCommands);
+        NeoForge.EVENT_BUS.addListener(this::registerCommands);
     }
 
     public void onAddLayers(EntityRenderersEvent.AddLayers event) {
