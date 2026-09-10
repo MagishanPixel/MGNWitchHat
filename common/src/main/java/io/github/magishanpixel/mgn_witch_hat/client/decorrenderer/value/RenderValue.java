@@ -132,7 +132,7 @@ public class RenderValue {
         }
 
         public Builder glow(Predicate<ItemStack> predicate) {
-            this.glowPredicate = glowPredicate;
+            this.glowPredicate = predicate;
             return this;
         }
 

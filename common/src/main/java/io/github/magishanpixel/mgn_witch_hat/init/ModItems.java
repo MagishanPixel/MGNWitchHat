@@ -182,6 +182,9 @@ public class ModItems {
                     premadestack2.set(ModDataComponents.BAND_COLOR.value(), DyeColor.BROWN);
                     premadestack2.set(ModDataComponents.WITCH_HAT_COLOR.value(), DyeColor.GREEN);
 
+                    ItemStack CANDLE_LIT_STACK = WITCH_CANDLE.createStack();
+                    CANDLE_LIT_STACK.set(ModDataComponents.CANDLE_LIT.value(), true);
+
                     ItemStack premadestack3 = createWithDecorStack(List.of(
                             DecorType.SKULL,
                             DecorType.FEATHER,
@@ -190,7 +193,7 @@ public class ModItems {
                     ), List.of(
                             new DataDecor(Items.SKELETON_SKULL.getDefaultInstance(), DecorPlacement.RIGHT),
                             new DataDecor(RAVEN_FEATHER.createStack(), DecorPlacement.RIGHT),
-                            new DataDecor(WITCH_CANDLE.createStack(), DecorPlacement.REGULAR),
+                            new DataDecor(CANDLE_LIT_STACK.copy(), DecorPlacement.REGULAR),
                             new DataDecor(Items.SOUL_LANTERN.getDefaultInstance(), DecorPlacement.BACK)
                     ));
 
@@ -219,8 +222,7 @@ public class ModItems {
                             Items.ZOMBIE_HEAD.getDefaultInstance()
                     ));
 
-                    ItemStack CANDLE_LIT_STACK = WITCH_CANDLE.createStack();
-                    CANDLE_LIT_STACK.set(ModDataComponents.CANDLE_LIT.value(), true);
+
 
                     acceptAsDecor.run(DecorType.CANDLE, DecorPlacement.RIGHT, List.of(
                             WITCH_CANDLE.createStack(),
