@@ -66,6 +66,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         hatBand.create(ModItems.GREEN_HAT_BAND, Items.GREEN_DYE, recipeOutput);
         hatBand.create(ModItems.RED_HAT_BAND, Items.RED_DYE, recipeOutput);
         hatBand.create(ModItems.BLACK_HAT_BAND, Items.BLACK_DYE, recipeOutput);
+        hatBand.create(ModItems.LIGHT_GRAY_HAT_BAND, Items.LIGHT_GRAY_DYE, recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.WITCH_CRYSTAL_DUST)
                 .requires(Items.GUNPOWDER)

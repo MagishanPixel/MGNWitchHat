@@ -16,6 +16,8 @@ public class HatBakedModels {
     public static final ResourceLocation HAT_BAND = id("hat_band");
     public static final ResourceLocation BUCKLE = id("buckle");
     public static final ResourceLocation SKULL = id("skull");
+    public static final ResourceLocation CREEPER_HEAD = id("creeper_head");
+    public static final ResourceLocation ZOMBIE_HEAD = id("zombie_head");
     public static final ResourceLocation RIBBON = id("ribbon");
     public static final ResourceLocation CANDLES = id("candles");
     public static final ResourceLocation FEATHER = id("feather");
@@ -45,6 +47,9 @@ public class HatBakedModels {
         m.put(SHORT_BRIM, new ShortBrimModel<>(context.bakeLayer(ModModelLayers.SHORT_BRIM)));
         m.put(WIDE_BRIM, new ShortBrimModel<>(context.bakeLayer(ModModelLayers.WIDE_BRIM)));
         m.put(PUMPKIN, new PumpkinDecorModel<>(context.bakeLayer(ModModelLayers.PUMPKIN)));
+
+        m.put(ZOMBIE_HEAD, new SkullModel(context.bakeLayer(ModelLayers.ZOMBIE_HEAD)));
+        m.put(CREEPER_HEAD, new SkullModel(context.bakeLayer(ModelLayers.CREEPER_HEAD)));
 
         MODEL_MAP = m.build();
     }

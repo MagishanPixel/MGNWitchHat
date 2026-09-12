@@ -34,6 +34,7 @@ import org.joml.Quaternionf;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class WitchHatRenderer {
     public interface RenderDecor {
@@ -299,7 +300,17 @@ public class WitchHatRenderer {
         rendBuilder.put(DecorType.SKULL,
                 decorBuilder()
                         .setDefaultModel(new RenderValue.ModelVal.Builder()
-                                .setModel(HatBakedModels.SKULL)
+                                .setModel(paramVal -> {
+                                    ItemStack stack = paramVal.stack();
+
+                                    if (stack.is(Items.ZOMBIE_HEAD)) {
+                                        return HatBakedModels.ZOMBIE_HEAD;
+                                    } else if (stack.is(Items.CREEPER_HEAD)) {
+                                        return HatBakedModels.CREEPER_HEAD;
+                                    }
+
+                                    return HatBakedModels.SKULL;
+                                })
                                 .setRenderType(paramVal -> {
                                     BlockItem blockItem = (BlockItem) paramVal.stack().getItem();
 
@@ -425,12 +436,25 @@ public class WitchHatRenderer {
         );
 
         final Function<RenderValue.ParamVal, RenderType> CANDLE_FIRE = paramVal -> {
-            if (!paramVal.stack().get(ModDataComponents.CANDLE_LIT.value())) return RenderType.entityCutout(getDecorsTex("candle"));
+            RenderType defRend = RenderType.entityCutout(getDecorsTex("candle"));
+
+            ItemStack candleStack = paramVal.stack();
+
+            if (!candleStack.has(ModDataComponents.CANDLE_LIT.value())) return defRend;
+
+            if (!candleStack.get(ModDataComponents.CANDLE_LIT.value())) return defRend;
 
             Level level = Minecraft.getInstance().level;
             int currClock = (int) level.getGameTime();
             int v = ((currClock / 4) % 3) + 1;
             return RenderType.entityCutout(getDecorsTex("candle_fire" + v));
+        };
+
+        final Predicate<ItemStack> CANDLE_GLOW = stack -> {
+            if (stack.has(ModDataComponents.CANDLE_LIT.value())) {
+                return stack.get(ModDataComponents.CANDLE_LIT.value());
+            }
+            return false;
         };
 
         // CANDLES
@@ -465,7 +489,7 @@ public class WitchHatRenderer {
                         )
                         // TIP
                         .add(RenderValue.builder()
-                                .glow(stack -> stack.get(ModDataComponents.CANDLE_LIT.value()))
+                                .glow(CANDLE_GLOW)
                                 .setModel(HatBakedModels.CANDLES)
                                 .setRenderType(CANDLE_FIRE)
                                 .scale(0.7f)
@@ -475,7 +499,7 @@ public class WitchHatRenderer {
                                 .build()
                         )
                         .add(RenderValue.builder()
-                                .glow(stack -> stack.get(ModDataComponents.CANDLE_LIT.value()))
+                                .glow(CANDLE_GLOW)
                                 .setModel(HatBakedModels.CANDLES)
                                 .setRenderType(CANDLE_FIRE)
                                 .scale(0.5f)
@@ -485,7 +509,7 @@ public class WitchHatRenderer {
                                 .build()
                         )
                         .add(RenderValue.builder()
-                                .glow(stack -> stack.get(ModDataComponents.CANDLE_LIT.value()))
+                                .glow(CANDLE_GLOW)
                                 .setModel(HatBakedModels.CANDLES)
                                 .setRenderType(CANDLE_FIRE)
                                 .scale(0.5f)

@@ -1,7 +1,8 @@
-// 1.21.1	2026-09-12T14:15:49.8257201	MGN's Witch Hat/Recipes
+// 1.21.1	2026-09-12T16:12:21.5745407	MGN's Witch Hat/Recipes
 b7725edd87a98b8c101cdfe8a226389b742c481c data\mgn_witch_hat\recipe\brown_ribbon.json
 f2048233a312b9eeef0c49e66617a9df8591000e data\mgn_witch_hat\advancement\recipes\misc\purple_hat_band.json
 87587ee1fe0f203e79585a84f56ccceef5927f81 data\mgn_witch_hat\recipe\red_hat_band.json
+0c08df8915d1402bb2a13e7c224550f62b5cd75c data\mgn_witch_hat\advancement\recipes\misc\light_gray_hat_band.json
 02fe0f3917e91ac1fc8cb199debb74b2afe21cc5 data\mgn_witch_hat\recipe\white_hat_band.json
 1c97c5496096c135e5f28dd065508d93e74c626c data\mgn_witch_hat\advancement\recipes\misc\magenta_hat_band.json
 26f44998841558252498aa1685afda661b6315f2 data\mgn_witch_hat\advancement\recipes\misc\green_ribbon.json
@@ -19,6 +20,7 @@ adc3cd3e040f4b1018f1f33e465e7fa92a9756dd data\mgn_witch_hat\advancement\recipes\
 6b245a720720f7ac4b1d1b397ff7a51836f45557 data\mgn_witch_hat\recipe\magenta_ribbon.json
 c44922578ac49c723f4ca985548c6879b7e6d5c8 data\mgn_witch_hat\recipe\green_ribbon.json
 5c17c72dbc6f7c964ea4dd44ab9e8a46a4083ff0 data\mgn_witch_hat\advancement\recipes\misc\gray_ribbon.json
+2d8e32db9bd0b0488186a97642e9bac7d1750cd1 data\mgn_witch_hat\recipe\light_gray_hat_band.json
 11a7ad1a0ba7e141812acdad4dba864900e05d37 data\mgn_witch_hat\recipe\white_ribbon.json
 808ec7682efe2dfc9c0eecf3bd5cdb9d1816cdf9 data\mgn_witch_hat\recipe\yellow_hat_band.json
 d30fa6b91370a918ad3409e3de51726c8d03f579 data\mgn_witch_hat\advancement\recipes\misc\white_ribbon.json
