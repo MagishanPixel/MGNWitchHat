@@ -6,6 +6,10 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,6 +32,17 @@ public class WitchHatItem extends Item implements Equipable {
     }
 
     @Override
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> comp, TooltipFlag tooltipFlag) {
+        if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
+            comp.add(Component.translatable("item.mgn_witch_hat.desc.usage").withStyle(ChatFormatting.YELLOW)
+                    .append(Component.literal(" ")).append(
+                            Component.translatable("item.mgn_witch_hat.witch_hat.usage").withStyle(ChatFormatting.WHITE)
+                    ));
+        }
+
+    }
+
+    @Override
     public EquipmentSlot getEquipmentSlot() {
         return EquipmentSlot.HEAD;
     }
@@ -43,6 +58,8 @@ public class WitchHatItem extends Item implements Equipable {
                 }
 
                 stack.remove(ModDataComponents.DECOR_TYPES.value());
+
+                level.playSound(null, player, SoundEvents.ARMOR_EQUIP_LEATHER.value(), SoundSource.PLAYERS, 1, 1);
 
                 return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
             }

@@ -25,7 +25,7 @@ public class WitchHatTooltip implements ClientTooltipComponent {
 
     @Override
     public int getHeight() {
-        return 22 * (Math.max(1, (int) Math.ceil(((double) display.dataList().size())/4d)));
+        return (22 * (Math.max(1, (int) Math.ceil(((double) display.dataList().size())/4d)))) + 5;
     }
 
     @Override

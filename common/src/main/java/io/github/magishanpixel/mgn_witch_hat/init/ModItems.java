@@ -222,8 +222,6 @@ public class ModItems {
                             Items.ZOMBIE_HEAD.getDefaultInstance()
                     ));
 
-
-
                     acceptAsDecor.run(DecorType.CANDLE, DecorPlacement.RIGHT, List.of(
                             WITCH_CANDLE.createStack(),
                             CANDLE_LIT_STACK

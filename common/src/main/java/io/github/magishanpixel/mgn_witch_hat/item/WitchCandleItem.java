@@ -1,6 +1,7 @@
 package io.github.magishanpixel.mgn_witch_hat.item;
 
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -21,7 +22,10 @@ public class WitchCandleItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> comp, TooltipFlag tooltipFlag) {
-        comp.add(Component.translatable("item.mgn_witch_hat.witch_candle.desc"));
+        comp.add(Component.translatable("item.mgn_witch_hat.desc.usage").withStyle(ChatFormatting.YELLOW)
+                .append(Component.literal(" ")).append(
+                        Component.translatable("item.mgn_witch_hat.witch_candle.usage").withStyle(ChatFormatting.WHITE)
+                ));
     }
 
     @Override

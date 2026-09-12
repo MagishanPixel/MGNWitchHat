@@ -46,9 +46,13 @@ public class WitchHatRenderer {
         if (DECOR_RENDERERS == null) return;
 
         for (Map.Entry<DecorType, DataDecor> entry : mapTypes.entrySet()) {
-            RenderDecor v = DECOR_RENDERERS.get(entry.getKey());
+            DataDecor data = entry.getValue();
 
-            v.render(blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, resetPose, entry.getValue(), hatStack);
+            if (!data.stack().isEmpty()) {
+                RenderDecor v = DECOR_RENDERERS.get(entry.getKey());
+
+                v.render(blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, resetPose, data, hatStack);
+            }
         }
     }
 

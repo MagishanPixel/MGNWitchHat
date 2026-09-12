@@ -7,10 +7,13 @@
     },
     "B": {
       "item": "minecraft:amethyst_shard"
+    },
+    "S": {
+      "item": "mgn_witch_hat:witch_crystal_dust"
     }
   },
   "pattern": [
-    " # ",
+    "S#S",
     "#B#",
     "###"
   ],
