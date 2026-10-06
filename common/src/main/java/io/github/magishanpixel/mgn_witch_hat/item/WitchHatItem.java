@@ -1,5 +1,6 @@
 package io.github.magishanpixel.mgn_witch_hat.item;
 
+import io.github.magishanpixel.mgn_witch_hat.block.WitchHatBlockEntity;
 import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
@@ -7,22 +8,29 @@ import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class WitchHatItem extends Item implements Equipable {
-    public WitchHatItem(Properties properties) {
-        super(properties);
+public class WitchHatItem extends BlockItem implements Equipable {
+    public WitchHatItem(Block block,Properties properties) {
+        super(block,properties);
     }
 
     @Override
@@ -40,6 +48,20 @@ public class WitchHatItem extends Item implements Equipable {
                     ));
         }
 
+    }
+
+    @Override
+    public String getDescriptionId() {
+        return this.getOrCreateDescriptionId();
+    }
+
+    @Override
+    protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, @Nullable Player player, ItemStack stack, BlockState state) {
+        if (level.getBlockEntity(pos) instanceof WitchHatBlockEntity blockEntity) {
+            blockEntity.setHatStack(stack.copy());
+            return true;
+        }
+        return false;
     }
 
     @Override

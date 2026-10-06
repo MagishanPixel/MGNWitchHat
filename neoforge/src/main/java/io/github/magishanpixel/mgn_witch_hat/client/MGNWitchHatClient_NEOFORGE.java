@@ -2,7 +2,7 @@ package io.github.magishanpixel.mgn_witch_hat.client;
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
-import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
+import io.github.magishanpixel.mgn_witch_hat.client.renderer.WitchHatRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.renderer.WitchHatItemRenderer;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;

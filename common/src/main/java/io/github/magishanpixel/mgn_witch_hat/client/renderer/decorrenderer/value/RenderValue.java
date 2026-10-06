@@ -1,7 +1,6 @@
-package io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value;
+package io.github.magishanpixel.mgn_witch_hat.client.renderer.decorrenderer.value;
 
 import com.google.common.collect.ImmutableList;
-import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
 import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import net.minecraft.client.renderer.RenderType;

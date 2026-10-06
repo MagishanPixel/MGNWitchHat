@@ -1,8 +1,6 @@
 package io.github.magishanpixel.mgn_witch_hat.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;

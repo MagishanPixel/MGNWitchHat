@@ -1,15 +1,19 @@
 package io.github.magishanpixel.mgn_witch_hat.client;
 
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
+import io.github.magishanpixel.mgn_witch_hat.client.renderer.WitchHatBlockEntityRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
+import io.github.magishanpixel.mgn_witch_hat.init.ModBlocks;
 import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayers;
 import net.blay09.mods.balm.api.client.module.BalmClientModule;
 import net.blay09.mods.balm.api.client.rendering.BalmRenderers;
 import net.blay09.mods.balm.client.BalmClientTooltipComponentRegistrar;
 import net.blay09.mods.balm.client.model.geom.BalmModelLayerRegistrar;
+import net.blay09.mods.balm.client.renderer.blockentity.BalmBlockEntityRendererRegistrar;
 import net.blay09.mods.balm.client.renderer.chunk.BalmBlockRenderTypeRegistrar;
 import net.blay09.mods.balm.client.renderer.entity.BalmEntityRendererRegistrar;
 import net.blay09.mods.balm.server.packs.resources.BalmClientResourceReloadListenerRegistrar;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public class MGNWitchHatClient implements BalmClientModule {
@@ -31,4 +35,14 @@ public class MGNWitchHatClient implements BalmClientModule {
         reg.register(WitchHatTooltip.DisplayStacks.class, WitchHatTooltip::new);
     }
 
+
+    @Override
+    public void registerBlockEntityRenderers(BalmBlockEntityRendererRegistrar blockEntityRenderers) {
+        blockEntityRenderers.register(ModBlocks.WITCH_HAT_ENTITY, context -> new WitchHatBlockEntityRenderer());
+    }
+
+    @Override
+    public void registerBlockRenderTypes(BalmBlockRenderTypeRegistrar blockRenderTypes) {
+        blockRenderTypes.setRenderLayer(ModBlocks.WITCH_HAT_BLOCK, RenderType.cutout());
+    }
 }

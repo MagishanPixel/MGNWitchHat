@@ -1,4 +1,4 @@
-package io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.value;
+package io.github.magishanpixel.mgn_witch_hat.client.renderer.decorrenderer.value;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import io.github.magishanpixel.mgn_witch_hat.client.HatBakedModels;
-import io.github.magishanpixel.mgn_witch_hat.client.decorrenderer.WitchHatRenderer;
+import io.github.magishanpixel.mgn_witch_hat.client.renderer.WitchHatRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.models.SplittedParts;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
