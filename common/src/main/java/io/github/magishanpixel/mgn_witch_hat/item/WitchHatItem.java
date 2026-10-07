@@ -1,7 +1,7 @@
 package io.github.magishanpixel.mgn_witch_hat.item;
 
-import io.github.magishanpixel.mgn_witch_hat.block.WitchHatBlockEntity;
 import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
+import io.github.magishanpixel.mgn_witch_hat.entity.WitchHatDisplayEntity;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
@@ -21,16 +21,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.tooltip.TooltipComponent;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DiodeBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.RotationSegment;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class WitchHatItem extends BlockItem implements Equipable {
-    public WitchHatItem(Block block,Properties properties) {
-        super(block,properties);
+public class WitchHatItem extends Item implements Equipable {
+    public WitchHatItem(Properties properties) {
+        super(properties);
     }
 
     @Override
@@ -48,20 +51,6 @@ public class WitchHatItem extends BlockItem implements Equipable {
                     ));
         }
 
-    }
-
-    @Override
-    public String getDescriptionId() {
-        return this.getOrCreateDescriptionId();
-    }
-
-    @Override
-    protected boolean updateCustomBlockEntityTag(BlockPos pos, Level level, @Nullable Player player, ItemStack stack, BlockState state) {
-        if (level.getBlockEntity(pos) instanceof WitchHatBlockEntity blockEntity) {
-            blockEntity.setHatStack(stack.copy());
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -89,6 +78,25 @@ public class WitchHatItem extends BlockItem implements Equipable {
         return this.swapWithEquipmentSlot(this, level, player, hand);
     }
 
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
 
+        Level level = context.getLevel();
 
+        BlockState bottomState = level.getBlockState(context.getClickedPos().above().below());
+
+        if (bottomState.isSolid() || DiodeBlock.isDiode(bottomState)) {
+            if (!level.isClientSide()) {
+                ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+                WitchHatDisplayEntity displayEntity = new WitchHatDisplayEntity(level, context.getClickedPos().above(), stack.copy(), RotationSegment.convertToSegment(context.getRotation()));
+
+                stack.consume(1, context.getPlayer());
+
+                level.addFreshEntity(displayEntity);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide());
+        }
+
+        return InteractionResult.FAIL;
+    }
 }

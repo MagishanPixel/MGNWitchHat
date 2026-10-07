@@ -1,12 +1,13 @@
 package io.github.magishanpixel.mgn_witch_hat;
 
-import io.github.magishanpixel.mgn_witch_hat.init.ModBlocks;
 import io.github.magishanpixel.mgn_witch_hat.init.ModCustomRecipes;
 import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
+import io.github.magishanpixel.mgn_witch_hat.init.ModEntities;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import net.blay09.mods.balm.api.command.BalmCommands;
 import net.blay09.mods.balm.api.module.BalmModule;
 import net.blay09.mods.balm.core.component.BalmDataComponentTypeRegistrar;
+import net.blay09.mods.balm.world.entity.BalmEntityTypeRegistrar;
 import net.blay09.mods.balm.world.item.BalmCreativeModeTabRegistrar;
 import net.blay09.mods.balm.world.item.BalmItemRegistrar;
 import net.blay09.mods.balm.world.item.crafting.BalmRecipeTypeRegistrar;
@@ -43,12 +44,7 @@ public class MGNWitchHat implements BalmModule {
     }
 
     @Override
-    public void registerBlocks(BalmBlockRegistrar factory) {
-        ModBlocks.initBlock(factory);
-    }
-
-    @Override
-    public void registerBlockEntityTypes(BalmBlockEntityTypeRegistrar blockEntityTypes) {
-        ModBlocks.initBlockEntity(blockEntityTypes);
+    public void registerEntityTypes(BalmEntityTypeRegistrar entityTypes) {
+        ModEntities.init(entityTypes);
     }
 }

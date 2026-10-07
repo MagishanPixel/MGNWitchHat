@@ -1,9 +1,10 @@
 package io.github.magishanpixel.mgn_witch_hat.client;
 
 import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
-import io.github.magishanpixel.mgn_witch_hat.client.renderer.WitchHatBlockEntityRenderer;
+import io.github.magishanpixel.mgn_witch_hat.client.renderer.WitchHatDisplayEntityRenderer;
 import io.github.magishanpixel.mgn_witch_hat.client.tooltip.WitchHatTooltip;
-import io.github.magishanpixel.mgn_witch_hat.init.ModBlocks;
+import io.github.magishanpixel.mgn_witch_hat.entity.WitchHatDisplayEntity;
+import io.github.magishanpixel.mgn_witch_hat.init.ModEntities;
 import io.github.magishanpixel.mgn_witch_hat.init.ModModelLayers;
 import net.blay09.mods.balm.api.client.module.BalmClientModule;
 import net.blay09.mods.balm.api.client.rendering.BalmRenderers;
@@ -37,12 +38,7 @@ public class MGNWitchHatClient implements BalmClientModule {
 
 
     @Override
-    public void registerBlockEntityRenderers(BalmBlockEntityRendererRegistrar blockEntityRenderers) {
-        blockEntityRenderers.register(ModBlocks.WITCH_HAT_ENTITY, context -> new WitchHatBlockEntityRenderer());
-    }
-
-    @Override
-    public void registerBlockRenderTypes(BalmBlockRenderTypeRegistrar blockRenderTypes) {
-        blockRenderTypes.setRenderLayer(ModBlocks.WITCH_HAT_BLOCK, RenderType.cutout());
+    public void registerEntityRenderers(BalmEntityRendererRegistrar entityRenderers) {
+        entityRenderers.register(ModEntities.WITCH_HAT_DISPLAY, WitchHatDisplayEntityRenderer::new);
     }
 }
