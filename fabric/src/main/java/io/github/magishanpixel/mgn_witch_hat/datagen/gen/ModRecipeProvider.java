@@ -81,11 +81,40 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .unlockedBy(FabricRecipeProvider.getHasName(ModItems.RAVEN_FEATHER), FabricRecipeProvider.has(ModItems.RAVEN_FEATHER))
                 .save(recipeOutput);
 
-
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.WITCH_CANDLE)
                 .requires(ItemTags.CANDLES)
                 .requires(ModItems.WITCH_CRYSTAL_DUST)
                 .unlockedBy(FabricRecipeProvider.getHasName(ModItems.WITCH_CANDLE), FabricRecipeProvider.has(ModItems.WITCH_CANDLE))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.ANTLER)
+                .requires(Items.STICK)
+                .requires(ModItems.WITCH_CRYSTAL_DUST)
+                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.ANTLER), FabricRecipeProvider.has(ModItems.ANTLER))
+                .save(recipeOutput);
+
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.DARK_ANTLER)
+                .requires(ModItems.DARK_ANTLER)
+                .requires(Items.BLACK_DYE)
+                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.DARK_ANTLER), FabricRecipeProvider.has(ModItems.DARK_ANTLER))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.HORN)
+                .pattern("RR ")
+                .pattern("RWR")
+                .pattern("R  ")
+                .define('R', Items.BASALT)
+                .define('W', ModItems.WITCH_CRYSTAL_DUST)
+                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.HORN), FabricRecipeProvider.has(ModItems.HORN))
+                .save(recipeOutput);
+
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.DEVIL_HORN)
+                .pattern("RR ")
+                .pattern("RWR")
+                .pattern("R  ")
+                .define('R', Items.REDSTONE)
+                .define('W', ModItems.WITCH_CRYSTAL_DUST)
+                .unlockedBy(FabricRecipeProvider.getHasName(ModItems.DEVIL_HORN), FabricRecipeProvider.has(ModItems.DEVIL_HORN))
                 .save(recipeOutput);
 
         AutoRecipe ribbonRecipe = (deferredItem, wool, v) -> {

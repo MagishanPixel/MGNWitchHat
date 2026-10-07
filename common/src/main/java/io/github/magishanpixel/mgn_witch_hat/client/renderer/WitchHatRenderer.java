@@ -12,6 +12,7 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.item.ColoredItem;
 import io.github.magishanpixel.mgn_witch_hat.misc.BrimType;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
+import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.Model;
@@ -35,7 +36,7 @@ import java.util.function.Predicate;
 
 public class WitchHatRenderer {
     public interface RenderDecor {
-        void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> setPose, DataDecor datam, ItemStack hatStack);
+        void render(BlockRenderDispatcher blockRenderer, ItemRenderer itemRenderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, int overlay, Consumer<PoseStack> setPose, DataDecor data, ItemStack hatStack);
     }
 
     private static ImmutableMap<DecorType, RenderDecor> DECOR_RENDERERS;
@@ -70,6 +71,26 @@ public class WitchHatRenderer {
 
     private static BasicRenderDecor.Builder decorBuilder() {
         return new BasicRenderDecor.Builder();
+    }
+
+    private static RenderDecor renderSingleModel(Function<ItemStack, ResourceLocation> model, Function<ItemStack, RenderType> rendType) {
+        return (blockRenderer, itemRenderer, buffer, poseStack, packedLight, overlay, setPose, data, hatStack) -> {
+            ItemStack stack = data.stack();
+            Model targModel = HatBakedModels.getModel(model.apply(stack));
+            RenderType rend = rendType.apply(stack);
+
+            poseStack.pushPose();
+
+            setPose.accept(poseStack);
+
+            poseStack.mulPose(Axis.XP.rotation((float) (Math.toRadians(7.5))));
+            poseStack.scale(1.1f, 1.1f, 1.1f);
+            poseStack.translate(0, -1.9f, 0);
+
+            targModel.renderToBuffer(poseStack, buffer.getBuffer(rend), packedLight, overlay);
+
+            poseStack.popPose();
+        };
     }
 
     public static void renderHat(ItemStack stack, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int overlay, Consumer<PoseStack> resetPose, @Nullable Consumer<PoseStack> startPose) {
@@ -148,7 +169,7 @@ public class WitchHatRenderer {
     }
 
     // INITIALIZE THE DECORS OFC
-    public static void init() {
+    public static void initializeDecors() {
         // for being reloadable
         DECOR_RENDERERS = null;
 
@@ -432,6 +453,40 @@ public class WitchHatRenderer {
                 .build()
         );
 
+        // ANTLER
+        rendBuilder.put(DecorType.ANTLER, renderSingleModel(
+                        stack -> HatBakedModels.ANTLER,
+                        stack -> {
+                            ResourceLocation tex;
+
+                            if (stack.is(ModItems.DARK_ANTLER.asItem())) {
+                                tex = getDecorsTex("dark_antler");
+                            } else {
+                                tex = getDecorsTex("antler");
+                            }
+
+                            return RenderType.entityCutout(tex);
+                        }
+                )
+        );
+
+        // HORN
+        rendBuilder.put(DecorType.HORN, renderSingleModel(
+                        stack -> HatBakedModels.HORN,
+                        stack -> {
+                            ResourceLocation tex;
+
+                            if (stack.is(ModItems.DEVIL_HORN.asItem())) {
+                                tex = getDecorsTex("devil_horn");
+                            } else {
+                                tex = getDecorsTex("horn");
+                            }
+
+                            return RenderType.entityCutout(tex);
+                        }
+                )
+        );
+
         final Function<RenderValue.ParamVal, RenderType> CANDLE_FIRE = paramVal -> {
             RenderType defRend = RenderType.entityCutout(getDecorsTex("candle"));
 
@@ -517,6 +572,8 @@ public class WitchHatRenderer {
                         )
                         .build()
         );
+
+
 
         DECOR_RENDERERS = rendBuilder.build();
     }

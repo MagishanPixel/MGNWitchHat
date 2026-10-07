@@ -24,6 +24,8 @@ public class HatBakedModels {
     public static final ResourceLocation SHORT_BRIM = id("short_brim");
     public static final ResourceLocation WIDE_BRIM = id("wide_brim");
     public static final ResourceLocation PUMPKIN = id("pumpkin");
+    public static final ResourceLocation HORN = id("horn");
+    public static final ResourceLocation ANTLER = id("antler");
 
     private static ImmutableMap<ResourceLocation, Model> MODEL_MAP = null;
 
@@ -50,6 +52,9 @@ public class HatBakedModels {
 
         m.put(ZOMBIE_HEAD, new SkullModel(context.bakeLayer(ModelLayers.ZOMBIE_HEAD)));
         m.put(CREEPER_HEAD, new SkullModel(context.bakeLayer(ModelLayers.CREEPER_HEAD)));
+
+        m.put(ANTLER, new AntlerModel<>(context.bakeLayer(ModModelLayers.ANTLER)));
+        m.put(HORN, new AntlerModel<>(context.bakeLayer(ModModelLayers.HORN)));
 
         MODEL_MAP = m.build();
     }

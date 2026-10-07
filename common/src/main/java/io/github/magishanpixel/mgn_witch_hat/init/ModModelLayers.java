@@ -19,6 +19,9 @@ public class ModModelLayers {
 
     public static ModelLayerLocation PUMPKIN = create("pumpkin");
 
+    public static ModelLayerLocation ANTLER = create("antler");
+    public static ModelLayerLocation HORN = create("horn");
+
     public static void init(BalmModelLayerRegistrar layer) {
         layer.register(WITCH_HAT.getModel(), WitchHatModel::createBodyLayer);
         layer.register(ROBE.getModel(), HatBandModel::createBodyLayer);
@@ -29,6 +32,8 @@ public class ModModelLayers {
         layer.register(SHORT_BRIM.getModel(), ShortBrimModel::createBodyLayer);
         layer.register(WIDE_BRIM.getModel(), WideBrimModel::createBodyLayer);
         layer.register(PUMPKIN.getModel(), PumpkinDecorModel::createBodyLayer);
+        layer.register(ANTLER.getModel(), AntlerModel::createBodyLayer);
+        layer.register(HORN.getModel(), HornModel::createBodyLayer);
     }
 
     private static ModelLayerLocation create(String name) {

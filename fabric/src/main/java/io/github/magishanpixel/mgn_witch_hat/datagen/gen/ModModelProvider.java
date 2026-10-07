@@ -58,5 +58,9 @@ public class ModModelProvider extends FabricModelProvider {
         gen.generateFlatItem(ModItems.BLACK_RIBBON.asItem(), ModelTemplates.FLAT_ITEM);
 
         gen.generateFlatItem(ModItems.WITCH_CRYSTAL_DUST.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.ANTLER.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.DARK_ANTLER.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.HORN.asItem(), ModelTemplates.FLAT_ITEM);
+        gen.generateFlatItem(ModItems.DEVIL_HORN.asItem(), ModelTemplates.FLAT_ITEM);
     }
 }

@@ -7,7 +7,10 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import io.github.magishanpixel.mgn_witch_hat.misc.DataDecor;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorPlacement;
 import io.github.magishanpixel.mgn_witch_hat.misc.DecorType;
+import net.blay09.mods.balm.api.Balm;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -44,13 +47,25 @@ public class WitchHatItem extends Item implements Equipable {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> comp, TooltipFlag tooltipFlag) {
-        if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
-            comp.add(Component.translatable("item.mgn_witch_hat.desc.usage").withStyle(ChatFormatting.YELLOW)
-                    .append(Component.literal(" ")).append(
-                            Component.translatable("item.mgn_witch_hat.witch_hat.usage").withStyle(ChatFormatting.WHITE)
-                    ));
-        }
+       if (Screen.hasShiftDown()) {
+           if (stack.has(ModDataComponents.DECOR_TYPES.value())) {
+               comp.add(Component.translatable("item.mgn_witch_hat.witch_hat.key.removedecor").withStyle(ChatFormatting.YELLOW)
+                       .append(Component.literal(" ")).append(
+                               Component.translatable("item.mgn_witch_hat.witch_hat.desc.removedecor").withStyle(ChatFormatting.WHITE)
+                       ));
+           }
 
+           comp.add(Component.translatable("item.mgn_witch_hat.witch_hat.key.placeblock").withStyle(ChatFormatting.YELLOW).append(
+                   Component.literal(" ").append(
+                           Component.translatable("item.mgn_witch_hat.witch_hat.desc.placeblock").withStyle(ChatFormatting.WHITE)
+                   )
+           ));
+       } else {
+            comp.add(Component.literal("[ ").withStyle(ChatFormatting.GRAY).append(
+                    Component.translatable("item.mgn_witch_hat.witch_hat.shift").withStyle(ChatFormatting.DARK_GRAY))
+                    .append(" ]").withStyle(ChatFormatting.GRAY)
+            );
+       }
     }
 
     @Override
@@ -79,24 +94,26 @@ public class WitchHatItem extends Item implements Equipable {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public InteractionResult useOn(UseOnContext c) {
+        if (c.getPlayer().isCrouching()) {
+            BlockPlaceContext context = new BlockPlaceContext(c);
+            Level level = context.getLevel();
+            BlockState bottomState = level.getBlockState(context.getClickedPos().below());
 
-        Level level = context.getLevel();
+            if (bottomState.isSolid() || DiodeBlock.isDiode(bottomState)) {
+                if (!level.isClientSide()) {
+                    ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
+                    WitchHatDisplayEntity displayEntity = new WitchHatDisplayEntity(level, context.getClickedPos(), stack.copy(), RotationSegment.convertToSegment(context.getRotation()));
 
-        BlockState bottomState = level.getBlockState(context.getClickedPos().above().below());
+                    stack.consume(1, context.getPlayer());
 
-        if (bottomState.isSolid() || DiodeBlock.isDiode(bottomState)) {
-            if (!level.isClientSide()) {
-                ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
-                WitchHatDisplayEntity displayEntity = new WitchHatDisplayEntity(level, context.getClickedPos().above(), stack.copy(), RotationSegment.convertToSegment(context.getRotation()));
-
-                stack.consume(1, context.getPlayer());
-
-                level.addFreshEntity(displayEntity);
+                    level.addFreshEntity(displayEntity);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide());
             }
-            return InteractionResult.sidedSuccess(level.isClientSide());
+
         }
 
-        return InteractionResult.FAIL;
+        return InteractionResult.PASS;
     }
 }

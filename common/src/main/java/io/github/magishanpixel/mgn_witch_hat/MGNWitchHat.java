@@ -5,6 +5,7 @@ import io.github.magishanpixel.mgn_witch_hat.init.ModDataComponents;
 import io.github.magishanpixel.mgn_witch_hat.init.ModEntities;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import net.blay09.mods.balm.api.command.BalmCommands;
+import net.blay09.mods.balm.api.config.BalmConfig;
 import net.blay09.mods.balm.api.module.BalmModule;
 import net.blay09.mods.balm.core.component.BalmDataComponentTypeRegistrar;
 import net.blay09.mods.balm.world.entity.BalmEntityTypeRegistrar;

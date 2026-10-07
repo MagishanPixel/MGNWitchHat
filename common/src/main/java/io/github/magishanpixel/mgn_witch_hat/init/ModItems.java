@@ -58,6 +58,11 @@ public class ModItems {
 
     public static DeferredItem RAVEN_FEATHER;
     public static DeferredItem WITCH_CANDLE;
+    public static DeferredItem ANTLER;
+    public static DeferredItem DARK_ANTLER;
+    public static DeferredItem HORN;
+    public static DeferredItem DEVIL_HORN;
+
     public static DeferredItem WITCH_CRYSTAL_DUST;
 
     public static Holder<CreativeModeTab> MAIN_TAB;
@@ -102,6 +107,10 @@ public class ModItems {
         PURPLE_RIBBON = reg.register("purple_ribbon", p -> new ColoredItem(p, DyeColor.PURPLE, ColoredItem.ItemType.RIBBON), p -> p.stacksTo(1)).asDeferredItem();
 
         RAVEN_FEATHER = reg.register("raven_feather", Item::new, p -> p.stacksTo(1)).asDeferredItem();
+        DARK_ANTLER = reg.register("dark_antler", Item::new, p -> p.stacksTo(1)).asDeferredItem();
+        ANTLER = reg.register("antler", Item::new, p -> p.stacksTo(1)).asDeferredItem();
+        HORN = reg.register("horn", Item::new, p -> p.stacksTo(1)).asDeferredItem();
+        DEVIL_HORN = reg.register("devil_horn", Item::new, p -> p.stacksTo(1)).asDeferredItem();
         WITCH_CANDLE = reg.register("witch_candle", p -> new WitchCandleItem(p.component(ModDataComponents.CANDLE_LIT.value(), false)), p -> p.stacksTo(1)).asDeferredItem();
         WITCH_CRYSTAL_DUST = reg.register("witch_crystal_dust", Item::new).asDeferredItem();
     }
@@ -118,6 +127,10 @@ public class ModItems {
 
                     v.accept(WITCH_CRYSTAL_DUST);
                     v.accept(RAVEN_FEATHER);
+                    v.accept(ANTLER);
+                    v.accept(DARK_ANTLER);
+                    v.accept(HORN);
+                    v.accept(DEVIL_HORN);
                     v.accept(WITCH_CANDLE);
 
                     v.accept(HAT_BAND);
@@ -242,12 +255,24 @@ public class ModItems {
                     acceptAsDecor.run(DecorType.LANTERN, DecorPlacement.RIGHT, List.of(Items.LANTERN.getDefaultInstance(), Items.SOUL_LANTERN.getDefaultInstance()));
                     acceptAsDecor.run(DecorType.LANTERN, DecorPlacement.BACK, List.of(Items.LANTERN.getDefaultInstance(), Items.SOUL_LANTERN.getDefaultInstance()));
 
+                    acceptAsDecor.run(DecorType.ANTLER, DecorPlacement.REGULAR, List.of(
+                            ANTLER.createStack(),
+                            DARK_ANTLER.createStack()
+                    ));
+
+                    acceptAsDecor.run(DecorType.HORN, DecorPlacement.REGULAR, List.of(
+                            HORN.createStack(),
+                            DEVIL_HORN.createStack()
+                    ));
+
                     acceptAsDecor.run(DecorType.FLOWER, DecorPlacement.RIGHT, List.of(
                             Items.ORANGE_TULIP.getDefaultInstance(),
                             Items.PINK_TULIP.getDefaultInstance(),
                             Items.RED_TULIP.getDefaultInstance(),
                             Items.WHITE_TULIP.getDefaultInstance()
                     ));
+
+
 
                 })
         ).asHolder();

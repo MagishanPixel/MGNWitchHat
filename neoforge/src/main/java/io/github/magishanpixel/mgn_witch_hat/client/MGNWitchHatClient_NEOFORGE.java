@@ -42,7 +42,7 @@ public class MGNWitchHatClient_NEOFORGE {
     }
 
     public void clientInit(FMLClientSetupEvent event) {
-        event.enqueueWork(WitchHatRenderer::init);
+        event.enqueueWork(WitchHatRenderer::initializeDecors);
         event.enqueueWork(() -> {
             ItemProperties.register(ModItems.WITCH_CANDLE.asItem(), MGNConstants.newId("candle_lit"), (itemStack, clientLevel, livingEntity, i) -> itemStack.get(ModDataComponents.CANDLE_LIT.value()) ? 1f : 0f);
         });
@@ -64,7 +64,7 @@ public class MGNWitchHatClient_NEOFORGE {
     public void registerCommands(RegisterClientCommandsEvent event) {
         LiteralArgumentBuilder<CommandSourceStack> command = LiteralArgumentBuilder.literal("reloadwitchhat");
         command.executes(context -> {
-            WitchHatRenderer.init();
+            WitchHatRenderer.initializeDecors();
             return 1;
         });
 

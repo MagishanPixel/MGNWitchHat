@@ -20,6 +20,17 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        getOrCreateTagBuilder(MGNConstants.ItemTags.Decor.ANTLER)
+                .add(ModItems.ANTLER.asItem())
+                .add(ModItems.DARK_ANTLER.asItem())
+        ;
+
+        getOrCreateTagBuilder(MGNConstants.ItemTags.Decor.HORN)
+                .add(ModItems.HORN.asItem())
+                .add(ModItems.DEVIL_HORN.asItem())
+        ;
+
+
         getOrCreateTagBuilder(MGNConstants.ItemTags.BUCKLE)
                 .add(Items.IRON_INGOT)
                 .add(Items.DIAMOND)
@@ -34,6 +45,8 @@ public class ModItemTagsProvider extends FabricTagProvider<Item> {
                 .addTag(MGNConstants.ItemTags.Decor.FEATHER)
                 .add(Items.PUMPKIN, Items.CARVED_PUMPKIN, Items.JACK_O_LANTERN)
                 .add(ModItems.WITCH_CANDLE.asItem())
+                .addTag(MGNConstants.ItemTags.Decor.ANTLER)
+                .addTag(MGNConstants.ItemTags.Decor.HORN)
         ;
 
         getOrCreateTagBuilder(MGNConstants.ItemTags.Decor.FEATHER)
