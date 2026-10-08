@@ -22,7 +22,7 @@ public class WitchCandleItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> comp, TooltipFlag tooltipFlag) {
-        comp.add(Component.translatable("item.mgn_witch_hat.desc.usage").withStyle(ChatFormatting.YELLOW)
+        comp.add(Component.translatable("item.mgn_witch_hat.witch_hat.key.removedecor").withStyle(ChatFormatting.YELLOW)
                 .append(Component.literal(" ")).append(
                         Component.translatable("item.mgn_witch_hat.witch_candle.usage").withStyle(ChatFormatting.WHITE)
                 ));

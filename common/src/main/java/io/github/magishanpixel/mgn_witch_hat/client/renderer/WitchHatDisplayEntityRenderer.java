@@ -26,13 +26,13 @@ public class WitchHatDisplayEntityRenderer extends EntityRenderer<WitchHatDispla
         poseStack.pushPose();
 
 
-        poseStack.translate(0, -0.4, 0);
+        poseStack.translate(0, -0.24, 0);
         poseStack.mulPose(Axis.XP.rotationDegrees(180f));
         poseStack.mulPose(Axis.YP.rotationDegrees(180));
         poseStack.mulPose(Axis.YP.rotationDegrees(RotationSegment.convertToDegrees(entity.getRotation())));
         poseStack.translate(0, 0, -(0.175f/16f) + (1/16f));
         poseStack.mulPose(Axis.XP.rotationDegrees(7.5f));
-
+        poseStack.scale(0.6f, 0.6f, 0.6f);
 
 
         WitchHatRenderer.renderHat(entity.getHatStack(), poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY,

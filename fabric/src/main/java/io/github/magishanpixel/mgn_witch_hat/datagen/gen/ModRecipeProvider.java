@@ -94,7 +94,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .save(recipeOutput);
 
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.DARK_ANTLER)
-                .requires(ModItems.DARK_ANTLER)
+                .requires(ModItems.ANTLER)
                 .requires(Items.BLACK_DYE)
                 .unlockedBy(FabricRecipeProvider.getHasName(ModItems.DARK_ANTLER), FabricRecipeProvider.has(ModItems.DARK_ANTLER))
                 .save(recipeOutput);

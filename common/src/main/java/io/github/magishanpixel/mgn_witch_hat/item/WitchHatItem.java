@@ -98,9 +98,7 @@ public class WitchHatItem extends Item implements Equipable {
         if (c.getPlayer().isCrouching()) {
             BlockPlaceContext context = new BlockPlaceContext(c);
             Level level = context.getLevel();
-            BlockState bottomState = level.getBlockState(context.getClickedPos().below());
-
-            if (bottomState.isSolid() || DiodeBlock.isDiode(bottomState)) {
+            if (WitchHatDisplayEntity.validPlace(level, context.getClickedPos(), null)) {
                 if (!level.isClientSide()) {
                     ItemStack stack = context.getPlayer().getItemInHand(context.getHand());
                     WitchHatDisplayEntity displayEntity = new WitchHatDisplayEntity(level, context.getClickedPos(), stack.copy(), RotationSegment.convertToSegment(context.getRotation()));
@@ -108,10 +106,13 @@ public class WitchHatItem extends Item implements Equipable {
                     stack.consume(1, context.getPlayer());
 
                     level.addFreshEntity(displayEntity);
+
+                    level.playSound(null, context.getClickedPos(), SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 1, 1);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide());
+            } else {
+                return InteractionResult.FAIL;
             }
-
         }
 
         return InteractionResult.PASS;

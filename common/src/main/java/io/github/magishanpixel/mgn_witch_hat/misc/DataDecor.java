@@ -6,6 +6,8 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Objects;
+
 public record DataDecor(ItemStack stack, DecorPlacement placement) {
     public static final Codec<DataDecor> CODEC = RecordCodecBuilder.create(inst -> inst.group(
             ItemStack.OPTIONAL_CODEC.fieldOf("stack").forGetter(DataDecor::stack),
@@ -17,4 +19,20 @@ public record DataDecor(ItemStack stack, DecorPlacement placement) {
             DecorPlacement.STREAM_CODEC, DataDecor::placement,
             DataDecor::new
     );
+
+    @Override
+    public boolean equals(Object v) {
+        if (v == this) return true;
+
+        if (v instanceof DataDecor dat) {
+            return ItemStack.matches(stack, dat.stack) && dat.placement == placement;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 31 * (ItemStack.hashItemAndComponents(stack) + placement.hashCode());
+    }
 }

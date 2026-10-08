@@ -17,7 +17,7 @@ public class ModTranslateProvider extends FabricLanguageProvider {
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder t) {
         t.add("itemgroup.mgn_witch_hat", "MGN's Witch Hat");
         t.add(ModItems.WITCH_HAT.asItem(), "Witch Hat");
-        t.add("item.mgn_witch_hat.witch_hat.key.removedecor", "Sneak + Right");
+        t.add("item.mgn_witch_hat.witch_hat.key.removedecor", "Sneak + Right Click");
         t.add("item.mgn_witch_hat.witch_hat.desc.removedecor", "to remove all");
         t.add("item.mgn_witch_hat.witch_hat.key.placeblock", "Sneak + Place");
         t.add("item.mgn_witch_hat.witch_hat.desc.placeblock", "to place on block");
@@ -65,7 +65,7 @@ public class ModTranslateProvider extends FabricLanguageProvider {
         t.add(ModItems.ANTLER.asItem(), "Antler");
         t.add(ModItems.DARK_ANTLER.asItem(), "Dark Antler");
         t.add(ModItems.HORN.asItem(), "Horn");
-        t.add(ModItems.DEVIL_HORN.asItem(), "Horn");
+        t.add(ModItems.DEVIL_HORN.asItem(), "Devil Horn");
 
         t.add("item.mgn_witch_hat.witch_candle.usage", "to lit up");
 

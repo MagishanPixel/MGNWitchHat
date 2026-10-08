@@ -39,7 +39,7 @@ public class ModDataComponents {
                 )
         ).asHolder();
         BRIM_TYPE = reg.register("brim_type", BrimType.CODEC, BrimType.STREAM_CODEC).asHolder();
-        CANDLE_LIT = reg.register("candle_list", Codec.BOOL, ByteBufCodecs.BOOL).asHolder();
+        CANDLE_LIT = reg.register("candle_lit", Codec.BOOL, ByteBufCodecs.BOOL).asHolder();
 
     }
 }

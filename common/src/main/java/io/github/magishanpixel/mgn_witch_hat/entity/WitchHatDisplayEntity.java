@@ -1,5 +1,6 @@
 package io.github.magishanpixel.mgn_witch_hat.entity;
 
+import io.github.magishanpixel.mgn_witch_hat.MGNConstants;
 import io.github.magishanpixel.mgn_witch_hat.init.ModEntities;
 import io.github.magishanpixel.mgn_witch_hat.init.ModItems;
 import net.minecraft.core.BlockPos;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.decoration.BlockAttachedEntity;
 import net.minecraft.world.entity.decoration.HangingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DiodeBlock;
@@ -31,7 +33,6 @@ import org.jetbrains.annotations.Nullable;
 public class WitchHatDisplayEntity extends Entity {
     private static final EntityDataAccessor<ItemStack> HAT_STACK = SynchedEntityData.defineId(WitchHatDisplayEntity.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<Integer> ROTATION = SynchedEntityData.defineId(WitchHatDisplayEntity.class, EntityDataSerializers.INT);
-    private BlockPos pos = new BlockPos(0,0,0);
     private int interval = 0;
 
     public WitchHatDisplayEntity(EntityType<?> entityType, Level level) {
@@ -41,13 +42,33 @@ public class WitchHatDisplayEntity extends Entity {
     public WitchHatDisplayEntity(Level level, BlockPos pos, ItemStack stack, int rot) {
         super(ModEntities.WITCH_HAT_DISPLAY.value(), level);
         this.entityData.set(HAT_STACK, stack);
-        this.pos = pos;
         this.entityData.set(ROTATION, rot);
         this.moveTo(pos.getBottomCenter());
     }
 
+    @Override
+    public boolean skipAttackInteraction(Entity entity) {
+        if (entity instanceof Player player) {
+            return !this.level().mayInteract(player, this.blockPosition()) ? true : this.hurt(this.damageSources().playerAttack(player), 0.0F);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public @Nullable ItemStack getPickResult() {
+        ItemStack stack = getHatStack();
+
+        return stack.isEmpty() ? ModItems.WITCH_HAT.createStack() : stack.copy();
+    }
+
     public int getRotation() {
         return entityData.get(ROTATION);
+    }
+
+    @Override
+    protected void reapplyPosition() {
+        this.setPos(this.blockPosition().getBottomCenter());
     }
 
     @Override
@@ -86,11 +107,13 @@ public class WitchHatDisplayEntity extends Entity {
         if (!level().isClientSide()) {
             interval++;
 
-            if (interval >= 100) {
+            if (interval >= 20) {
                 if (!survives()) {
                     this.dropItem(null);
                     this.discard();
                 }
+
+                interval = 0;
             }
         }
     }
@@ -99,10 +122,19 @@ public class WitchHatDisplayEntity extends Entity {
         if (!this.level().noCollision(this)) {
             return false;
         } else {
-            BlockState blockstate = this.level().getBlockState(pos.below());
-            boolean flag = blockstate.isSolid() || DiodeBlock.isDiode(blockstate);
-            return flag && this.level().getEntities(this, this.getBoundingBox(), (v) -> v instanceof BlockAttachedEntity).isEmpty();
+            return validPlace(level(), this.blockPosition(), this);
         }
+    }
+
+    public static boolean validPlace(Level level, BlockPos pos, @Nullable WitchHatDisplayEntity self) {
+        BlockState blockstate = level.getBlockState(pos.below());
+        boolean flag = blockstate.isSolid() || DiodeBlock.isDiode(blockstate);
+
+        if (flag) {
+            return level.getEntities(self, new AABB(pos), v -> v instanceof BlockAttachedEntity || v instanceof WitchHatDisplayEntity).isEmpty();
+        }
+
+        return false;
     }
 
     public ItemStack getHatStack() {
@@ -118,6 +150,8 @@ public class WitchHatDisplayEntity extends Entity {
 
     public void dropItem(@Nullable Entity entity) {
         ItemStack resStack = getHatStack();
+
+        BlockPos pos = this.blockPosition();
 
         Containers.dropItemStack(level(),
                 pos.getX(),
@@ -139,17 +173,6 @@ public class WitchHatDisplayEntity extends Entity {
             this.entityData.set(HAT_STACK, stack);
         }
 
-        if (compound.contains("hat_pos_x")) {
-            this.pos = new BlockPos(
-                    compound.getInt("hat_pos_x"),
-                    compound.getInt("hat_pos_y"),
-                    compound.getInt("hat_pos_z")
-
-            );
-
-            this.setPos(pos.getBottomCenter());
-        }
-
         if (compound.contains("hat_rotation")) {
             this.entityData.set(ROTATION, compound.getInt("hat_rotation"));
         }
@@ -158,9 +181,6 @@ public class WitchHatDisplayEntity extends Entity {
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         compound.put("hat_stack", getHatStack().save(this.registryAccess()));
-        compound.putInt("hat_pos_x", pos.getX());
-        compound.putInt("hat_pos_y", pos.getY());
-        compound.putInt("hat_pos_z", pos.getZ());
         compound.putInt("hat_rotation", getRotation());
     }
 
