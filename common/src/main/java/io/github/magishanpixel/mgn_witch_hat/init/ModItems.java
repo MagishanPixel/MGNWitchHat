@@ -212,9 +212,63 @@ public class ModItems {
 
                     premadestack3.set(ModDataComponents.WITCH_HAT_COLOR.value(), DyeColor.BLACK);
 
+                    ItemStack premadestack4 = createWithDecorStack(
+                            List.of(
+                                    DecorType.ANTLER
+                            ),
+                            List.of(
+                                    new DataDecor(ANTLER.createStack(), DecorPlacement.REGULAR)
+                            )
+                    );
+
+                    premadestack4.set(ModDataComponents.WITCH_HAT_COLOR.value(), DyeColor.BROWN);
+                    premadestack4.set(ModDataComponents.BUCKLE_TYPE.value(), BuckleType.GOLD);
+                    premadestack4.set(ModDataComponents.HAS_BAND.value(), true);
+
+                    ItemStack premadestack5 = createWithDecorStack(
+                            List.of(
+                                    DecorType.FLOWER,
+                                    DecorType.LANTERN,
+                                    DecorType.RIBBON
+                            ),
+                            List.of(
+                                    new DataDecor(Items.BLUE_ORCHID.getDefaultInstance(), DecorPlacement.RIGHT),
+                                    new DataDecor(Items.SOUL_LANTERN.getDefaultInstance(), DecorPlacement.REGULAR),
+                                    new DataDecor(CYAN_RIBBON.createStack(), DecorPlacement.REGULAR)
+                            )
+                    );
+
+                    premadestack5.set(ModDataComponents.WITCH_HAT_COLOR.value(), DyeColor.WHITE);
+                    premadestack5.set(ModDataComponents.BUCKLE_TYPE.value(), BuckleType.DIAMOND);
+                    premadestack5.set(ModDataComponents.HAS_BAND.value(), true);
+                    premadestack5.set(ModDataComponents.BAND_COLOR.value(), DyeColor.LIGHT_BLUE);
+
+                    ItemStack premadestack6 = createWithDecorStack(
+                            List.of(
+                                    DecorType.PUMPKIN,
+                                    DecorType.FLOWER,
+                                    DecorType.HORN,
+                                    DecorType.RIBBON
+                            ),
+                            List.of(
+                                    new DataDecor(Items.PUMPKIN.getDefaultInstance(), DecorPlacement.RIGHT),
+                                    new DataDecor(Items.POPPY.getDefaultInstance(), DecorPlacement.REGULAR),
+                                    new DataDecor(DEVIL_HORN.createStack(), DecorPlacement.REGULAR),
+                                    new DataDecor(BLACK_RIBBON.createStack(), DecorPlacement.REGULAR)
+                            )
+                    );
+
+                    premadestack6.set(ModDataComponents.WITCH_HAT_COLOR.value(), DyeColor.RED);
+                    premadestack6.set(ModDataComponents.BUCKLE_TYPE.value(), BuckleType.IRON);
+                    premadestack6.set(ModDataComponents.HAS_BAND.value(), true);
+                    premadestack6.set(ModDataComponents.BAND_COLOR.value(), DyeColor.BLACK);
+
                     v.accept(premadestack1);
                     v.accept(premadestack2);
                     v.accept(premadestack3);
+                    v.accept(premadestack4);
+                    v.accept(premadestack5);
+                    v.accept(premadestack6);
 
                     for (DyeColor col : DyeColor.values()) {
                         ItemStack stack = WITCH_HAT.createStack();
@@ -313,6 +367,4 @@ public class ModItems {
 
         return stack;
     }
-
-    public static void addToCreativeTab(Consumer<ItemStack> v) {}
 }

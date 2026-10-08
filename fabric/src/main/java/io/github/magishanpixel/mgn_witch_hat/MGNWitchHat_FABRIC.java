@@ -13,10 +13,5 @@ public class MGNWitchHat_FABRIC implements ModInitializer {
     public void onInitialize() {
         MGNWitchHat.init();
         Balm.initializeMod(MGNConstants.MOD_ID, EmptyLoadContext.INSTANCE, new MGNWitchHat());
-
-        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.TOOLS_AND_UTILITIES).register(output -> {
-            ModItems.addToCreativeTab(output::accept);
-        });
-
     }
 }
